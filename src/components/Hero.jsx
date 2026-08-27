@@ -7,9 +7,9 @@ export default function Hero() {
       <div className="container">
         <div className="hero-text text-center">
           <div className="hero-tag">
-            <span className="tag-rating">★ 4.9/5 Rating</span>
+            <span className="tag-rating">★ 5/5 Rating</span>
             <span className="tag-divider-dot">•</span>
-            <span>Serviced with Trust • Delivered with Care</span>
+            <span>Managed with Trust • Delivered with Care</span>
           </div>
           <h1>
             Simple, Reliable & <span className="text-highlight-gold">Residential Property Services</span>
@@ -33,7 +33,7 @@ export default function Hero() {
             <div className="stat-icon-wrapper">
               <Users size={20} className="stat-icon" />
             </div>
-            <div className="stat-number">600+</div>
+            <div className="stat-number">100+</div>
             <div className="stat-desc">Happy Customers</div>
           </div>
           <div className="stat-divider"></div>
@@ -41,7 +41,7 @@ export default function Hero() {
             <div className="stat-icon-wrapper">
               <Building2 size={20} className="stat-icon" />
             </div>
-            <div className="stat-number">125+</div>
+            <div className="stat-number">50+</div>
             <div className="stat-desc">Completed Projects</div>
           </div>
           <div className="stat-divider"></div>
