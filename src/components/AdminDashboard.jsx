@@ -536,8 +536,8 @@ export default function AdminDashboard({
 
       {/* Edit Property Modal */}
       {editingProp && (
-        <div className="modal-overlay" onClick={() => setEditingProp(null)}>
-          <div className="modal-card legal-modal-card admin-edit-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="legal-modal-backdrop" onClick={() => setEditingProp(null)}>
+          <div className="legal-modal-card admin-edit-modal" onClick={(e) => e.stopPropagation()}>
             <div className="legal-modal-header">
               <h3>✏️ Edit Property Listing</h3>
               <button type="button" className="legal-modal-close" onClick={() => setEditingProp(null)}>
