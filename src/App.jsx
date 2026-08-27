@@ -38,19 +38,27 @@ export default function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Properties state: always use initialProperties as the base,
-  // then append any admin-added properties saved in localStorage.
+  // Deleted property IDs stored in localStorage
+  const [deletedIds, setDeletedIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem('securestay_deleted_ids');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Properties state initialized from localStorage or initialProperties minus deleted IDs
   const [propertiesList, setPropertiesList] = useState(() => {
     try {
-      const saved = localStorage.getItem('securestay_properties');
-      if (!saved) return initialProperties;
-      const parsed = JSON.parse(saved);
-      const initialIds = new Set(initialProperties.map(p => p.id));
-      // Keep only admin-added entries (not in the original data set)
-      const adminAdded = parsed.filter(p => !initialIds.has(p.id));
-      return adminAdded.length > 0
-        ? [...initialProperties, ...adminAdded]
-        : initialProperties;
+      const savedDeleted = localStorage.getItem('securestay_deleted_ids');
+      const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
+      const deletedSet = new Set(deletedArr);
+
+      const savedProps = localStorage.getItem('securestay_properties');
+      const baseProps = savedProps ? JSON.parse(savedProps) : initialProperties;
+
+      return baseProps.filter((p) => !deletedSet.has(p.id));
     } catch {
       return initialProperties;
     }
@@ -84,6 +92,15 @@ export default function App() {
     }
   }, [propertiesList]);
 
+  // Save deleted IDs to localStorage whenever updated
+  useEffect(() => {
+    try {
+      localStorage.setItem('securestay_deleted_ids', JSON.stringify(deletedIds));
+    } catch {
+      // fallback
+    }
+  }, [deletedIds]);
+
   // Save inquiries to localStorage whenever updated
   useEffect(() => {
     try {
@@ -98,7 +115,10 @@ export default function App() {
   };
 
   const handleDeleteProperty = (id) => {
-    setPropertiesList((prev) => prev.filter((p) => p.id !== id));
+    if (window.confirm('Are you sure you want to remove this property listing from SecureStay?')) {
+      setDeletedIds((prev) => [...prev, id]);
+      setPropertiesList((prev) => prev.filter((p) => p.id !== id));
+    }
   };
 
   const handleInquire = (propTitle) => {
