@@ -441,6 +441,7 @@ export default function AdminDashboard({
                           src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
                           alt={prop.title} 
                           className="table-prop-img"
+                          style={{ width: '60px', height: '44px', objectFit: 'cover', borderRadius: '6px', display: 'block' }}
                         />
                       </td>
                       <td><strong>{prop.title}</strong></td>
