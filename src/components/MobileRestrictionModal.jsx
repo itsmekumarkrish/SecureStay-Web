@@ -1,8 +1,8 @@
 import React from 'react';
-import { Monitor, Phone, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Monitor, Phone, ShieldCheck } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 
-export default function MobileRestrictionModal({ onBypass }) {
+export default function MobileRestrictionModal() {
   return (
     <div className="mobile-restriction-overlay">
       <div className="mobile-restriction-card">
@@ -12,26 +12,30 @@ export default function MobileRestrictionModal({ onBypass }) {
         </div>
 
         <div className="mobile-badge-tag">
-          <Monitor size={14} /> Desktop Portal Only
+          <Monitor size={14} /> Desktop &amp; Webview Only
         </div>
 
-        <h2>Desktop Screen Required</h2>
+        <h2>Desktop Access Required</h2>
         <p className="mobile-restriction-desc">
-          To deliver the highest security and seamless residential property services experience, <strong>SecureStay Web</strong> is exclusively designed for desktop screens and webview windows.
+          The <strong>SecureStay Web Portal</strong> is optimized exclusively for desktop computer screens and webview browser windows.
         </p>
 
-        {/* Info Grid */}
+        {/* Info Box */}
         <div className="mobile-info-box">
           <div className="mobile-info-item">
             <ShieldCheck size={18} className="text-gold" />
-            <span>Guaranteed Rent &amp; Verified Stays</span>
+            <span>Residential Property Services Portal</span>
           </div>
         </div>
+
+        <p className="mobile-instruction-text">
+          Please open this link on your desktop computer or laptop to explore properties and manage services.
+        </p>
 
         {/* Mobile Contact CTAs */}
         <div className="mobile-cta-group">
           <a
-            href="https://wa.me/917090902111?text=Hi%20SecureStay,%20I%20am%20visiting%20from%20a%20mobile%20device%20and%20need%20property%20assistance"
+            href="https://wa.me/917090902111?text=Hi%20SecureStay,%20I%20am%20opening%20your%20website%20from%20a%20mobile%20phone"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp-mobile-card"
@@ -44,11 +48,6 @@ export default function MobileRestrictionModal({ onBypass }) {
             <Phone size={18} />
             <span>Call Property Advisor</span>
           </a>
-
-          <button type="button" className="btn-bypass-mobile" onClick={onBypass}>
-            <span>Continue to Desktop View</span>
-            <ArrowRight size={14} />
-          </button>
         </div>
 
         <p className="mobile-restriction-footer">

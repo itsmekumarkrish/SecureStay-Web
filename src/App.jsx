@@ -24,13 +24,14 @@ export default function App() {
   const [legalModal, setLegalModal] = useState(null);
   const [activeDetailProperty, setActiveDetailProperty] = useState(null);
 
-  // Mobile screen restriction state
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
-  const [bypassMobileNotice, setBypassMobileNotice] = useState(false);
+  // Mobile screen restriction state (strict blocking)
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobileScreen(window.innerWidth <= 768);
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isNarrowScreen = window.innerWidth <= 991;
+      setIsMobileDevice(isMobileUA || isNarrowScreen);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -146,6 +147,10 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentView]);
 
+  if (isMobileDevice) {
+    return <MobileRestrictionModal />;
+  }
+
   return (
     <div className="page">
       {/* 1. All Properties Catalog View */}
@@ -211,11 +216,6 @@ export default function App() {
         onClose={() => setActiveDetailProperty(null)}
         onInquire={handleInquire}
       />
-
-      {/* Mobile Device Restriction Overlay */}
-      {isMobileScreen && !bypassMobileNotice && (
-        <MobileRestrictionModal onBypass={() => setBypassMobileNotice(true)} />
-      )}
     </div>
   );
 }
