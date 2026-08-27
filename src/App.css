@@ -309,18 +309,32 @@ a {
 }
 
 /* 2. Hero Section - Strictly Controls First Viewport (Screen 1) */
+.hero {
+  background: radial-gradient(circle at 50% 12%, #ffffff 0%, #f1f5fa 55%, #e6edf6 100%);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
 @media (min-width: 601px) {
   .hero {
     min-height: calc(100vh - var(--header-height));
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(24px, 3.5vh, 44px) 0;
-    background: radial-gradient(circle at 50% 12%, #ffffff 0%, #f1f5fa 55%, #e6edf6 100%);
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
     box-sizing: border-box;
+    padding: 0;
+  }
+
+  /* The .container inside .hero must stretch to full hero height */
+  .hero > .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: clamp(20px, 3.5vh, 40px);
+    padding-bottom: clamp(20px, 3.5vh, 40px);
+    width: 100%;
+    max-width: 1140px;
   }
 }
 
@@ -328,16 +342,13 @@ a {
   position: relative;
   z-index: 2;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .hero-text {
   max-width: min(92vw, 1040px);
   margin: 0 auto;
   text-align: center;
+  width: 100%;
 }
 
 .hero-tag {
