@@ -8,7 +8,7 @@ export default function ReviewsSection({ reviews }) {
         <div className="section-title text-center">
           <span className="section-eyebrow">VERIFIED REVIEWS</span>
           <h2>Loved by Property Owners & Tenants</h2>
-          <p>Rated 4.9/5 by 5,000+ happy customers across Bangalore, Mysuru, Hyderabad & Chennai.</p>
+          <p>Rated 4.9/5 by 600+ happy customers across Bangalore, Mysuru, Hyderabad &amp; Chennai.</p>
         </div>
       </div>
 

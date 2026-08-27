@@ -33,7 +33,7 @@ export default function Hero() {
             <div className="stat-icon-wrapper">
               <Users size={20} className="stat-icon" />
             </div>
-            <div className="stat-number">5,000+</div>
+            <div className="stat-number">600+</div>
             <div className="stat-desc">Happy Customers</div>
           </div>
           <div className="stat-divider"></div>
@@ -41,7 +41,7 @@ export default function Hero() {
             <div className="stat-icon-wrapper">
               <Building2 size={20} className="stat-icon" />
             </div>
-            <div className="stat-number">1,200+</div>
+            <div className="stat-number">125+</div>
             <div className="stat-desc">Completed Projects</div>
           </div>
           <div className="stat-divider"></div>
