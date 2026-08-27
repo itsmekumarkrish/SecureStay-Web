@@ -38,11 +38,19 @@ export default function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Properties state initialized from localStorage or initialProperties
+  // Properties state: always use initialProperties as the base,
+  // then append any admin-added properties saved in localStorage.
   const [propertiesList, setPropertiesList] = useState(() => {
     try {
       const saved = localStorage.getItem('securestay_properties');
-      return saved ? JSON.parse(saved) : initialProperties;
+      if (!saved) return initialProperties;
+      const parsed = JSON.parse(saved);
+      const initialIds = new Set(initialProperties.map(p => p.id));
+      // Keep only admin-added entries (not in the original data set)
+      const adminAdded = parsed.filter(p => !initialIds.has(p.id));
+      return adminAdded.length > 0
+        ? [...initialProperties, ...adminAdded]
+        : initialProperties;
     } catch {
       return initialProperties;
     }
