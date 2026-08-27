@@ -30,8 +30,8 @@ export default function App() {
   useEffect(() => {
     const checkMobile = () => {
       const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      const isNarrowScreen = window.innerWidth <= 991;
-      setIsMobileDevice(isMobileUA || isNarrowScreen);
+      const isHandheldPhone = window.innerWidth <= 600;
+      setIsMobileDevice(isMobileUA && isHandheldPhone);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
