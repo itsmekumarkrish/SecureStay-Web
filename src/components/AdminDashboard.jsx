@@ -94,9 +94,21 @@ export default function AdminDashboard({
     if (!editingProp || !editingProp.title.trim()) return;
 
     const validImages = (editingProp.images || []).filter(img => img.trim() !== '');
+    const typeStr = editingProp.type || '';
+    const bhk = typeStr.includes('1 RK') ? '1 RK' 
+      : typeStr.includes('1 BHK') ? '1 BHK' 
+      : typeStr.includes('2 BHK') ? '2 BHK' 
+      : typeStr.includes('3 BHK') ? '3 BHK' : '2 BHK';
+
+    const feature = typeStr.includes('Gated') ? 'Gated Society' 
+      : typeStr.includes('Private') ? 'Private Ensuite' : 'Fully Furnished';
+
     const finalProp = {
       ...editingProp,
-      images: validImages.length > 0 ? validImages : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80']
+      city: editingProp.city || 'Bangalore',
+      bhk: bhk,
+      feature: feature,
+      images: validImages.length > 0 ? validImages : ['/assets/hero_stay.jpg']
     };
 
     if (onEditProperty) {
@@ -114,16 +126,28 @@ export default function AdminDashboard({
     const validImages = newProp.images.filter((url) => url.trim() !== '');
     const finalImages = validImages.length > 0 
       ? validImages 
-      : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'];
+      : ['/assets/hero_stay.jpg'];
 
     const amenitiesList = newProp.amenitiesText
       .split(',')
       .map((item) => item.trim())
       .filter((item) => item !== '');
 
+    const typeStr = newProp.type || '';
+    const bhk = typeStr.includes('1 RK') ? '1 RK' 
+      : typeStr.includes('1 BHK') ? '1 BHK' 
+      : typeStr.includes('2 BHK') ? '2 BHK' 
+      : typeStr.includes('3 BHK') ? '3 BHK' : '2 BHK';
+
+    const feature = typeStr.includes('Gated') ? 'Gated Society' 
+      : typeStr.includes('Private') ? 'Private Ensuite' : 'Fully Furnished';
+
     const propertyPayload = {
       id: Date.now(),
       title: newProp.title,
+      city: newProp.city || 'Bangalore',
+      bhk: bhk,
+      feature: feature,
       location: `${newProp.area}, ${newProp.city === 'Bangalore' ? 'Bengaluru' : newProp.city}`,
       rentPrice: `₹${newProp.rentPrice.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} / month`,
       leasePrice: `₹${newProp.leasePrice} (2-3 Yrs)`,
@@ -135,6 +159,8 @@ export default function AdminDashboard({
     };
 
     onAddProperty(propertyPayload);
+    setSuccessMessage(`Property "${propertyPayload.title}" published live to catalog & homepage!`);
+    setTimeout(() => setSuccessMessage(''), 4000);
 
     // Reset Form
     setNewProp({

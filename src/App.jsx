@@ -18,6 +18,45 @@ import MobileRestrictionModal from './components/MobileRestrictionModal';
 import { properties as initialProperties, reviews, faqs } from './data/mockData';
 import './App.css';
 
+function normalizeProperty(item) {
+  if (!item) return item;
+  const locStr = item.location || '';
+  const typeStr = item.type || '';
+
+  let city = item.city;
+  if (!city) {
+    if (locStr.toLowerCase().includes('bengaluru') || locStr.toLowerCase().includes('bangalore') || locStr.toLowerCase().includes('hsr') || locStr.toLowerCase().includes('koramangala')) city = 'Bangalore';
+    else if (locStr.toLowerCase().includes('mysuru') || locStr.toLowerCase().includes('mysore') || locStr.toLowerCase().includes('gokulam') || locStr.toLowerCase().includes('vijayanagar')) city = 'Mysuru';
+    else if (locStr.toLowerCase().includes('hyderabad') || locStr.toLowerCase().includes('gachibowli') || locStr.toLowerCase().includes('jubilee')) city = 'Hyderabad';
+    else if (locStr.toLowerCase().includes('chennai') || locStr.toLowerCase().includes('t. nagar') || locStr.toLowerCase().includes('anna nagar')) city = 'Chennai';
+    else city = 'Bangalore';
+  }
+
+  let bhk = item.bhk;
+  if (!bhk) {
+    if (typeStr.includes('1 RK')) bhk = '1 RK';
+    else if (typeStr.includes('1 BHK')) bhk = '1 BHK';
+    else if (typeStr.includes('2 BHK') || typeStr.includes('2.5 BHK')) bhk = '2 BHK';
+    else if (typeStr.includes('3 BHK')) bhk = '3 BHK';
+    else bhk = '2 BHK';
+  }
+
+  let feature = item.feature;
+  if (!feature) {
+    if (typeStr.includes('Gated')) feature = 'Gated Society';
+    else if (typeStr.includes('Fully')) feature = 'Fully Furnished';
+    else if (typeStr.includes('Private')) feature = 'Private Ensuite';
+    else feature = 'Fully Furnished';
+  }
+
+  return {
+    ...item,
+    city,
+    bhk,
+    feature
+  };
+}
+
 export default function App() {
   const [currentView, setCurrentView] = useState('home'); // 'home' | 'catalog' | 'admin'
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -58,9 +97,9 @@ export default function App() {
       const savedProps = localStorage.getItem('securestay_properties');
       const baseProps = savedProps ? JSON.parse(savedProps) : initialProperties;
 
-      return baseProps.filter((p) => !deletedSet.has(p.id));
+      return baseProps.filter((p) => !deletedSet.has(p.id)).map(normalizeProperty);
     } catch {
-      return initialProperties;
+      return initialProperties.map(normalizeProperty);
     }
   });
 
