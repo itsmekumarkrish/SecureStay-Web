@@ -38,6 +38,16 @@ export default function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Detect Windows OS (Dell, ThinkPad, HP, Lenovo) to apply scaling ONLY on Windows PCs
+  useEffect(() => {
+    const isWindows = navigator.userAgent.includes('Windows') || navigator.platform.includes('Win');
+    if (isWindows) {
+      document.documentElement.classList.add('windows-device');
+    } else {
+      document.documentElement.classList.remove('windows-device');
+    }
+  }, []);
+
   // Properties state initialized from localStorage or initialProperties
   const [propertiesList, setPropertiesList] = useState(() => {
     try {
