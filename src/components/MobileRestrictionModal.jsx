@@ -17,7 +17,7 @@ export default function MobileRestrictionModal({ onBypass }) {
 
         <h2>Desktop Screen Required</h2>
         <p className="mobile-restriction-desc">
-          To deliver the highest security and seamless property management experience, <strong>SecureStay Web</strong> is exclusively designed for desktop screens and webview windows.
+          To deliver the highest security and seamless residential property services experience, <strong>SecureStay Web</strong> is exclusively designed for desktop screens and webview windows.
         </p>
 
         {/* Info Grid */}
