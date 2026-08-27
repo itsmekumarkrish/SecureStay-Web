@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, Building2, MessageSquare, LogOut, Upload } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, Building2, MessageSquare, LogOut, Upload, Pencil, X } from 'lucide-react';
 
 export default function AdminDashboard({ 
   properties, 
-  onAddProperty, 
+  onAddProperty,
+  onEditProperty,
   onDeleteProperty, 
   onBackToHome,
   inquiries = []
@@ -14,6 +15,9 @@ export default function AdminDashboard({
 
   const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries'
   const [successMessage, setSuccessMessage] = useState('');
+
+  // Editing Property Modal State
+  const [editingProp, setEditingProp] = useState(null);
 
   // New Property Form State
   const [newProp, setNewProp] = useState({
@@ -52,13 +56,7 @@ export default function AdminDashboard({
     setNewProp((prev) => ({ ...prev, images: updatedImages.length ? updatedImages : [''] }));
   };
 
-  const handleQuickPresetImage = (index, presetUrl) => {
-    const updatedImages = [...newProp.images];
-    updatedImages[index] = presetUrl;
-    setNewProp((prev) => ({ ...prev, images: updatedImages }));
-  };
-
-  const handleFileUpload = (e) => {
+  const handleFileUpload = (e, isEditMode = false) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
@@ -71,14 +69,42 @@ export default function AdminDashboard({
     });
 
     Promise.all(filePromises).then((base64Images) => {
-      setNewProp((prev) => {
-        const existingValid = prev.images.filter((img) => img.trim() !== '');
-        return {
-          ...prev,
-          images: [...existingValid, ...base64Images]
-        };
-      });
+      if (isEditMode && editingProp) {
+        setEditingProp((prev) => {
+          const existing = prev.images || [];
+          return {
+            ...prev,
+            images: [...existing.filter(i => i.trim() !== ''), ...base64Images]
+          };
+        });
+      } else {
+        setNewProp((prev) => {
+          const existingValid = prev.images.filter((img) => img.trim() !== '');
+          return {
+            ...prev,
+            images: [...existingValid, ...base64Images]
+          };
+        });
+      }
     });
+  };
+
+  const handleSaveEditedProperty = (e) => {
+    e.preventDefault();
+    if (!editingProp || !editingProp.title.trim()) return;
+
+    const validImages = (editingProp.images || []).filter(img => img.trim() !== '');
+    const finalProp = {
+      ...editingProp,
+      images: validImages.length > 0 ? validImages : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80']
+    };
+
+    if (onEditProperty) {
+      onEditProperty(finalProp);
+    }
+    setEditingProp(null);
+    setSuccessMessage(`Property "${finalProp.title}" updated successfully!`);
+    setTimeout(() => setSuccessMessage(''), 4000);
   };
 
   const handleCreatePropertySubmit = (e) => {
@@ -449,14 +475,24 @@ export default function AdminDashboard({
                       <td><span className="text-green font-semibold">{prop.rentPrice}</span></td>
                       <td><span className="table-badge">{prop.type}</span></td>
                       <td>
-                        <button 
-                          type="button" 
-                          className="btn-danger-sm" 
-                          onClick={() => onDeleteProperty(prop.id)}
-                          title="Delete Property"
-                        >
-                          <Trash2 size={14} /> Remove
-                        </button>
+                        <div className="table-actions-cell">
+                          <button 
+                            type="button" 
+                            className="btn-edit-sm" 
+                            onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                            title="Edit Property & Photos"
+                          >
+                            <Pencil size={14} /> Edit
+                          </button>
+                          <button 
+                            type="button" 
+                            className="btn-danger-sm" 
+                            onClick={() => onDeleteProperty(prop.id)}
+                            title="Delete Property"
+                          >
+                            <Trash2 size={14} /> Remove
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -497,6 +533,159 @@ export default function AdminDashboard({
           </div>
         )}
       </div>
+
+      {/* Edit Property Modal */}
+      {editingProp && (
+        <div className="modal-overlay" onClick={() => setEditingProp(null)}>
+          <div className="modal-card legal-modal-card admin-edit-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="legal-modal-header">
+              <h3>✏️ Edit Property Listing</h3>
+              <button type="button" className="legal-modal-close" onClick={() => setEditingProp(null)}>
+                <X size={20} />
+              </button>
+            </div>
+            
+            <form onSubmit={handleSaveEditedProperty} className="admin-form">
+              <div className="form-group">
+                <label>Property Title *</label>
+                <input 
+                  type="text" 
+                  required
+                  value={editingProp.title || ''}
+                  onChange={(e) => setEditingProp({ ...editingProp, title: e.target.value })}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>City *</label>
+                  <select 
+                    value={editingProp.city || 'Bangalore'}
+                    onChange={(e) => setEditingProp({ ...editingProp, city: e.target.value })}
+                  >
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Mysuru">Mysuru</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Chennai">Chennai</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Location / Area *</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={editingProp.location || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, location: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Monthly Rent *</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={editingProp.rentPrice || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, rentPrice: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Long-Term Lease Price</label>
+                  <input 
+                    type="text" 
+                    value={editingProp.leasePrice || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, leasePrice: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Property Type / BHK *</label>
+                <input 
+                  type="text" 
+                  required
+                  value={editingProp.type || ''}
+                  onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
+                />
+              </div>
+
+              {/* Photo Upload & Replacement */}
+              <div className="form-group">
+                <label>Property Photos (Upload Files or Edit Links)</label>
+                <div className="admin-photo-upload-box">
+                  <input 
+                    type="file" 
+                    multiple 
+                    accept="image/*" 
+                    id="edit-photo-file-input"
+                    className="file-input-hidden"
+                    onChange={(e) => handleFileUpload(e, true)}
+                  />
+                  <label htmlFor="edit-photo-file-input" className="file-upload-dropzone">
+                    <Upload size={22} className="text-gold mb-1" />
+                    <span className="upload-drop-title">Click to Upload / Replace Photos</span>
+                    <span className="upload-drop-sub">Select photo files from your computer</span>
+                  </label>
+                </div>
+
+                <div className="image-urls-list mt-3">
+                  <label className="text-xs font-semibold text-muted">Current Photos List ({(editingProp.images || []).length}):</label>
+                  {(editingProp.images || []).map((imgUrl, idx) => (
+                    <div key={idx} className="image-url-row" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                      <img 
+                        src={imgUrl || '/assets/hero_stay.jpg'} 
+                        alt="preview" 
+                        style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Image URL or Base64"
+                        value={imgUrl}
+                        onChange={(e) => {
+                          const updated = [...(editingProp.images || [])];
+                          updated[idx] = e.target.value;
+                          setEditingProp({ ...editingProp, images: updated });
+                        }}
+                        style={{ flex: 1, padding: '6px 10px', fontSize: '0.82rem', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                      />
+                      {(editingProp.images || []).length > 1 && (
+                        <button 
+                          type="button" 
+                          className="btn-danger-sm"
+                          onClick={() => {
+                            const updated = editingProp.images.filter((_, i) => i !== idx);
+                            setEditingProp({ ...editingProp, images: updated });
+                          }}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button 
+                    type="button" 
+                    className="btn-secondary"
+                    style={{ padding: '6px 12px', fontSize: '0.82rem' }}
+                    onClick={() => setEditingProp({ ...editingProp, images: [...(editingProp.images || []), ''] })}
+                  >
+                    <Plus size={14} /> Add Image Link
+                  </button>
+                </div>
+              </div>
+
+              <div className="admin-modal-actions mt-4" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '20px' }}>
+                <button type="button" className="btn-secondary" onClick={() => setEditingProp(null)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

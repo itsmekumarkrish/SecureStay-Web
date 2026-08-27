@@ -3658,15 +3658,47 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px !important;
   object-fit: cover !important;
   display: block !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .table-badge {
   background: #f1f5fa;
+  border: 1px solid #e2e8f0;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.78rem;
   font-weight: 600;
   color: #0c2340;
+  white-space: nowrap;
+}
+
+.table-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.btn-edit-sm {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-sm:hover {
+  background: #dbeafe;
+  color: #1e40af;
+  border-color: #93c5fd;
+  transform: translateY(-1px);
 }
 
 .btn-danger-sm {
@@ -3680,7 +3712,22 @@ input:focus, select:focus, textarea:focus {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-danger-sm:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+  transform: translateY(-1px);
+}
+
+.admin-edit-modal {
+  max-width: 680px !important;
+  width: 92% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
 }
 
 .admin-inquiries-grid {

@@ -114,6 +114,12 @@ export default function App() {
     setPropertiesList((prev) => [newProp, ...prev]);
   };
 
+  const handleEditProperty = (updatedProp) => {
+    setPropertiesList((prev) =>
+      prev.map((p) => (p.id === updatedProp.id ? updatedProp : p))
+    );
+  };
+
   const handleDeleteProperty = (id) => {
     if (window.confirm('Are you sure you want to remove this property listing from SecureStay?')) {
       setDeletedIds((prev) => [...prev, id]);
@@ -197,6 +203,7 @@ export default function App() {
         <AdminDashboard 
           properties={propertiesList}
           onAddProperty={handleAddProperty}
+          onEditProperty={handleEditProperty}
           onDeleteProperty={handleDeleteProperty}
           onBackToHome={() => setCurrentView('home')}
           inquiries={inquiriesList}
