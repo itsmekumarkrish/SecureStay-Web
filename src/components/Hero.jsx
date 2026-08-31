@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="container">
         <div className="hero-text text-center">
           <div className="hero-tag">
-            <span className="tag-rating">★ 5/5 Rating</span>
+            <span className="tag-rating">★ 5/15 Rating</span>
             <span className="tag-divider-dot">•</span>
             <span>Managed with Trust • Delivered with Care</span>
           </div>
