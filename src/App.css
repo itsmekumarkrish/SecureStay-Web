@@ -2354,12 +2354,9 @@ input:focus, select:focus, textarea:focus {
 
   /* Hero Section Mobile */
   .hero {
-    min-height: calc(100dvh - var(--header-height, 72px));
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 20px;
-    padding-bottom: clamp(48px, 8vh, 76px);
+    min-height: auto;
+    display: block;
+    padding: 20px 0 36px 0;
     box-sizing: border-box;
     overflow-x: hidden;
     margin-bottom: 0;
@@ -2410,18 +2407,10 @@ input:focus, select:focus, textarea:focus {
   .hero-subtitle {
     font-size: 0.92rem;
     line-height: 1.55;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     padding: 0;
     color: var(--text-muted);
     text-align: left;
-  }
-
-  /* Mobile-Specific Custom Design Slot Gap (Clean Spacing) */
-  .hero-custom-design-slot {
-    width: 100%;
-    margin-top: 24px;
-    margin-bottom: 48px;
-    min-height: 60px;
   }
 
   /* Horizontal Side-by-Side Action Buttons on Mobile */
