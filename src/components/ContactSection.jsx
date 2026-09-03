@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown, X } from 'lucide-react';
+import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown, X, RotateCcw, RotateCw, Settings } from 'lucide-react';
 
 export default function ContactSection({ formData, setFormData, formSubmitted, handleSubmit }) {
   const videoRef = useRef(null);
@@ -10,6 +10,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
   const [duration, setDuration] = useState('0:00');
   const [showControls, setShowControls] = useState(false);
   const [isUserTypeSheetOpen, setIsUserTypeSheetOpen] = useState(false);
+  const [showSettingsToast, setShowSettingsToast] = useState(false);
 
   const userTypeLabels = {
     owner: 'Property Owner / Landlord',
@@ -21,7 +22,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
     if (isNaN(timeInSeconds) || !timeInSeconds) return '0:00';
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   const handleTimeUpdate = () => {
@@ -46,6 +47,26 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
     const seekTime = (parseFloat(e.target.value) / 100) * videoRef.current.duration;
     videoRef.current.currentTime = seekTime;
     setVideoProgress(parseFloat(e.target.value));
+  };
+
+  const handleSkipBack = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - 10);
+    }
+  };
+
+  const handleSkipForward = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.currentTime = Math.min(videoRef.current.duration || 0, videoRef.current.currentTime + 10);
+    }
+  };
+
+  const toggleSettings = (e) => {
+    e.stopPropagation();
+    setShowSettingsToast(true);
+    setTimeout(() => setShowSettingsToast(false), 2500);
   };
 
   const toggleFullscreen = (e) => {
@@ -86,7 +107,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
             <h2>Contact SecureStay</h2>
             <p>Have questions or want to partner with us? Leave your message and our team will get back to you shortly.</p>
             
-            {/* Left-Side Video Showcase */}
+            {/* Interactive Custom Video Player Showcase */}
             <div 
               className={`contact-video-box ${!isPlaying ? 'is-paused' : ''}`}
               onMouseEnter={() => setShowControls(true)}
@@ -108,7 +129,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                 onClick={togglePlay}
               />
 
-              {/* Sleek Center Play/Pause Button */}
+              {/* Large 64px Floating Center Play/Pause Button */}
               <button 
                 type="button" 
                 className={`video-center-play-btn ${!isPlaying || showControls ? 'visible' : ''}`}
@@ -120,9 +141,9 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
               >
                 <span className="play-pulse-ring"></span>
                 {isPlaying ? (
-                  <Pause size={22} />
+                  <Pause size={28} />
                 ) : (
-                  <Play size={22} className="play-icon-offset" />
+                  <Play size={28} className="play-icon-offset" />
                 )}
               </button>
 
@@ -133,8 +154,16 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                 </div>
               </div>
 
-              {/* Professional Bottom Control Bar & Progress Slider */}
+              {/* Settings Toast Overlay */}
+              {showSettingsToast && (
+                <div className="video-settings-toast">
+                  1080p Full HD • 1.0x Speed
+                </div>
+              )}
+
+              {/* Bottom Custom Control Bar Overlay */}
               <div className={`video-controls-bar ${!isPlaying || showControls ? 'visible' : ''}`} onClick={(e) => e.stopPropagation()}>
+                {/* Progress Timeline Bar with Bright Blue Active Track & Marker */}
                 <div className="video-progress-container">
                   <input 
                     type="range" 
@@ -146,7 +175,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                     onChange={handleSeek}
                     aria-label="Video Progress Scrubber"
                     style={{
-                      background: `linear-gradient(to right, #c59b27 ${videoProgress}%, rgba(255, 255, 255, 0.3) ${videoProgress}%)`
+                      background: `linear-gradient(to right, #3b82f6 ${videoProgress}%, rgba(255, 255, 255, 0.3) ${videoProgress}%)`
                     }}
                   />
                 </div>
@@ -166,11 +195,21 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                     <button 
                       type="button" 
                       className="v-control-btn"
-                      onClick={toggleMute}
-                      aria-label={isMuted ? "Unmute" : "Mute"}
-                      title={isMuted ? "Unmute Audio" : "Mute Audio"}
+                      onClick={handleSkipBack}
+                      aria-label="Skip 10s Backward"
+                      title="Skip -10s"
                     >
-                      {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                      <RotateCcw size={14} />
+                    </button>
+
+                    <button 
+                      type="button" 
+                      className="v-control-btn"
+                      onClick={handleSkipForward}
+                      aria-label="Skip 10s Forward"
+                      title="Skip +10s"
+                    >
+                      <RotateCw size={14} />
                     </button>
 
                     <span className="video-time-display">
@@ -179,6 +218,26 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                   </div>
 
                   <div className="controls-right">
+                    <button 
+                      type="button" 
+                      className="v-control-btn"
+                      onClick={toggleMute}
+                      aria-label={isMuted ? "Unmute" : "Mute"}
+                      title={isMuted ? "Unmute Audio" : "Mute Audio"}
+                    >
+                      {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                    </button>
+
+                    <button 
+                      type="button" 
+                      className="v-control-btn"
+                      onClick={toggleSettings}
+                      aria-label="Settings"
+                      title="Quality & Speed Settings"
+                    >
+                      <Settings size={15} />
+                    </button>
+
                     <button 
                       type="button" 
                       className="v-control-btn"
