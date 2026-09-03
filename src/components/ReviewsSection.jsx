@@ -1,31 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Star, MapPin } from 'lucide-react';
 
 export default function ReviewsSection({ reviews }) {
-  const wrapperRef = useRef(null);
-  const [isSwiping, setIsSwiping] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  const handleTouchStart = (e) => {
-    setIsSwiping(true);
-    if (wrapperRef.current) {
-      setStartX(e.touches[0].pageX - wrapperRef.current.offsetLeft);
-      setScrollLeft(wrapperRef.current.scrollLeft);
-    }
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isSwiping || !wrapperRef.current) return;
-    const x = e.touches[0].pageX - wrapperRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    wrapperRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsSwiping(false);
-  };
-
   return (
     <section id="reviews" className="section reviews-marquee-section">
       <div className="container">
@@ -36,44 +12,11 @@ export default function ReviewsSection({ reviews }) {
         </div>
       </div>
 
-      {/* Auto-sliding Reviews Marquee Carousel with Touch Dragging */}
-      <div 
-        ref={wrapperRef}
-        className={`reviews-marquee-wrapper ${isSwiping ? 'is-swiping' : ''}`}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
+      {/* Reviews Carousel (Auto-marquee on Desktop, Native Touch Slider on Mobile) */}
+      <div className="reviews-marquee-wrapper">
         <div className="reviews-marquee-track">
-          {/* First Set of Reviews */}
           {reviews.map((rev) => (
-            <div key={`rev-a-${rev.id}`} className="review-card marquee-card">
-              <div className="review-card-top">
-                <div className="review-stars">
-                  {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} size={15} className="star-filled" />
-                  ))}
-                </div>
-                <span className="review-tag-badge">{rev.tag}</span>
-              </div>
-
-              <div className="review-body">
-                <p className="review-text">{rev.text}</p>
-              </div>
-
-              <div className="review-author">
-                <div className="review-author-info">
-                  <h4 className="author-name">{rev.name}</h4>
-                  <p className="author-role">{rev.role}</p>
-                  <p className="author-loc"><MapPin size={12} /> {rev.location}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Second Set of Reviews (Seamless Loop) */}
-          {reviews.map((rev) => (
-            <div key={`rev-b-${rev.id}`} className="review-card marquee-card">
+            <div key={`rev-${rev.id}`} className="review-card marquee-card">
               <div className="review-card-top">
                 <div className="review-stars">
                   {[...Array(rev.rating)].map((_, i) => (
