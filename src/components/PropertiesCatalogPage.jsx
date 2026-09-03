@@ -13,11 +13,12 @@ export default function PropertiesCatalogPage({
   const [selectedBHK, setSelectedBHK] = useState('All');
   const [selectedPriceRange, setSelectedPriceRange] = useState('All');
   const [selectedFeature, setSelectedFeature] = useState('All');
+  const [selectedPurpose, setSelectedPurpose] = useState('All');
   const [sortBy, setSortBy] = useState('default');
 
   const cities = ['All', 'Bangalore', 'Mysuru', 'Hyderabad', 'Chennai'];
 
-  // Parse rent price string like "₹22,000 / month" → 22000
+  // Parse rent/sale price string like "₹22,000 / month" → 22000
   const parsePrice = (priceStr) => {
     if (!priceStr) return 0;
     return parseInt(priceStr.replace(/[^0-9]/g, ''), 10) || 0;
@@ -43,8 +44,8 @@ export default function PropertiesCatalogPage({
       ? true
       : (prop.bhk || '').toLowerCase() === selectedBHK.toLowerCase();
 
-    // 4. Price Range — extracted from rentPrice string
-    const price = parsePrice(prop.rentPrice);
+    // 4. Price Range — extracted from rentPrice or salePrice string
+    const price = parsePrice(prop.rentPrice || prop.salePrice);
     let priceMatch = true;
     if (selectedPriceRange === 'under-15k')    priceMatch = price < 15000;
     else if (selectedPriceRange === '15k-25k') priceMatch = price >= 15000 && price <= 25000;
@@ -56,17 +57,23 @@ export default function PropertiesCatalogPage({
       ? true
       : (prop.feature || '').toLowerCase() === selectedFeature.toLowerCase();
 
-    return cityMatch && searchMatch && bhkMatch && priceMatch && featureMatch;
+    // 6. Purpose — Rent vs Lease vs Sale
+    let purposeMatch = true;
+    if (selectedPurpose === 'rent') purposeMatch = prop.purpose === 'rent' || prop.purpose === 'rent_sale' || !!prop.rentPrice;
+    else if (selectedPurpose === 'lease') purposeMatch = prop.purpose === 'lease' || !!prop.leasePrice;
+    else if (selectedPurpose === 'sale') purposeMatch = prop.purpose === 'sale' || prop.purpose === 'rent_sale' || !!prop.salePrice;
+
+    return cityMatch && searchMatch && bhkMatch && priceMatch && featureMatch && purposeMatch;
   });
 
   // Sorting
   const sortedProperties = [...filteredProperties].sort((a, b) => {
-    if (sortBy === 'price-low')  return parsePrice(a.rentPrice) - parsePrice(b.rentPrice);
-    if (sortBy === 'price-high') return parsePrice(b.rentPrice) - parsePrice(a.rentPrice);
+    if (sortBy === 'price-low')  return parsePrice(a.rentPrice || a.salePrice) - parsePrice(b.rentPrice || b.salePrice);
+    if (sortBy === 'price-high') return parsePrice(b.rentPrice || b.salePrice) - parsePrice(a.rentPrice || a.salePrice);
     return 0;
   });
 
-  const hasActiveFilters = selectedCity !== 'All' || searchQuery !== '' || selectedBHK !== 'All' || selectedPriceRange !== 'All' || selectedFeature !== 'All' || sortBy !== 'default';
+  const hasActiveFilters = selectedCity !== 'All' || searchQuery !== '' || selectedBHK !== 'All' || selectedPriceRange !== 'All' || selectedFeature !== 'All' || selectedPurpose !== 'All' || sortBy !== 'default';
 
   const resetAllFilters = () => {
     setSelectedCity('All');
@@ -74,6 +81,7 @@ export default function PropertiesCatalogPage({
     setSelectedBHK('All');
     setSelectedPriceRange('All');
     setSelectedFeature('All');
+    setSelectedPurpose('All');
     setSortBy('default');
   };
 
@@ -137,6 +145,16 @@ export default function PropertiesCatalogPage({
           {/* Four Filter Dropdowns */}
           <div className="catalog-dropdowns-row">
             <div className="filter-dropdown-item">
+              <label><Building2 size={13} /> Listing Purpose</label>
+              <select value={selectedPurpose} onChange={(e) => setSelectedPurpose(e.target.value)}>
+                <option value="All">All Purposes (Rent &amp; Sale)</option>
+                <option value="rent">For Monthly Rent</option>
+                <option value="lease">For Long-Term Lease</option>
+                <option value="sale">For Outright Sale</option>
+              </select>
+            </div>
+
+            <div className="filter-dropdown-item">
               <label><SlidersHorizontal size={13} /> BHK &amp; Configuration</label>
               <select value={selectedBHK} onChange={(e) => setSelectedBHK(e.target.value)}>
                 <option value="All">All Configurations</option>
@@ -173,8 +191,8 @@ export default function PropertiesCatalogPage({
               <label><ArrowUpDown size={13} /> Sort By</label>
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                 <option value="default">Featured First</option>
-                <option value="price-low">Rent: Low → High</option>
-                <option value="price-high">Rent: High → Low</option>
+                <option value="price-low">Price: Low → High</option>
+                <option value="price-high">Price: High → Low</option>
               </select>
             </div>
           </div>

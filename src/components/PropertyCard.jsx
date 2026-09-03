@@ -44,6 +44,7 @@ export default function PropertyCard({ property, onInquire }) {
 
   const isOccupied = property.availability === 'Occupied';
   const isFeatured = !!property.isFeatured;
+  const isForSale = property.purpose === 'sale' || property.purpose === 'rent_sale' || !!property.salePrice;
 
   return (
     <div className="property-card">
@@ -69,10 +70,15 @@ export default function PropertyCard({ property, onInquire }) {
         </div>
 
         {/* Status Badges Overlay */}
-        <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 10, display: 'flex', gap: '6px' }}>
+        <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 10, display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           {isFeatured && (
             <span style={{ background: '#ca8a04', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', boxShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
               ★ Featured
+            </span>
+          )}
+          {isForSale && (
+            <span style={{ background: '#2563eb', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', boxShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
+              🏷️ For Sale
             </span>
           )}
           {isOccupied && (
@@ -135,8 +141,10 @@ export default function PropertyCard({ property, onInquire }) {
         </p>
         <div className="property-bottom">
           <div className="property-pricing">
-            <span className="property-price">{property.rentPrice}</span>
-            <span className="property-lease-tag"> • Lease: {property.leasePrice}</span>
+            {property.rentPrice && <span className="property-price">{property.rentPrice}</span>}
+            {!property.rentPrice && property.salePrice && <span className="property-price">{property.salePrice}</span>}
+            {property.leasePrice && <span className="property-lease-tag"> • Lease: {property.leasePrice}</span>}
+            {property.salePrice && property.rentPrice && <span className="property-lease-tag" style={{ color: '#2563eb', fontWeight: 700 }}> • Sale: {property.salePrice}</span>}
           </div>
           <button 
             type="button" 

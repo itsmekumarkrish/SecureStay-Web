@@ -82,16 +82,31 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
               <MapPin size={16} className="text-green" /> {property.location}
             </p>
 
-            <div className="detail-pricing-box">
-              <div className="price-item">
-                <span className="price-label">Monthly Rent</span>
-                <span className="price-value-highlight">{property.rentPrice}</span>
-              </div>
-              <div className="price-divider"></div>
-              <div className="price-item">
-                <span className="price-label">Long-Term Lease</span>
-                <span className="price-value">{property.leasePrice}</span>
-              </div>
+            <div className="detail-pricing-box" style={{ flexWrap: 'wrap', gap: '12px' }}>
+              {property.rentPrice && (
+                <div className="price-item">
+                  <span className="price-label">Monthly Rent</span>
+                  <span className="price-value-highlight">{property.rentPrice}</span>
+                </div>
+              )}
+              {property.leasePrice && (
+                <>
+                  {property.rentPrice && <div className="price-divider"></div>}
+                  <div className="price-item">
+                    <span className="price-label">Long-Term Lease</span>
+                    <span className="price-value">{property.leasePrice}</span>
+                  </div>
+                </>
+              )}
+              {property.salePrice && (
+                <>
+                  {(property.rentPrice || property.leasePrice) && <div className="price-divider"></div>}
+                  <div className="price-item">
+                    <span className="price-label">Outright Sale</span>
+                    <span className="price-value-highlight" style={{ color: '#2563eb' }}>{property.salePrice}</span>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="detail-highlights">

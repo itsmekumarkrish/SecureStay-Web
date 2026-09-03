@@ -43,8 +43,10 @@ export default function AdminDashboard({
     title: '',
     city: 'Bangalore',
     area: '',
+    purpose: 'rent',
     rentPrice: '',
     leasePrice: '',
+    salePrice: '',
     type: 'Fully Furnished • 2 BHK',
     images: [''],
     amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping'
@@ -135,6 +137,10 @@ export default function AdminDashboard({
       city: editingProp.city || 'Bangalore',
       bhk: bhk,
       feature: feature,
+      purpose: editingProp.purpose || 'rent',
+      rentPrice: editingProp.rentPrice ? (editingProp.rentPrice.includes('₹') ? editingProp.rentPrice : `₹${editingProp.rentPrice} / month`) : '',
+      leasePrice: editingProp.leasePrice ? (editingProp.leasePrice.includes('₹') ? editingProp.leasePrice : `₹${editingProp.leasePrice}`) : '',
+      salePrice: editingProp.salePrice ? (editingProp.salePrice.includes('₹') ? editingProp.salePrice : `₹${editingProp.salePrice}`) : '',
       images: validImages.length > 0 ? validImages : ['/assets/hero_stay.jpg']
     };
 
@@ -169,15 +175,29 @@ export default function AdminDashboard({
     const feature = typeStr.includes('Gated') ? 'Gated Society' 
       : typeStr.includes('Private') ? 'Private Ensuite' : 'Fully Furnished';
 
+    const rentFormatted = newProp.rentPrice 
+      ? `₹${newProp.rentPrice.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} / month` 
+      : '';
+
+    const leaseFormatted = newProp.leasePrice 
+      ? (newProp.leasePrice.includes('₹') ? newProp.leasePrice : `₹${newProp.leasePrice}`) 
+      : '';
+
+    const saleFormatted = newProp.salePrice 
+      ? (newProp.salePrice.includes('₹') ? newProp.salePrice : `₹${newProp.salePrice}`) 
+      : '';
+
     const propertyPayload = {
       id: Date.now(),
       title: newProp.title,
       city: newProp.city || 'Bangalore',
       bhk: bhk,
       feature: feature,
+      purpose: newProp.purpose || 'rent',
       location: `${newProp.area}, ${newProp.city === 'Bangalore' ? 'Bengaluru' : newProp.city}`,
-      rentPrice: `₹${newProp.rentPrice.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} / month`,
-      leasePrice: `₹${newProp.leasePrice} (2-3 Yrs)`,
+      rentPrice: rentFormatted,
+      leasePrice: leaseFormatted,
+      salePrice: saleFormatted,
       type: newProp.type,
       images: finalImages,
       amenities: amenitiesList.length > 0 ? amenitiesList : [
@@ -194,8 +214,10 @@ export default function AdminDashboard({
       title: '',
       city: 'Bangalore',
       area: '',
+      purpose: 'rent',
       rentPrice: '',
       leasePrice: '',
+      salePrice: '',
       type: 'Fully Furnished • 2 BHK',
       images: [''],
       amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping'
@@ -458,7 +480,7 @@ export default function AdminDashboard({
               </div>
 
               <div className="form-row">
-                <div className="form-group">
+                <div className="form-group flex-1">
                   <label>Neighborhood / Area Address *</label>
                   <input 
                     type="text" 
@@ -468,7 +490,7 @@ export default function AdminDashboard({
                     onChange={(e) => setNewProp({ ...newProp, area: e.target.value })}
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group flex-1">
                   <label>Property Type / BHK *</label>
                   <input 
                     type="text" 
@@ -478,35 +500,54 @@ export default function AdminDashboard({
                     onChange={(e) => setNewProp({ ...newProp, type: e.target.value })}
                   />
                 </div>
+                <div className="form-group flex-1">
+                  <label>Listing Purpose *</label>
+                  <select
+                    value={newProp.purpose}
+                    onChange={(e) => setNewProp({ ...newProp, purpose: e.target.value })}
+                  >
+                    <option value="rent">For Monthly Rent</option>
+                    <option value="lease">For Long-Term Lease</option>
+                    <option value="sale">For Outright Sale</option>
+                    <option value="rent_sale">Rent &amp; Sale Available</option>
+                  </select>
+                </div>
               </div>
 
               <div className="form-row">
                 <div className="form-group">
-                  <label>Monthly Rent Amount (₹) *</label>
+                  <label>Monthly Rent (₹)</label>
                   <input 
                     type="text" 
-                    required 
-                    placeholder="e.g. 28000"
+                    placeholder="e.g. 28000 (Optional if Sale only)"
                     value={newProp.rentPrice}
                     onChange={(e) => setNewProp({ ...newProp, rentPrice: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Long-Term Lease Deposit (₹) *</label>
+                  <label>Long-Term Lease (₹)</label>
                   <input 
                     type="text" 
-                    required 
-                    placeholder="e.g. 15L"
+                    placeholder="e.g. 15L (Optional)"
                     value={newProp.leasePrice}
                     onChange={(e) => setNewProp({ ...newProp, leasePrice: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Outright Sale Price (₹)</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 1.25 Cr (For Sale)"
+                    value={newProp.salePrice}
+                    onChange={(e) => setNewProp({ ...newProp, salePrice: e.target.value })}
                   />
                 </div>
               </div>
 
               {/* Photo Upload / Image URLs Section */}
-              <div className="form-group">
-                <label className="flex-between">
-                  <span>Property Photos (Upload Files or Paste Image URLs)</span>
+              <div className="form-group mt-3">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <label style={{ margin: 0 }}>Property Photos (Upload Files or Paste Image URLs)</label>
                   <button 
                     type="button" 
                     className="btn-link-sm" 
@@ -514,7 +555,7 @@ export default function AdminDashboard({
                   >
                     + Add URL Field
                   </button>
-                </label>
+                </div>
 
                 {/* Multi File Picker Drop Box */}
                 <div className="multi-file-upload-box mb-3">
@@ -879,32 +920,54 @@ export default function AdminDashboard({
 
               <div className="form-row">
                 <div className="form-group">
-                  <label>Monthly Rent *</label>
+                  <label>Monthly Rent</label>
                   <input 
                     type="text" 
-                    required
                     value={editingProp.rentPrice || ''}
                     onChange={(e) => setEditingProp({ ...editingProp, rentPrice: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Long-Term Lease Price</label>
+                  <label>Long-Term Lease</label>
                   <input 
                     type="text" 
                     value={editingProp.leasePrice || ''}
                     onChange={(e) => setEditingProp({ ...editingProp, leasePrice: e.target.value })}
                   />
                 </div>
+                <div className="form-group">
+                  <label>Outright Sale Price (₹)</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 1.25 Cr"
+                    value={editingProp.salePrice || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, salePrice: e.target.value })}
+                  />
+                </div>
               </div>
 
-              <div className="form-group">
-                <label>Property Type / BHK *</label>
-                <input 
-                  type="text" 
-                  required
-                  value={editingProp.type || ''}
-                  onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Property Type / BHK *</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={editingProp.type || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Listing Purpose *</label>
+                  <select
+                    value={editingProp.purpose || 'rent'}
+                    onChange={(e) => setEditingProp({ ...editingProp, purpose: e.target.value })}
+                  >
+                    <option value="rent">For Monthly Rent</option>
+                    <option value="lease">For Long-Term Lease</option>
+                    <option value="sale">For Outright Sale</option>
+                    <option value="rent_sale">Rent &amp; Sale Available</option>
+                  </select>
+                </div>
               </div>
 
               {/* Photo Upload & Replacement */}
