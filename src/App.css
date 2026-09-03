@@ -882,10 +882,16 @@ a {
   box-shadow: 0 12px 26px rgba(12, 35, 64, 0.10);
 }
 
-.service-box h3 {
+.services-section-title {
+  color: #0c2340 !important;
+  font-weight: 800;
+}
+
+.service-card-title {
   font-size: 1.35rem;
   margin-bottom: 20px;
-  color: #0c2340;
+  color: #0c2340 !important;
+  font-weight: 700;
 }
 
 .service-list {
@@ -899,13 +905,30 @@ a {
 .service-list li {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.95rem;
   color: var(--text-dark);
 }
 
+.service-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(12, 35, 64, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.service-icon-svg {
+  color: #0c2340;
+}
+
 .service-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--primary-color);
   font-weight: 600;
   font-size: 0.95rem;
@@ -2575,8 +2598,97 @@ input:focus, select:focus, textarea:focus {
     gap: 14px;
   }
 
+  /* Mobile App-Style Redesign for Our Services */
+  .services-section-title {
+    color: #0c2340 !important;
+    font-weight: 800;
+  }
+
   .services-grid {
-    gap: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .service-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 16px rgba(12, 35, 64, 0.04);
+  }
+
+  .service-card-title {
+    font-size: 1.15rem;
+    color: #0c2340 !important;
+    font-weight: 800;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .service-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.90rem;
+    color: #1e293b;
+    line-height: 1.45;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .service-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .service-icon-wrapper {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(12, 35, 64, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .service-icon-svg {
+    color: #0c2340;
+  }
+
+  .btn-service-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: #0c2340;
+    color: #ffffff !important;
+    border-radius: 50px;
+    padding: 13px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(12, 35, 64, 0.18);
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+  }
+
+  .btn-service-pill:active,
+  .btn-service-pill:hover {
+    background: #08172c;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(12, 35, 64, 0.28);
   }
 
   .properties-grid {
