@@ -4818,6 +4818,16 @@ input:focus, select:focus, textarea:focus {
   transition: all 0.3s ease;
 }
 
+.admin-edit-modal-saas {
+  max-width: 860px !important;
+  width: 92% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  border-radius: 16px !important;
+  padding: 28px !important;
+  box-shadow: 0 20px 40px rgba(7, 21, 41, 0.3) !important;
+}
+
 .saas-form-card:hover {
   box-shadow: 0 8px 24px rgba(12, 35, 64, 0.06);
   border-color: #cbd5e1;

@@ -91,6 +91,41 @@ export default function AdminDashboard({
     }));
   };
 
+  const toggleEditPurpose = (purposeKey) => {
+    if (!editingProp) return;
+    const current = editingProp.purposes || [editingProp.purpose || 'rent'];
+    let updated;
+    if (current.includes(purposeKey)) {
+      if (current.length === 1) return;
+      updated = current.filter(k => k !== purposeKey);
+    } else {
+      updated = [...current, purposeKey];
+    }
+    setEditingProp({ ...editingProp, purposes: updated });
+  };
+
+  const handleAddEditCustomField = () => {
+    if (!editingProp) return;
+    const current = editingProp.customFields || [];
+    setEditingProp({
+      ...editingProp,
+      customFields: [...current, { label: '', value: '' }]
+    });
+  };
+
+  const handleEditCustomFieldChange = (idx, field, val) => {
+    if (!editingProp) return;
+    const current = [...(editingProp.customFields || [])];
+    current[idx] = { ...current[idx], [field]: val };
+    setEditingProp({ ...editingProp, customFields: current });
+  };
+
+  const handleRemoveEditCustomField = (idx) => {
+    if (!editingProp) return;
+    const current = (editingProp.customFields || []).filter((_, i) => i !== idx);
+    setEditingProp({ ...editingProp, customFields: current });
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (loginForm.username === 'admin' && loginForm.password === 'securestay123') {
@@ -171,15 +206,38 @@ export default function AdminDashboard({
     const feature = typeStr.includes('Gated') ? 'Gated Society' 
       : typeStr.includes('Private') ? 'Private Ensuite' : 'Fully Furnished';
 
+    const selectedPurposes = editingProp.purposes || [editingProp.purpose || 'rent'];
+    const purposeNames = selectedPurposes.map((p) => {
+      if (p === 'rent') return 'Monthly Rent';
+      if (p === 'lease') return 'Long-Term Lease';
+      if (p === 'sale') return 'Outright Sale';
+      if (p === 'custom') return editingProp.customPurpose || 'Custom Purpose';
+      return p;
+    });
+
+    const effectiveCity = editingProp.city === 'Other' && editingProp.customCity
+      ? editingProp.customCity
+      : editingProp.city || 'Bangalore';
+
+    const validCustomFields = (editingProp.customFields || []).filter(
+      (f) => f.label && f.label.trim() !== '' && f.value && f.value.trim() !== ''
+    );
+
     const finalProp = {
       ...editingProp,
-      city: editingProp.city || 'Bangalore',
+      city: effectiveCity,
+      customCity: editingProp.customCity || '',
+      location: editingProp.location || editingProp.area || 'City Center',
+      area: editingProp.area || editingProp.location || 'City Center',
       bhk: bhk,
       feature: feature,
-      purpose: editingProp.purpose || 'rent',
+      purposes: selectedPurposes,
+      purposeText: purposeNames.join(' • '),
+      purpose: selectedPurposes.includes('rent') ? 'rent' : selectedPurposes[0],
       rentPrice: editingProp.rentPrice ? (editingProp.rentPrice.includes('₹') ? editingProp.rentPrice : `₹${editingProp.rentPrice} / month`) : '',
       leasePrice: editingProp.leasePrice ? (editingProp.leasePrice.includes('₹') ? editingProp.leasePrice : `₹${editingProp.leasePrice}`) : '',
       salePrice: editingProp.salePrice ? (editingProp.salePrice.includes('₹') ? editingProp.salePrice : `₹${editingProp.salePrice}`) : '',
+      customFields: validCustomFields,
       images: validImages.length > 0 ? validImages : ['/assets/hero_stay.jpg']
     };
 
@@ -1132,180 +1190,347 @@ export default function AdminDashboard({
       {/* Edit Property Modal */}
       {editingProp && (
         <div className="legal-modal-backdrop" onClick={() => setEditingProp(null)}>
-          <div className="legal-modal-card admin-edit-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="legal-modal-card admin-edit-modal-saas" onClick={(e) => e.stopPropagation()}>
             <div className="legal-modal-header">
-              <h3>✏️ Edit Property Listing</h3>
+              <h3>Edit Property Listing</h3>
               <button type="button" className="legal-modal-close" onClick={() => setEditingProp(null)}>
                 <X size={20} />
               </button>
             </div>
             
-            <form onSubmit={handleSaveEditedProperty} className="admin-form">
-              <div className="form-row">
-                <div className="form-group flex-2">
-                  <label>Property Title *</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={editingProp.title || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, title: e.target.value })}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label>Property ID Number</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. SS-MYS-02"
-                    value={editingProp.propertyId || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, propertyId: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group flex-1">
-                  <label>City Location *</label>
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="e.g. Bangalore, Mysuru, Pune, Hyderabad"
-                    value={editingProp.city || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, city: e.target.value })}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label>Location / Area *</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={editingProp.location || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, location: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Monthly Rent</label>
-                  <input 
-                    type="text" 
-                    value={editingProp.rentPrice || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, rentPrice: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Long-Term Lease</label>
-                  <input 
-                    type="text" 
-                    value={editingProp.leasePrice || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, leasePrice: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Outright Sale Price (₹)</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 1.25 Cr"
-                    value={editingProp.salePrice || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, salePrice: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Property Type / BHK *</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={editingProp.type || ''}
-                    onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Listing Purpose *</label>
-                  <select
-                    value={editingProp.purpose || 'rent'}
-                    onChange={(e) => setEditingProp({ ...editingProp, purpose: e.target.value })}
-                  >
-                    <option value="rent">For Monthly Rent</option>
-                    <option value="lease">For Long-Term Lease</option>
-                    <option value="sale">For Outright Sale</option>
-                    <option value="rent_sale">Rent &amp; Sale Available</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Photo Upload & Replacement */}
-              <div className="form-group">
-                <label>Property Photos (Upload Files or Edit Links)</label>
-                <div className="admin-photo-upload-box mb-2">
-                  <input 
-                    type="file" 
-                    multiple 
-                    accept="image/*" 
-                    id="edit-photo-file-input"
-                    className="file-input-hidden"
-                    onChange={(e) => handleFileUpload(e, true)}
-                    style={{ display: 'none' }}
-                  />
-                  <label htmlFor="edit-photo-file-input" className="file-upload-dropzone btn-upload-multiple">
-                    <Upload size={18} />
-                    <span>Upload / Add Photos</span>
-                  </label>
+            <form onSubmit={handleSaveEditedProperty} className="add-property-form-saas mt-3">
+              {/* Section 1: Basic Details & Location */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">1</div>
+                  <div>
+                    <h4 className="saas-card-title">Basic Details &amp; Location</h4>
+                    <p className="saas-card-subtitle">Edit building title, tracking ID, target city, and area address.</p>
+                  </div>
                 </div>
 
-                <div className="image-urls-list mt-3">
-                  <label className="text-xs font-semibold text-muted">Current Photos List ({(editingProp.images || []).length}):</label>
-                  {(editingProp.images || []).map((imgUrl, idx) => (
-                    <div key={idx} className="image-url-row" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                      <img 
-                        src={imgUrl || '/assets/hero_stay.jpg'} 
-                        alt="preview" 
-                        style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-                      />
+                <div className="saas-card-body">
+                  <div className="saas-grid-3fr-1fr">
+                    <div className="saas-field">
+                      <label className="saas-label">Property Title / Building Name *</label>
                       <input 
                         type="text" 
-                        placeholder="Image URL or Base64"
-                        value={imgUrl}
-                        onChange={(e) => {
-                          const updated = [...(editingProp.images || [])];
-                          updated[idx] = e.target.value;
-                          setEditingProp({ ...editingProp, images: updated });
-                        }}
-                        style={{ flex: 1, padding: '6px 10px', fontSize: '0.82rem', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                        required
+                        className="saas-input"
+                        value={editingProp.title || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, title: e.target.value })}
                       />
-                      {(editingProp.images || []).length > 1 && (
-                        <button 
-                          type="button" 
-                          className="btn-danger-sm"
-                          onClick={() => {
-                            const updated = editingProp.images.filter((_, i) => i !== idx);
-                            setEditingProp({ ...editingProp, images: updated });
-                          }}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      )}
                     </div>
-                  ))}
-                  <button 
-                    type="button" 
-                    className="btn-secondary"
-                    style={{ padding: '6px 12px', fontSize: '0.82rem' }}
-                    onClick={() => setEditingProp({ ...editingProp, images: [...(editingProp.images || []), ''] })}
-                  >
-                    <Plus size={14} /> Add Image Link
-                  </button>
+                    <div className="saas-field">
+                      <label className="saas-label">Property ID Number</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. SS-MYS-02"
+                        value={editingProp.propertyId || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, propertyId: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="saas-grid-3 mt-3">
+                    <div className="saas-field">
+                      <label className="saas-label">City Location *</label>
+                      <select 
+                        className="saas-input saas-select"
+                        value={['Bangalore','Mysuru','Hyderabad','Chennai'].includes(editingProp.city) ? editingProp.city : 'Other'} 
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setEditingProp({ 
+                            ...editingProp, 
+                            city: val === 'Other' ? (editingProp.customCity || 'Other') : val,
+                            customCity: val === 'Other' ? (editingProp.customCity || '') : ''
+                          });
+                        }}
+                      >
+                        <option value="Bangalore">Bangalore (Bengaluru)</option>
+                        <option value="Mysuru">Mysuru</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Other">Add Custom City Manually...</option>
+                      </select>
+                    </div>
+
+                    {(!['Bangalore','Mysuru','Hyderabad','Chennai'].includes(editingProp.city) || editingProp.city === 'Other') && (
+                      <div className="saas-field">
+                        <label className="saas-label">Manual City Name *</label>
+                        <input 
+                          type="text" 
+                          required
+                          className="saas-input"
+                          placeholder="e.g. Pune, Mangalore, Coimbatore"
+                          value={editingProp.customCity || (editingProp.city !== 'Other' ? editingProp.city : '')}
+                          onChange={(e) => setEditingProp({ ...editingProp, customCity: e.target.value, city: e.target.value })}
+                        />
+                      </div>
+                    )}
+
+                    <div className="saas-field">
+                      <label className="saas-label">Neighborhood / Area Address *</label>
+                      <input 
+                        type="text" 
+                        required
+                        className="saas-input"
+                        value={editingProp.location || editingProp.area || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, location: e.target.value, area: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="saas-field">
+                      <label className="saas-label">Property Type / BHK *</label>
+                      <input 
+                        type="text" 
+                        required
+                        className="saas-input"
+                        value={editingProp.type || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="admin-modal-actions mt-4" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '20px' }}>
-                <button type="button" className="btn-secondary" onClick={() => setEditingProp(null)}>
+              {/* Section 2: Listing Purpose & Pricing Models */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">2</div>
+                  <div>
+                    <h4 className="saas-card-title">Listing Purpose &amp; Pricing Models</h4>
+                    <p className="saas-card-subtitle">Select availability options and update pricing structure.</p>
+                  </div>
+                </div>
+
+                <div className="saas-card-body">
+                  <div className="saas-field mb-4">
+                    <label className="saas-label mb-2">Listing Purpose Types (Select Single or Multiple Options) *</label>
+                    <div className="purpose-checkbox-group">
+                      <label className={`purpose-checkbox-pill ${(editingProp.purposes || [editingProp.purpose || 'rent']).includes('rent') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(editingProp.purposes || [editingProp.purpose || 'rent']).includes('rent')} 
+                          onChange={() => toggleEditPurpose('rent')} 
+                        />
+                        <span>For Monthly Rent</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(editingProp.purposes || [editingProp.purpose || 'rent']).includes('lease') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(editingProp.purposes || [editingProp.purpose || 'rent']).includes('lease')} 
+                          onChange={() => toggleEditPurpose('lease')} 
+                        />
+                        <span>For Long-Term Lease</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(editingProp.purposes || [editingProp.purpose || 'rent']).includes('sale') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(editingProp.purposes || [editingProp.purpose || 'rent']).includes('sale')} 
+                          onChange={() => toggleEditPurpose('sale')} 
+                        />
+                        <span>For Outright Sale</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(editingProp.purposes || [editingProp.purpose || 'rent']).includes('custom') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(editingProp.purposes || [editingProp.purpose || 'rent']).includes('custom')} 
+                          onChange={() => toggleEditPurpose('custom')} 
+                        />
+                        <span>Add Custom Listing Purpose...</span>
+                      </label>
+                    </div>
+
+                    {(editingProp.purposes || []).includes('custom') && (
+                      <div className="mt-3">
+                        <input 
+                          type="text" 
+                          className="saas-input"
+                          placeholder="e.g. PG / Paying Guest, Commercial Lease, Short Stay"
+                          value={editingProp.customPurpose || ''}
+                          onChange={(e) => setEditingProp({ ...editingProp, customPurpose: e.target.value })}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="saas-grid-3">
+                    <div className="saas-field">
+                      <label className="saas-label">Monthly Rent (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        value={editingProp.rentPrice || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, rentPrice: e.target.value })}
+                      />
+                    </div>
+                    <div className="saas-field">
+                      <label className="saas-label">Long-Term Lease (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        value={editingProp.leasePrice || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, leasePrice: e.target.value })}
+                      />
+                    </div>
+                    <div className="saas-field">
+                      <label className="saas-label">Outright Sale Price (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. 1.25 Cr"
+                        value={editingProp.salePrice || ''}
+                        onChange={(e) => setEditingProp({ ...editingProp, salePrice: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Dynamic Custom Details & Extra Fields */}
+              <div className="saas-form-card">
+                <div className="saas-card-header flex-between">
+                  <div className="flex-align">
+                    <div className="saas-card-number">3</div>
+                    <div>
+                      <h4 className="saas-card-title">Dynamic Custom Details / Extra Fields</h4>
+                      <p className="saas-card-subtitle">Add or edit optional custom key-value attributes (e.g. Security Deposit, Facing).</p>
+                    </div>
+                  </div>
+                  <button 
+                    type="button" 
+                    className="btn-secondary-sm" 
+                    onClick={handleAddEditCustomField}
+                  >
+                    + Add Extra Field
+                  </button>
+                </div>
+
+                <div className="saas-card-body">
+                  {(editingProp.customFields || []).length > 0 ? (
+                    <div className="extra-fields-stack">
+                      {editingProp.customFields.map((field, idx) => (
+                        <div key={idx} className="extra-field-grid">
+                          <input 
+                            type="text" 
+                            className="saas-input"
+                            placeholder="Field Label (e.g. Security Deposit)"
+                            value={field.label || ''}
+                            onChange={(e) => handleEditCustomFieldChange(idx, 'label', e.target.value)}
+                          />
+                          <input 
+                            type="text" 
+                            className="saas-input"
+                            placeholder="Field Value (e.g. 2 Months Rent)"
+                            value={field.value || ''}
+                            onChange={(e) => handleEditCustomFieldChange(idx, 'value', e.target.value)}
+                          />
+                          <button 
+                            type="button" 
+                            className="btn-icon-danger"
+                            onClick={() => handleRemoveEditCustomField(idx)}
+                            title="Delete Field"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty-fields-text">No custom extra fields added yet. Click "+ Add Extra Field" to add custom metadata.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Section 4: Property Media & Photos */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">4</div>
+                  <div>
+                    <h4 className="saas-card-title">Property Media &amp; Photos</h4>
+                    <p className="saas-card-subtitle">Upload new photo files or manage image links.</p>
+                  </div>
+                </div>
+
+                <div className="saas-card-body">
+                  <div className="saas-upload-dropzone mb-4">
+                    <Upload size={28} className="saas-upload-icon" />
+                    <h5 className="saas-upload-title">Upload New Photos</h5>
+                    <p className="saas-upload-sub">Select multiple photo files from your computer</p>
+                    
+                    <label className="btn-upload-saas mt-2">
+                      <span>📁 Select Photo Files</span>
+                      <input 
+                        type="file" 
+                        multiple 
+                        accept="image/*" 
+                        onChange={(e) => handleFileUpload(e, true)}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="saas-field mb-3">
+                    <div className="flex-between mb-2">
+                      <label className="saas-label margin-0">Current Photos List ({(editingProp.images || []).length}):</label>
+                      <button 
+                        type="button" 
+                        className="btn-link-sm" 
+                        onClick={() => setEditingProp({ ...editingProp, images: [...(editingProp.images || []), ''] })}
+                      >
+                        + Add Image Link Field
+                      </button>
+                    </div>
+
+                    {(editingProp.images || []).map((imgUrl, idx) => (
+                      <div key={idx} className="image-url-input-row mb-2" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <img 
+                          src={imgUrl || '/assets/hero_stay.jpg'} 
+                          alt="preview" 
+                          style={{ width: '44px', height: '36px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                        />
+                        <input 
+                          type="url" 
+                          className="saas-input"
+                          placeholder="Image URL (https://...)"
+                          value={imgUrl}
+                          onChange={(e) => {
+                            const updated = [...(editingProp.images || [])];
+                            updated[idx] = e.target.value;
+                            setEditingProp({ ...editingProp, images: updated });
+                          }}
+                        />
+                        {(editingProp.images || []).length > 1 && (
+                          <button 
+                            type="button" 
+                            className="btn-icon-danger"
+                            onClick={() => {
+                              const updated = editingProp.images.filter((_, i) => i !== idx);
+                              setEditingProp({ ...editingProp, images: updated });
+                            }}
+                            title="Remove photo"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Submit Actions */}
+              <div className="saas-modal-actions flex-between mt-4">
+                <button type="button" className="btn-secondary px-4 py-2" onClick={() => setEditingProp(null)}>
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary">
-                  Save Changes
+                <button type="submit" className="btn-publish-saas" style={{ width: 'auto', padding: '12px 28px' }}>
+                  Save Property Changes
                 </button>
               </div>
             </form>
