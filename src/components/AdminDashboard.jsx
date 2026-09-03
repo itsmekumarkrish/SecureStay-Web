@@ -343,10 +343,10 @@ export default function AdminDashboard({
       {/* Top Admin Bar */}
       <div className="admin-top-bar">
         <div className="container admin-top-content">
-          <div className="admin-brand flex-align gap-2">
+          <div className="admin-brand">
             <ShieldCheck size={22} className="text-gold" />
             <h3>SecureStay Properties Dashboard</h3>
-            <span style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0', fontSize: '0.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span className="cloud-sync-badge">
               ☁️ Live Cloud Sync
             </span>
           </div>
