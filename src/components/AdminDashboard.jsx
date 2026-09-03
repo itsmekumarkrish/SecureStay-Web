@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
   Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
-  Users, Clock, CheckSquare
+  Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound
 } from 'lucide-react';
 
 export default function AdminDashboard({ 
@@ -19,7 +19,13 @@ export default function AdminDashboard({
 }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
+
+  const handleAutoFillDemo = () => {
+    setLoginForm({ username: 'admin', password: 'securestay123' });
+    setLoginError('');
+  };
 
   const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries'
   const [successMessage, setSuccessMessage] = useState('');
@@ -223,51 +229,89 @@ export default function AdminDashboard({
   if (!isAuthenticated) {
     return (
       <div className="admin-login-screen">
+        <div className="admin-login-orb orb-1"></div>
+        <div className="admin-login-orb orb-2"></div>
+
         <div className="admin-login-card">
           <div className="login-header text-center">
-            <div className="admin-icon-circle">
-              <ShieldCheck size={32} className="text-gold" />
+            <div className="admin-brand-header mb-3">
+              <img 
+                src="/assets/logo_light.png" 
+                alt="Secure Stay Private Limited" 
+                className="admin-logo-img mx-auto"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
             </div>
+
+            <div className="admin-icon-halo">
+              <ShieldCheck size={28} className="text-gold" />
+            </div>
+
             <h2>SecureStay Properties Dashboard</h2>
-            <p>Sign in to upload property stays, edit listings, and track leads</p>
+            <p>Sign in to manage live property stays, edit listings &amp; track customer leads</p>
           </div>
 
           {loginError && <div className="login-error-alert">{loginError}</div>}
 
           <form onSubmit={handleLogin} className="admin-login-form">
             <div className="form-group">
-              <label>Username</label>
-              <input 
-                type="text" 
-                required
-                placeholder="Enter admin username"
-                value={loginForm.username}
-                onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-              />
+              <label>Admin Username</label>
+              <div className="login-input-wrap">
+                <User size={18} className="login-input-icon" />
+                <input 
+                  type="text" 
+                  required
+                  placeholder="e.g. admin"
+                  value={loginForm.username}
+                  onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                />
+              </div>
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input 
-                type="password" 
-                required
-                placeholder="Enter password"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-              />
+              <div className="login-input-wrap">
+                <Lock size={18} className="login-input-icon" />
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  required
+                  placeholder="Enter password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                />
+                <button 
+                  type="button" 
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                  title={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
 
-            <div className="login-demo-hint">
-              <Lock size={13} /> Demo Credentials: <strong>admin</strong> / <strong>securestay123</strong>
+            {/* 1-Click Auto-Fill Demo Credentials Button */}
+            <div className="login-autofill-box">
+              <button 
+                type="button" 
+                className="btn-autofill-demo"
+                onClick={handleAutoFillDemo}
+              >
+                <Sparkles size={14} className="text-gold" />
+                <span>Auto-fill Demo Credentials</span>
+                <span className="autofill-tag">admin / securestay123</span>
+              </button>
             </div>
 
-            <button type="submit" className="btn-primary w-full mt-2">
+            <button type="submit" className="btn-primary w-full py-3 mt-2 btn-login-submit">
               Sign In to Admin Portal
             </button>
           </form>
 
-          <div className="text-center mt-3">
-            <button type="button" className="btn-link-sm" onClick={onBackToHome}>
+          <div className="text-center mt-4">
+            <button type="button" className="btn-return-website" onClick={onBackToHome}>
               ← Return to Main Website
             </button>
           </div>
