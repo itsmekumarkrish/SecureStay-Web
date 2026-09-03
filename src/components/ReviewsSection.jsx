@@ -6,8 +6,8 @@ export default function ReviewsSection({ reviews }) {
     <section id="reviews" className="section reviews-marquee-section">
       <div className="container">
         <div className="section-title text-center">
-          <span className="section-eyebrow">VERIFIED REVIEWS</span>
-          <h2 className="reviews-section-title">Loved by Property Owners &amp; Tenants</h2>
+          <span className="section-eyebrow verified-reviews-eyebrow">VERIFIED REVIEWS</span>
+          <h2 className="reviews-section-title">Loved by Proud Customers</h2>
           <p>Rated 5/5 by 100+ happy customers across Bangalore, Mysuru, Hyderabad &amp; Chennai.</p>
         </div>
       </div>
