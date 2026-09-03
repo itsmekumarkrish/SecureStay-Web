@@ -141,7 +141,7 @@ export default function PropertyCard({ property, onInquire }) {
         </p>
         <div className="property-bottom">
           <div className="property-pricing">
-            {property.rentPrice && <span className="property-price">{property.rentPrice}</span>}
+            {property.rentPrice && <span className="property-price">{property.rentPrice.replace(/\s*\/\s*month/gi, '')}</span>}
             {!property.rentPrice && property.salePrice && <span className="property-price">{property.salePrice}</span>}
             {property.leasePrice && <span className="property-lease-tag"> • Lease: {property.leasePrice}</span>}
             {property.salePrice && property.rentPrice && <span className="property-lease-tag" style={{ color: '#2563eb', fontWeight: 700 }}> • Sale: {property.salePrice}</span>}

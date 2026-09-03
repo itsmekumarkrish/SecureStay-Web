@@ -3150,8 +3150,8 @@ input:focus, select:focus, textarea:focus {
 /* ------- Filter Dropdowns Row ------- */
 .catalog-dropdowns-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
   margin-bottom: 18px;
 }
 
@@ -3159,6 +3159,7 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .filter-dropdown-item label {
@@ -3166,18 +3167,21 @@ input:focus, select:focus, textarea:focus {
   font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   display: flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .filter-dropdown-item select {
   width: 100%;
-  padding: 10px 14px;
+  padding: 10px 12px;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: #0c2340;
   background: #f8fafc;
@@ -3192,6 +3196,18 @@ input:focus, select:focus, textarea:focus {
   border-color: #1a3a6e;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(26, 58, 110, 0.08);
+}
+
+@media (max-width: 768px) {
+  .catalog-dropdowns-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .filter-dropdown-item select {
+    padding: 8px 8px !important;
+    font-size: 0.8rem !important;
+  }
 }
 
 /* ------- City Pills Row ------- */
