@@ -2791,6 +2791,73 @@ input:focus, select:focus, textarea:focus {
     font-size: 0.74rem;
   }
 
+  /* Native Mobile App Style for FAQ Section */
+  .faq-section-eyebrow {
+    display: none !important;
+  }
+
+  .faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.02);
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .faq-question-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .faq-q-text {
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: #0c2340;
+    line-height: 1.4;
+  }
+
+  .faq-icon-wrapper {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(12, 35, 64, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .faq-chevron {
+    color: #0c2340;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-answer-content {
+    padding: 0 16px 14px 16px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .faq-answer-content p {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: #475569;
+    padding-top: 10px;
+  }
+
   /* Contact Lead Form & Card App-Redesign on Mobile */
   .contact-card {
     padding: 26px 20px;

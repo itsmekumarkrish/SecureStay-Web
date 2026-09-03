@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 export default function FaqSection({ faqs }) {
-  const [openFaq, setOpenFaq] = useState(0);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -12,7 +12,7 @@ export default function FaqSection({ faqs }) {
     <section id="faq" className="section bg-light">
       <div className="container">
         <div className="section-title text-center">
-          <span className="section-eyebrow">HELP & CLARITY</span>
+          <span className="section-eyebrow faq-section-eyebrow">HELP &amp; CLARITY</span>
           <h2>Frequently Asked Questions</h2>
           <p>Everything you need to know about property onboarding, rent guarantees, and stay agreements.</p>
         </div>
