@@ -2356,7 +2356,8 @@ input:focus, select:focus, textarea:focus {
   .hero {
     min-height: auto;
     display: block;
-    padding: 20px 0 36px 0;
+    padding-top: 20px;
+    padding-bottom: clamp(48px, 8.5vh, 76px);
     box-sizing: border-box;
     overflow-x: hidden;
     margin-bottom: 0;
@@ -2407,7 +2408,7 @@ input:focus, select:focus, textarea:focus {
   .hero-subtitle {
     font-size: 0.92rem;
     line-height: 1.55;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
     padding: 0;
     color: var(--text-muted);
     text-align: left;
