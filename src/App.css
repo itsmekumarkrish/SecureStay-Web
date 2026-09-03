@@ -310,8 +310,8 @@ a {
 
 /* 2. Hero Section - Strictly Controls First Viewport (Screen 1) */
 .hero {
-  background: radial-gradient(circle at 50% 12%, #ffffff 0%, #f1f5fa 55%, #e6edf6 100%);
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5fa 50%, #e8eef6 100%);
+  border-bottom: none;
   position: relative;
   padding-top: clamp(40px, 7vh, 64px);
 }
@@ -2351,10 +2351,12 @@ input:focus, select:focus, textarea:focus {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 24px 0 32px 0;
+    padding-top: 20px;
+    padding-bottom: clamp(48px, 8vh, 76px);
     box-sizing: border-box;
     overflow-x: hidden;
     margin-bottom: 0;
+    border-bottom: none;
   }
 
   .hero-text {
@@ -2490,9 +2492,9 @@ input:focus, select:focus, textarea:focus {
     text-align: center;
   }
 
-  /* Generous Mobile Top Margin for 'Why Choose SecureStay?' Section */
+  /* Seamless Transition into 'Why Choose SecureStay?' Section */
   #about.section {
-    margin-top: clamp(60px, 12vh, 120px);
+    margin-top: 0;
     padding-top: 48px;
   }
 
