@@ -17,6 +17,8 @@ export default function Hero() {
           <p className="hero-subtitle">
             End-to-end residential property services for owners with guaranteed on-time rent, verified tenants, and seamless property care across India.
           </p>
+          {/* Custom Design / Element Slot Gap */}
+          <div className="hero-custom-design-slot"></div>
           <div className="hero-buttons">
             <a href="#contact" className="btn-primary">
               Get in Touch <ArrowRight size={16} className="btn-arrow" />
