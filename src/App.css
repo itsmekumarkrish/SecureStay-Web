@@ -947,19 +947,17 @@ a {
 
 .property-card {
   background: #ffffff;
-  border: 1.5px solid #dbeafe;
-  outline: 1px solid rgba(12, 35, 64, 0.08);
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.04);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 20px rgba(12, 35, 64, 0.03);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .property-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary-color);
-  outline-color: var(--primary-color);
-  box-shadow: 0 14px 30px rgba(12, 35, 64, 0.12);
+  transform: translateY(-6px);
+  border-color: #E2E8F0;
+  box-shadow: 0 20px 38px rgba(12, 35, 64, 0.08);
 }
 
 .property-img-container {
@@ -987,6 +985,13 @@ a {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 1024px) {
+  .property-card:hover .property-img {
+    transform: scale(1.04);
+  }
 }
 
 .property-photo-counter {
