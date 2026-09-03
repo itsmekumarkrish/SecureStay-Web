@@ -257,7 +257,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                   <label>Location / City</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. Indiranagar, Bangalore or HSR Layout"
+                    placeholder="e.g. Mysuru, Bangalore, Chennai, M G Road"
                     value={formData.location || ''}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   />
