@@ -3126,6 +3126,17 @@ input:focus, select:focus, textarea:focus {
     gap: 28px;
   }
 
+  /* Lock Video Controls Always Visible on Mobile */
+  .contact-video-box .video-controls-bar {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .contact-video-box .video-center-play-btn {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+
   .contact-info h2 {
     font-size: 1.60rem !important;
     color: #0c2340 !important;
