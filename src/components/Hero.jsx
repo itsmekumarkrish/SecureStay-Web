@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="container">
-        <div className="hero-text">
+        <div className="hero-text hero-content-main">
           <div className="hero-tag">
             <span className="tag-rating">★ 5/5 Rating</span>
             <span className="tag-divider-dot">•</span>
