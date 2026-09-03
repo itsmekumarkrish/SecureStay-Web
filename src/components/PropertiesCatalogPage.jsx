@@ -130,7 +130,7 @@ export default function PropertiesCatalogPage({
               <Search size={18} className="search-icon" />
               <input
                 type="text"
-                placeholder="Search by area, city, or property name (e.g. Koramangala, Gokulam)…"
+                placeholder="Search by area, city or property name…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -147,10 +147,10 @@ export default function PropertiesCatalogPage({
             <div className="filter-dropdown-item">
               <label><Building2 size={13} /> Listing Purpose</label>
               <select value={selectedPurpose} onChange={(e) => setSelectedPurpose(e.target.value)}>
-                <option value="All">All Purposes (Rent &amp; Sale)</option>
-                <option value="rent">For Monthly Rent</option>
-                <option value="lease">For Long-Term Lease</option>
-                <option value="sale">For Outright Sale</option>
+                <option value="All">All Purposes</option>
+                <option value="rent">Monthly Rent</option>
+                <option value="lease">Long-Term Lease</option>
+                <option value="sale">Outright Sale</option>
               </select>
             </div>
 
@@ -187,12 +187,12 @@ export default function PropertiesCatalogPage({
               </select>
             </div>
 
-            <div className="filter-dropdown-item">
+            <div className="filter-dropdown-item filter-sort-item">
               <label><ArrowUpDown size={13} /> Sort By</label>
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                 <option value="default">Featured First</option>
-                <option value="price-low">Price: Low → High</option>
-                <option value="price-high">Price: High → Low</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
               </select>
             </div>
           </div>

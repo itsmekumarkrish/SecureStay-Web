@@ -2973,6 +2973,19 @@ input:focus, select:focus, textarea:focus {
   z-index: 1;
 }
 
+@media (max-width: 768px) {
+  .catalog-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0 28px 0;
+    gap: 12px;
+  }
+
+  .catalog-header-left[style*='hidden'] {
+    display: none !important;
+  }
+}
+
 .catalog-header-left {
   flex-shrink: 0;
 }
@@ -3036,6 +3049,21 @@ input:focus, select:focus, textarea:focus {
   margin: 0;
 }
 
+@media (max-width: 768px) {
+  .catalog-brand-title {
+    text-align: left;
+  }
+
+  .catalog-brand-title h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .catalog-brand-title p {
+    font-size: 0.82rem;
+  }
+}
+
 .catalog-header-stats {
   display: flex;
   gap: 20px;
@@ -3084,6 +3112,15 @@ input:focus, select:focus, textarea:focus {
   z-index: 10;
 }
 
+@media (max-width: 768px) {
+  .catalog-controls-card {
+    padding: 16px 14px 14px 14px;
+    border-radius: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+}
+
 /* ------- Search Bar ------- */
 .catalog-search-row {
   display: flex;
@@ -3115,6 +3152,17 @@ input:focus, select:focus, textarea:focus {
   color: #0c2340;
   background: #f8fafc;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .search-input-wrap input {
+    font-size: 0.82rem;
+    padding: 11px 70px 11px 40px;
+  }
+
+  .search-icon {
+    left: 12px;
+  }
 }
 
 .search-input-wrap input:focus {
@@ -3150,9 +3198,24 @@ input:focus, select:focus, textarea:focus {
 /* ------- Filter Dropdowns Row ------- */
 .catalog-dropdowns-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 18px;
+}
+
+/* Sort By spans full width on mobile */
+.filter-sort-item {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 769px) {
+  .catalog-dropdowns-row {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .filter-sort-item {
+    grid-column: auto;
+  }
 }
 
 .filter-dropdown-item {
