@@ -7,7 +7,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
   const [isMuted, setIsMuted] = useState(true);
   const [videoProgress, setVideoProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('00:00');
-  const [duration, setDuration] = useState('03:45');
+  const [duration, setDuration] = useState('03:47');
   const [showControls, setShowControls] = useState(false);
   const [isUserTypeSheetOpen, setIsUserTypeSheetOpen] = useState(false);
   const [showSettingsToast, setShowSettingsToast] = useState(false);
@@ -116,7 +116,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
               <video
                 ref={videoRef}
                 className="contact-video-element"
-                src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-interior-living-room-41525-large.mp4"
+                src="/assets/property-tour.mp4"
                 poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
                 loop
                 muted={isMuted}
