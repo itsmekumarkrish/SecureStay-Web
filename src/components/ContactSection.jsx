@@ -254,6 +254,28 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                 </div>
 
                 <div className="form-group">
+                  <label>Location / City</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. Bangalore, Mysuru, Hyderabad, Chennai"
+                    value={formData.location || ''}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  />
+                  <div className="quick-city-chips">
+                    {['Bangalore', 'Mysuru', 'Hyderabad', 'Chennai'].map((city) => (
+                      <button
+                        key={city}
+                        type="button"
+                        className={`city-chip ${formData.location === city ? 'is-selected' : ''}`}
+                        onClick={() => setFormData({ ...formData, location: city })}
+                      >
+                        {city}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="form-group">
                   <label>Message / Property Details</label>
                   <textarea 
                     rows={3} 
@@ -272,7 +294,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                 <CheckCircle size={48} className="text-green mx-auto mb-2" />
                 <h3>Thank You!</h3>
                 <p>We have received your message. Our representative will contact you within 24 hours.</p>
-                <button className="btn-secondary mt-3" onClick={() => setFormData({ name: '', phone: '', email: '', userType: 'owner', message: '' })}>
+                <button className="btn-secondary mt-3" onClick={() => setFormData({ name: '', phone: '', email: '', userType: 'owner', location: '', message: '' })}>
                   Send Another Message
                 </button>
               </div>

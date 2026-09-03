@@ -1787,6 +1787,34 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--primary-color);
 }
 
+.quick-city-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.city-chip {
+  background: #f1f5fa;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0c2340;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.city-chip:hover,
+.city-chip.is-selected {
+  background: #0c2340;
+  color: #ffffff !important;
+  border-color: #0c2340;
+  box-shadow: 0 2px 8px rgba(12, 35, 64, 0.18);
+}
+
 /* Custom Select Field & Bottom Sheet Modal */
 .custom-select-trigger {
   width: 100%;

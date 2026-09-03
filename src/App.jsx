@@ -140,6 +140,7 @@ export default function App() {
     phone: '',
     email: '',
     userType: 'owner',
+    location: '',
     message: ''
   });
 
