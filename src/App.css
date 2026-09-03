@@ -3006,18 +3006,19 @@ input:focus, select:focus, textarea:focus {
 .btn-back-home {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  padding: 9px 18px;
-  border-radius: 22px;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   cursor: pointer;
   transition: all 0.25s ease;
   backdrop-filter: blur(8px);
   font-family: inherit;
+  letter-spacing: 0.01em;
 }
 
 .btn-back-home:hover {
@@ -3290,44 +3291,45 @@ input:focus, select:focus, textarea:focus {
 
 /* ------- City Pills Row ------- */
 .catalog-city-pills-row {
-  border-top: 1.5px solid #f1f5f9;
-  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
 }
 
 .pills-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .pills-label {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #475569;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   white-space: nowrap;
 }
 
 .pills-group {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .city-filter-pill {
-  padding: 7px 18px;
+  padding: 5px 13px;
   border-radius: 20px;
   border: 1.5px solid #e2e8f0;
   background: #f8fafc;
-  color: #475569;
-  font-size: 0.84rem;
+  color: #64748b;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  letter-spacing: 0.01em;
 }
 
 .city-filter-pill:hover {
@@ -3340,7 +3342,7 @@ input:focus, select:focus, textarea:focus {
   background: #0c2340;
   border-color: #0c2340;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(12, 35, 64, 0.22);
+  box-shadow: 0 3px 8px rgba(12, 35, 64, 0.2);
 }
 
 .btn-reset-filters {
