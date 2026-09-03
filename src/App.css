@@ -2354,14 +2354,25 @@ input:focus, select:focus, textarea:focus {
 
   /* Hero Section Mobile */
   .hero {
-    min-height: auto;
-    display: block;
-    padding-top: 20px;
-    padding-bottom: clamp(56px, 12vh, 96px);
+    min-height: calc(100svh - var(--header-height, 72px));
+    min-height: calc(100vh - var(--header-height, 72px));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 0 24px 0;
     box-sizing: border-box;
     overflow-x: hidden;
-    margin-bottom: 12vh !important;
+    margin-bottom: 0 !important;
     border-bottom: none;
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5fa 50%, #e8eef6 100%);
+  }
+
+  .hero > .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .hero-text {
