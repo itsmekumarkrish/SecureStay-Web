@@ -257,22 +257,10 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                   <label>Location / City</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. Bangalore, Mysuru, Hyderabad, Chennai"
+                    placeholder="e.g. Indiranagar, Bangalore or HSR Layout"
                     value={formData.location || ''}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   />
-                  <div className="quick-city-chips">
-                    {['Bangalore', 'Mysuru', 'Hyderabad', 'Chennai'].map((city) => (
-                      <button
-                        key={city}
-                        type="button"
-                        className={`city-chip ${formData.location === city ? 'is-selected' : ''}`}
-                        onClick={() => setFormData({ ...formData, location: city })}
-                      >
-                        {city}
-                      </button>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="form-group">
