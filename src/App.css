@@ -2416,12 +2416,12 @@ input:focus, select:focus, textarea:focus {
     text-align: left;
   }
 
-  /* Mobile-Specific Custom Design Slot Gap (Increased spacing for mobile design insertion) */
+  /* Mobile-Specific Custom Design Slot Gap (Generously Expanded) */
   .hero-custom-design-slot {
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 36px;
-    min-height: 44px;
+    margin-top: 32px;
+    margin-bottom: 72px;
+    min-height: 90px;
   }
 
   /* Horizontal Side-by-Side Action Buttons on Mobile */
