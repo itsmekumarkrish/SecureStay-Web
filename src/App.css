@@ -2348,8 +2348,10 @@ input:focus, select:focus, textarea:focus {
   /* Hero Section Mobile */
   .hero {
     min-height: auto;
-    display: block;
-    padding: 20px 0 28px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px 0 16px 0;
     box-sizing: border-box;
     overflow-x: hidden;
   }
@@ -2366,25 +2368,25 @@ input:focus, select:focus, textarea:focus {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    font-size: 0.75rem;
-    padding: 5px 12px;
-    gap: 6px;
-    margin-top: 4px;
-    margin-bottom: 14px;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    gap: 5px;
+    margin-top: 2px;
+    margin-bottom: 10px;
     text-align: left;
     max-width: 100%;
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   .tag-rating {
-    font-size: 0.72rem;
-    padding: 2px 7px;
+    font-size: 0.70rem;
+    padding: 2px 6px;
   }
 
   .hero-text h1 {
-    font-size: clamp(1.6rem, 5.8vw, 1.95rem);
-    line-height: 1.18;
-    margin-bottom: 12px;
+    font-size: clamp(1.48rem, 5.2vw, 1.8rem);
+    line-height: 1.2;
+    margin-bottom: 8px;
     letter-spacing: -0.3px;
     font-weight: 800;
     text-align: left;
@@ -2396,9 +2398,9 @@ input:focus, select:focus, textarea:focus {
   }
 
   .hero-subtitle {
-    font-size: 0.92rem;
-    line-height: 1.55;
-    margin-bottom: 22px;
+    font-size: 0.88rem;
+    line-height: 1.48;
+    margin-bottom: 14px;
     padding: 0;
     color: var(--text-muted);
     text-align: left;
@@ -2412,7 +2414,7 @@ input:focus, select:focus, textarea:focus {
     width: 100%;
     gap: 10px;
     justify-content: flex-start;
-    margin-bottom: 24px;
+    margin-bottom: 14px;
   }
 
   .hero-buttons .btn-primary,
@@ -2422,8 +2424,8 @@ input:focus, select:focus, textarea:focus {
     box-sizing: border-box;
     text-align: center;
     justify-content: center;
-    padding: 12px 14px;
-    font-size: 0.92rem;
+    padding: 10px 12px;
+    font-size: 0.90rem;
     white-space: nowrap;
   }
 
@@ -2431,14 +2433,14 @@ input:focus, select:focus, textarea:focus {
   .hero-stats-strip {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px;
-    padding: 14px 10px;
-    border-radius: 14px;
+    gap: 8px;
+    padding: 10px 8px;
+    border-radius: 12px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    margin-top: 24px;
+    margin-top: 10px;
     overflow: hidden;
     position: relative;
   }
@@ -2448,15 +2450,15 @@ input:focus, select:focus, textarea:focus {
     left: -2px;
     right: -2px;
     bottom: -3px;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 
   .stat-item {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px 4px;
+    padding: 8px 4px;
     background: #f8fafc;
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
@@ -2466,22 +2468,24 @@ input:focus, select:focus, textarea:focus {
   }
 
   .stat-icon-wrapper {
-    width: 34px;
-    height: 34px;
-    margin-bottom: 6px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 4px;
   }
 
   .stat-number {
-    font-size: 1.3rem;
-    margin-bottom: 3px;
+    font-size: 1.18rem;
+    margin-bottom: 2px;
     white-space: normal;
+    word-break: break-word;
   }
 
   .stat-desc {
-    font-size: 0.74rem;
-    line-height: 1.25;
+    font-size: 0.70rem;
+    line-height: 1.2;
     white-space: normal;
     word-break: break-word;
+    overflow-wrap: break-word;
     text-align: center;
   }
 
