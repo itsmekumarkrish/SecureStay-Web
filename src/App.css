@@ -2006,10 +2006,11 @@ input:focus, select:focus, textarea:focus {
   color: #ffffff !important;
 }
 
-.whatsapp-floating-circle-btn:hover {
+.whatsapp-floating-circle-btn:hover,
+.whatsapp-floating-circle-btn:active {
   transform: scale(1.08);
-  background: #1eb954;
-  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.6);
+  background: #128C7E;
+  box-shadow: 0 12px 28px rgba(18, 140, 126, 0.6);
 }
 
 .chat-floating-btn {
@@ -2661,7 +2662,19 @@ input:focus, select:focus, textarea:focus {
     gap: 12px;
   }
 
-  /* Chatbot on Mobile */
+  /* Chatbot & WhatsApp Floating Button on Mobile */
+  .floating-chat-container {
+    bottom: 18px;
+    right: 18px;
+    z-index: 9999;
+  }
+
+  .whatsapp-floating-circle-btn {
+    width: 52px;
+    height: 52px;
+    box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55);
+  }
+
   .chat-floating-btn {
     width: 50px;
     height: 50px;
