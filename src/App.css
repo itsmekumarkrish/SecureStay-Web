@@ -3152,7 +3152,6 @@ input:focus, select:focus, textarea:focus {
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  }
 
   .review-text {
     font-size: 0.88rem;
