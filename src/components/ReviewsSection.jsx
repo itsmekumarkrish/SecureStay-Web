@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Star, MapPin } from 'lucide-react';
 
 export default function ReviewsSection({ reviews }) {
+  const wrapperRef = useRef(null);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setIsSwiping(true);
+    if (wrapperRef.current) {
+      setStartX(e.touches[0].pageX - wrapperRef.current.offsetLeft);
+      setScrollLeft(wrapperRef.current.scrollLeft);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isSwiping || !wrapperRef.current) return;
+    const x = e.touches[0].pageX - wrapperRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    wrapperRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsSwiping(false);
+  };
+
   return (
     <section id="reviews" className="section reviews-marquee-section">
       <div className="container">
@@ -12,8 +36,14 @@ export default function ReviewsSection({ reviews }) {
         </div>
       </div>
 
-      {/* Auto-sliding Reviews Marquee Carousel */}
-      <div className="reviews-marquee-wrapper">
+      {/* Auto-sliding Reviews Marquee Carousel with Touch Dragging */}
+      <div 
+        ref={wrapperRef}
+        className={`reviews-marquee-wrapper ${isSwiping ? 'is-swiping' : ''}`}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="reviews-marquee-track">
           {/* First Set of Reviews */}
           {reviews.map((rev) => (

@@ -3090,6 +3090,10 @@ input:focus, select:focus, textarea:focus {
     background: #08172c;
   }
 
+  .properties-see-more-bar {
+    margin-top: 24px !important;
+  }
+
   /* Reviews Marquee & Cards on Mobile */
   .reviews-marquee-section {
     padding-top: 32px !important;
@@ -3113,6 +3117,19 @@ input:focus, select:focus, textarea:focus {
     mask-image: none;
     -webkit-mask-image: none;
     padding: 8px 0 16px 0;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-y;
+    scrollbar-width: none;
+  }
+
+  .reviews-marquee-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reviews-marquee-wrapper.is-swiping .reviews-marquee-track {
+    animation-play-state: paused !important;
   }
 
   .reviews-marquee-track {
@@ -3130,6 +3147,8 @@ input:focus, select:focus, textarea:focus {
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(12, 35, 64, 0.04);
+    scroll-snap-align: center;
+    touch-action: pan-y;
   }
 
   .review-text {
