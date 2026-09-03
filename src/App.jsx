@@ -351,10 +351,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentView]);
 
-  if (isMobileDevice) {
-    return <MobileRestrictionModal />;
-  }
-
   return (
     <div className="page">
       {/* 1. All Properties Catalog View */}
