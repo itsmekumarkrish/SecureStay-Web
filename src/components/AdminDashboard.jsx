@@ -522,7 +522,10 @@ export default function AdminDashboard({
           <div className="admin-card-section">
             <div className="admin-section-header">
               <h3>Add New Property Listing</h3>
-              <p>Upload high-resolution property photos, set monthly rent/lease details, and select targe            <form onSubmit={handleCreatePropertySubmit} className="add-property-form-saas">
+              <p>Upload high-resolution property photos, set monthly rent/lease details, and select target city.</p>
+            </div>
+
+            <form onSubmit={handleCreatePropertySubmit} className="add-property-form-saas">
               {/* Section 1: Basic Details & Location */}
               <div className="saas-form-card">
                 <div className="saas-card-header">
