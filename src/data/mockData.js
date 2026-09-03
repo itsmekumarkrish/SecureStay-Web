@@ -1,6 +1,7 @@
 export const properties = [
   {
     id: 1,
+    propertyId: 'SS-BLR-01',
     title: 'Modern Studio Apartment',
     location: 'Koramangala, Bengaluru',
     rentPrice: '₹22,000 / month',
@@ -19,6 +20,7 @@ export const properties = [
   },
   {
     id: 2,
+    propertyId: 'SS-MYS-02',
     title: 'Executive 2 BHK Residence',
     location: 'Gokulam, Mysuru',
     rentPrice: '₹38,000 / month',
@@ -37,6 +39,7 @@ export const properties = [
   },
   {
     id: 3,
+    propertyId: 'SS-HYD-03',
     title: 'Luxury Coliving Suite',
     location: 'Gachibowli, Hyderabad',
     rentPrice: '₹18,500 / month',
@@ -55,6 +58,7 @@ export const properties = [
   },
   {
     id: 4,
+    propertyId: 'SS-CHE-04',
     title: 'Premium Villa Residence',
     location: 'Anna Nagar, Chennai',
     rentPrice: '₹34,000 / month',
@@ -72,6 +76,7 @@ export const properties = [
   },
   {
     id: 5,
+    propertyId: 'SS-BLR-05',
     title: 'Serene 1 BHK Apartment',
     location: 'HSR Layout, Bengaluru',
     rentPrice: '₹26,000 / month',
@@ -89,6 +94,7 @@ export const properties = [
   },
   {
     id: 6,
+    propertyId: 'SS-HYD-06',
     title: 'Compact Studio Near IT Hub',
     location: 'Jubilee Hills, Hyderabad',
     rentPrice: '₹15,000 / month',
@@ -106,6 +112,7 @@ export const properties = [
   },
   {
     id: 7,
+    propertyId: 'SS-CHE-07',
     title: 'Spacious 3 BHK Family Home',
     location: 'T. Nagar, Chennai',
     rentPrice: '₹45,000 / month',
@@ -123,6 +130,7 @@ export const properties = [
   },
   {
     id: 8,
+    propertyId: 'SS-MYS-08',
     title: 'Heritage Coliving Rooms',
     location: 'Vijayanagar, Mysuru',
     rentPrice: '₹12,000 / month',

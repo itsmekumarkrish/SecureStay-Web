@@ -41,6 +41,7 @@ export default function AdminDashboard({
   // New Property Form State
   const [newProp, setNewProp] = useState({
     title: '',
+    propertyId: '',
     city: 'Bangalore',
     area: '',
     purpose: 'rent',
@@ -187,8 +188,13 @@ export default function AdminDashboard({
       ? (newProp.salePrice.includes('₹') ? newProp.salePrice : `₹${newProp.salePrice}`) 
       : '';
 
+    const cityCode = newProp.city === 'Mysuru' ? 'MYS' : newProp.city === 'Hyderabad' ? 'HYD' : newProp.city === 'Chennai' ? 'CHE' : 'BLR';
+    const autoPropId = `SS-${cityCode}-${Math.floor(10 + Math.random() * 90)}`;
+    const finalPropertyId = newProp.propertyId && newProp.propertyId.trim() ? newProp.propertyId.trim() : autoPropId;
+
     const propertyPayload = {
       id: Date.now(),
+      propertyId: finalPropertyId,
       title: newProp.title,
       city: newProp.city || 'Bangalore',
       bhk: bhk,
@@ -206,12 +212,13 @@ export default function AdminDashboard({
     };
 
     onAddProperty(propertyPayload);
-    setSuccessMessage(`Property "${propertyPayload.title}" published live to website!`);
+    setSuccessMessage(`Property "${propertyPayload.title}" (${finalPropertyId}) published live to website!`);
     setTimeout(() => setSuccessMessage(''), 4000);
 
     // Reset Form
     setNewProp({
       title: '',
+      propertyId: '',
       city: 'Bangalore',
       area: '',
       purpose: 'rent',
@@ -463,6 +470,15 @@ export default function AdminDashboard({
                     placeholder="e.g. Skyline Luxury 2 BHK Residency"
                     value={newProp.title}
                     onChange={(e) => setNewProp({ ...newProp, title: e.target.value })}
+                  />
+                </div>
+                <div className="form-group flex-1">
+                  <label>Property ID Number</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. SS-MYS-02 (Auto-generated if empty)"
+                    value={newProp.propertyId || ''}
+                    onChange={(e) => setNewProp({ ...newProp, propertyId: e.target.value })}
                   />
                 </div>
                 <div className="form-group flex-1">
@@ -905,14 +921,25 @@ export default function AdminDashboard({
             </div>
             
             <form onSubmit={handleSaveEditedProperty} className="admin-form">
-              <div className="form-group">
-                <label>Property Title *</label>
-                <input 
-                  type="text" 
-                  required
-                  value={editingProp.title || ''}
-                  onChange={(e) => setEditingProp({ ...editingProp, title: e.target.value })}
-                />
+              <div className="form-row">
+                <div className="form-group flex-2">
+                  <label>Property Title *</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={editingProp.title || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, title: e.target.value })}
+                  />
+                </div>
+                <div className="form-group flex-1">
+                  <label>Property ID Number</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. SS-MYS-02"
+                    value={editingProp.propertyId || ''}
+                    onChange={(e) => setEditingProp({ ...editingProp, propertyId: e.target.value })}
+                  />
+                </div>
               </div>
 
               <div className="form-row">

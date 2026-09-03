@@ -79,7 +79,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
             <span className="property-type">{property.type}</span>
             <h2 className="detail-property-title">{property.title}</h2>
             <p className="detail-property-loc">
-              <MapPin size={16} className="text-green" /> {property.location}
+              <MapPin size={16} className="text-green" /> {property.location} {property.propertyId && <span className="property-id-tag">• ID: {property.propertyId}</span>}
             </p>
 
             <div className="detail-pricing-box">
@@ -138,7 +138,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
                 className="btn-primary w-full"
                 onClick={() => {
                   onClose();
-                  onInquire(property.title);
+                  onInquire(property);
                 }}
               >
                 Inquire About This Home <ArrowRight size={16} />

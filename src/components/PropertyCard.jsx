@@ -137,7 +137,7 @@ export default function PropertyCard({ property, onInquire }) {
         <span className="property-type">{property.type}</span>
         <h3 className="property-title">{property.title}</h3>
         <p className="property-location">
-          <MapPin size={14} /> {property.location}
+          <MapPin size={14} /> {property.location} {property.propertyId && <span className="property-id-tag">• ID: {property.propertyId}</span>}
         </p>
         <div className="property-bottom">
           <div className="property-pricing">
@@ -151,7 +151,7 @@ export default function PropertyCard({ property, onInquire }) {
             className="btn-secondary-sm" 
             onClick={(e) => {
               e.stopPropagation();
-              onInquire && onInquire(property.title);
+              onInquire && onInquire(property);
             }}
           >
             {isOccupied ? 'Inquire Next Slot' : 'Inquire'}

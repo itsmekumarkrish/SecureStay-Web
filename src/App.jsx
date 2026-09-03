@@ -49,11 +49,19 @@ function normalizeProperty(item) {
     else feature = 'Fully Furnished';
   }
 
+  let propertyId = item.propertyId;
+  if (!propertyId) {
+    const cityCode = city === 'Mysuru' ? 'MYS' : city === 'Hyderabad' ? 'HYD' : city === 'Chennai' ? 'CHE' : 'BLR';
+    const num = String(item.id || Math.floor(Math.random() * 90 + 10)).padStart(2, '0');
+    propertyId = `SS-${cityCode}-${num}`;
+  }
+
   return {
     ...item,
     city,
     bhk,
-    feature
+    feature,
+    propertyId
   };
 }
 
@@ -244,13 +252,32 @@ export default function App() {
     }
   };
 
-  const handleInquire = (propTitle) => {
+  const handleInquire = (propOrTitle) => {
     setCurrentView('home');
+    let messageText = '';
+    let targetLocation = '';
+
+    if (typeof propOrTitle === 'object' && propOrTitle !== null) {
+      const p = propOrTitle;
+      const cityCode = p.city === 'Mysuru' ? 'MYS' : p.city === 'Hyderabad' ? 'HYD' : p.city === 'Chennai' ? 'CHE' : 'BLR';
+      const fallbackId = `SS-${cityCode}-${String(p.id || 1).padStart(2, '0')}`;
+      const propId = p.propertyId || fallbackId;
+      const idFormatted = propId.startsWith('ID:') ? propId : `ID: ${propId}`;
+      const titleStr = p.title || 'Property';
+      const locStr = p.location ? ` located in ${p.location}` : '';
+      targetLocation = p.location || '';
+      messageText = `Hi SecureStay team, I am interested in inquiring about the ${titleStr} (${idFormatted})${locStr}. Please share more details.`;
+    } else if (typeof propOrTitle === 'string' && propOrTitle.trim() !== '') {
+      messageText = `Hi SecureStay team, I am interested in inquiring about "${propOrTitle}". Please share more details.`;
+    }
+
     setFormData((prev) => ({
       ...prev,
       userType: 'tenant',
-      message: propTitle ? `Hi, I am interested in inquiring about "${propTitle}".` : prev.message
+      location: targetLocation || prev.location,
+      message: messageText || prev.message
     }));
+
     setTimeout(() => {
       const elem = document.getElementById('contact-form') || document.getElementById('contact-card') || document.getElementById('contact');
       if (elem) {
