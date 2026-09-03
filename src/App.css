@@ -5980,14 +5980,9 @@ input:focus, select:focus, textarea:focus {
     padding: 0 12px !important;
     margin: 8px auto 0 auto !important;
   }
-
-  .rating-num-badge {
-    display: inline-block !important;
-    vertical-align: middle !important;
-  }
 }
 
-/* Customer Reviews Rating Badge Styling (Global) */
+/* Customer Reviews Rating Subtitle Styling (Global) */
 .reviews-section-subtitle {
   text-align: center;
   font-size: 0.95rem;
@@ -5996,18 +5991,6 @@ input:focus, select:focus, textarea:focus {
   margin: 8px auto 0 auto;
 }
 
-.rating-num-badge {
-  display: inline-block;
-  font-weight: 800;
-  color: #0c2340;
-  background: rgba(197, 155, 39, 0.16);
-  border: 1px solid rgba(197, 155, 39, 0.35);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.92rem;
-  vertical-align: middle;
-  margin: 0 2px;
-}
 
 
 

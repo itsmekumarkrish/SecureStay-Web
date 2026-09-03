@@ -9,7 +9,7 @@ export default function ReviewsSection({ reviews }) {
           <span className="section-eyebrow verified-reviews-eyebrow">VERIFIED REVIEWS</span>
           <h2 className="reviews-section-title">Loved by Proud Customers</h2>
           <p className="reviews-section-subtitle">
-            Rated <span className="rating-num-badge">5/15</span> by 100+ happy customers across Bangalore, Mysuru, Hyderabad &amp; Chennai.
+            Rated 5/15 by 100+ happy customers across Bangalore, Mysuru, Hyderabad &amp; Chennai.
           </p>
         </div>
       </div>
