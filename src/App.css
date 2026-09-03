@@ -3502,9 +3502,13 @@ input:focus, select:focus, textarea:focus {
   }
 
   .whatsapp-floating-circle-btn {
-    width: 52px;
-    height: 52px;
-    box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55);
+    width: 52px !important;
+    height: 52px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
   }
 
   .chat-floating-btn {
