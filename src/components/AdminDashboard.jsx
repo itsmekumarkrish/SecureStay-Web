@@ -43,6 +43,7 @@ export default function AdminDashboard({
     title: '',
     propertyId: '',
     city: 'Bangalore',
+    customCity: '',
     area: '',
     purpose: 'rent',
     rentPrice: '',
@@ -188,7 +189,11 @@ export default function AdminDashboard({
       ? (newProp.salePrice.includes('₹') ? newProp.salePrice : `₹${newProp.salePrice}`) 
       : '';
 
-    const cityCode = newProp.city === 'Mysuru' ? 'MYS' : newProp.city === 'Hyderabad' ? 'HYD' : newProp.city === 'Chennai' ? 'CHE' : 'BLR';
+    const effectiveCity = newProp.city === 'Other' && newProp.customCity && newProp.customCity.trim() 
+      ? newProp.customCity.trim() 
+      : newProp.city;
+
+    const cityCode = effectiveCity.substring(0, 3).toUpperCase();
     const autoPropId = `SS-${cityCode}-${Math.floor(10 + Math.random() * 90)}`;
     const finalPropertyId = newProp.propertyId && newProp.propertyId.trim() ? newProp.propertyId.trim() : autoPropId;
 
@@ -196,11 +201,11 @@ export default function AdminDashboard({
       id: Date.now(),
       propertyId: finalPropertyId,
       title: newProp.title,
-      city: newProp.city || 'Bangalore',
+      city: effectiveCity,
       bhk: bhk,
       feature: feature,
       purpose: newProp.purpose || 'rent',
-      location: `${newProp.area}, ${newProp.city === 'Bangalore' ? 'Bengaluru' : newProp.city}`,
+      location: `${newProp.area}, ${effectiveCity}`,
       rentPrice: rentFormatted,
       leasePrice: leaseFormatted,
       salePrice: saleFormatted,
@@ -212,7 +217,7 @@ export default function AdminDashboard({
     };
 
     onAddProperty(propertyPayload);
-    setSuccessMessage(`Property "${propertyPayload.title}" (${finalPropertyId}) published live to website!`);
+    setSuccessMessage(`Property "${propertyPayload.title}" (${finalPropertyId}) in ${effectiveCity} published live to website!`);
     setTimeout(() => setSuccessMessage(''), 4000);
 
     // Reset Form
@@ -220,6 +225,7 @@ export default function AdminDashboard({
       title: '',
       propertyId: '',
       city: 'Bangalore',
+      customCity: '',
       area: '',
       purpose: 'rent',
       rentPrice: '',
@@ -482,7 +488,7 @@ export default function AdminDashboard({
                   />
                 </div>
                 <div className="form-group flex-1">
-                  <label>City *</label>
+                  <label>City Location *</label>
                   <select 
                     value={newProp.city} 
                     onChange={(e) => setNewProp({ ...newProp, city: e.target.value })}
@@ -491,8 +497,22 @@ export default function AdminDashboard({
                     <option value="Mysuru">Mysuru</option>
                     <option value="Hyderabad">Hyderabad</option>
                     <option value="Chennai">Chennai</option>
+                    <option value="Other">➕ Add Custom City Manually...</option>
                   </select>
                 </div>
+
+                {newProp.city === 'Other' && (
+                  <div className="form-group flex-1">
+                    <label>Manual City Name *</label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. Pune, Mangalore, Coimbatore"
+                      value={newProp.customCity || ''}
+                      onChange={(e) => setNewProp({ ...newProp, customCity: e.target.value })}
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="form-row">
@@ -943,19 +963,17 @@ export default function AdminDashboard({
               </div>
 
               <div className="form-row">
-                <div className="form-group">
-                  <label>City *</label>
-                  <select 
-                    value={editingProp.city || 'Bangalore'}
+                <div className="form-group flex-1">
+                  <label>City Location *</label>
+                  <input 
+                    type="text" 
+                    required
+                    placeholder="e.g. Bangalore, Mysuru, Pune, Hyderabad"
+                    value={editingProp.city || ''}
                     onChange={(e) => setEditingProp({ ...editingProp, city: e.target.value })}
-                  >
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Mysuru">Mysuru</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Chennai">Chennai</option>
-                  </select>
+                  />
                 </div>
-                <div className="form-group">
+                <div className="form-group flex-1">
                   <label>Location / Area *</label>
                   <input 
                     type="text" 
