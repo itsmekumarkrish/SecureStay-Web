@@ -2,34 +2,38 @@ import React from 'react';
 import { Monitor, Phone, ShieldCheck } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 
-export default function MobileRestrictionModal() {
+export default function MobileRestrictionModal({ onBypass }) {
   return (
     <div className="mobile-restriction-overlay">
       <div className="mobile-restriction-card">
-        {/* Brand Header */}
-        <div className="mobile-brand-wrap">
-          <img src="/assets/logo.png" alt="Secure Stay Private Limited" className="mobile-restriction-logo" />
+        {/* Brand Logo Header */}
+        <div className="mobile-brand-wrap mb-3">
+          <img 
+            src="/favicon.png" 
+            alt="SecureStay" 
+            className="mobile-restriction-icon mx-auto" 
+          />
         </div>
 
         <div className="mobile-badge-tag">
-          <Monitor size={14} /> Desktop &amp; Webview Only
+          <Monitor size={14} /> Desktop &amp; Laptop Required
         </div>
 
         <h2>Desktop Access Required</h2>
         <p className="mobile-restriction-desc">
-          The <strong>SecureStay Web Portal</strong> is optimized exclusively for desktop computer screens and webview browser windows.
+          The <strong>SecureStay Properties Portal</strong> is optimized exclusively for desktop &amp; laptop computer screens for 3D walkthroughs, listing management, and property verification.
         </p>
 
         {/* Info Box */}
         <div className="mobile-info-box">
           <div className="mobile-info-item">
             <ShieldCheck size={18} className="text-gold" />
-            <span>Residential Property Services Portal</span>
+            <span>Verified Residential Property Stays</span>
           </div>
         </div>
 
         <p className="mobile-instruction-text">
-          Please open this link on your desktop computer or laptop to explore properties and manage services.
+          Please open <strong>securestay.in</strong> on your laptop or desktop browser.
         </p>
 
         {/* Mobile Contact CTAs */}
@@ -48,9 +52,19 @@ export default function MobileRestrictionModal() {
             <Phone size={18} />
             <span>Call Property Advisor</span>
           </a>
+
+          {onBypass && (
+            <button 
+              type="button" 
+              className="btn-bypass-mobile mt-2" 
+              onClick={onBypass}
+            >
+              Continue to Mobile Site Anyway →
+            </button>
+          )}
         </div>
 
-        <p className="mobile-restriction-footer">
+        <p className="mobile-restriction-footer mt-3">
           © {new Date().getFullYear()} Secure Stay Private Limited. All rights reserved.
         </p>
       </div>

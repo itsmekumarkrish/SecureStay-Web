@@ -347,9 +347,12 @@ export default function App() {
   }, []);
 
   // Scroll to top on view change
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentView]);
+  // Mobile screen restriction state
+  const [mobileBypass, setMobileBypass] = useState(false);
+
+  if (isMobileDevice && !mobileBypass) {
+    return <MobileRestrictionModal onBypass={() => setMobileBypass(true)} />;
+  }
 
   return (
     <div className="page">
