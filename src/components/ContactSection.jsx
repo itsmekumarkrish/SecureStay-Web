@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle } from 'lucide-react';
+import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown } from 'lucide-react';
 
 export default function ContactSection({ formData, setFormData, formSubmitted, handleSubmit }) {
   const videoRef = useRef(null);
@@ -9,6 +9,13 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [showControls, setShowControls] = useState(false);
+  const [isUserTypeSheetOpen, setIsUserTypeSheetOpen] = useState(false);
+
+  const userTypeLabels = {
+    owner: 'Property Owner / Landlord',
+    tenant: 'Tenant / Guest',
+    other: 'Other Inquiry'
+  };
 
   const formatTime = (timeInSeconds) => {
     if (isNaN(timeInSeconds) || !timeInSeconds) return '0:00';
@@ -232,14 +239,18 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
 
                 <div className="form-group">
                   <label>I am a</label>
-                  <select 
-                    value={formData.userType}
-                    onChange={(e) => setFormData({ ...formData, userType: e.target.value })}
+                  <button 
+                    type="button" 
+                    className="custom-select-trigger"
+                    onClick={() => setIsUserTypeSheetOpen(true)}
+                    aria-haspopup="dialog"
+                    aria-expanded={isUserTypeSheetOpen}
                   >
-                    <option value="owner">Property Owner / Landlord (Want to list property / avail residential services)</option>
-                    <option value="tenant">Tenant / Guest (Looking for a home to rent)</option>
-                    <option value="other">Other Inquiry</option>
-                  </select>
+                    <span className="custom-select-value">
+                      {userTypeLabels[formData.userType] || 'Select your role...'}
+                    </span>
+                    <ChevronDown size={18} className="custom-select-chevron" />
+                  </button>
                 </div>
 
                 <div className="form-group">
@@ -269,6 +280,48 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
           </div>
         </div>
       </div>
+
+      {/* State-Driven Bottom Sheet Modal for 'I am a' Selection */}
+      {isUserTypeSheetOpen && (
+        <div className="bottom-sheet-root">
+          <div 
+            className="bottom-sheet-backdrop" 
+            onClick={() => setIsUserTypeSheetOpen(false)} 
+          />
+          <div className="bottom-sheet-tray" role="dialog" aria-modal="true">
+            <div className="bottom-sheet-handle" />
+            <h3 className="bottom-sheet-title">I am a</h3>
+            <div className="bottom-sheet-options">
+              {[
+                { key: 'owner', title: 'Property Owner / Landlord', subtitle: 'Want to list property or avail residential services' },
+                { key: 'tenant', title: 'Tenant / Guest', subtitle: 'Looking for a home to rent' },
+                { key: 'other', title: 'Other Inquiry', subtitle: 'General questions or business partnerships' }
+              ].map((opt) => {
+                const isSelected = formData.userType === opt.key;
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    className={`bottom-sheet-option-row ${isSelected ? 'is-selected' : ''}`}
+                    onClick={() => {
+                      setFormData({ ...formData, userType: opt.key });
+                      setIsUserTypeSheetOpen(false);
+                    }}
+                  >
+                    <div className="option-text-wrapper">
+                      <span className="option-title">{opt.title}</span>
+                      <span className="option-subtitle">{opt.subtitle}</span>
+                    </div>
+                    <div className="custom-radio-circle">
+                      {isSelected && <div className="custom-radio-inner-dot" />}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
