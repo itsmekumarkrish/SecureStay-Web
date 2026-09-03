@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Users, Building2, TrendingUp, ShieldCheck, Zap, Home, Key } from 'lucide-react';
+import { ArrowRight, Users, Building2, TrendingUp, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -18,28 +18,8 @@ export default function Hero() {
             End-to-end residential property services for owners with guaranteed on-time rent, verified tenants, and seamless property care across India.
           </p>
 
-          {/* Animated Live Trust & Feature Strip */}
-          <div className="hero-custom-design-slot">
-            <div className="hero-trust-marquee-wrapper">
-              <div className="hero-trust-badge badge-glow">
-                <span className="badge-pulse-dot"></span>
-                <Zap size={14} className="badge-icon icon-gold" />
-                <span>Guaranteed On-Time Rent</span>
-              </div>
-              <div className="hero-trust-badge">
-                <ShieldCheck size={14} className="badge-icon icon-blue" />
-                <span>100% KYC Verified Tenants</span>
-              </div>
-              <div className="hero-trust-badge">
-                <Home size={14} className="badge-icon icon-green" />
-                <span>Full Property Care</span>
-              </div>
-              <div className="hero-trust-badge">
-                <Key size={14} className="badge-icon icon-gold" />
-                <span>Zero Brokerage Stays</span>
-              </div>
-            </div>
-          </div>
+          {/* Clean Responsive Spacing Gap Slot */}
+          <div className="hero-custom-design-slot"></div>
 
           <div className="hero-buttons">
             <a href="#contact" className="btn-primary">

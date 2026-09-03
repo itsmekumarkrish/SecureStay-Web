@@ -421,79 +421,9 @@ a {
 
 .hero-custom-design-slot {
   width: 100%;
-  margin-top: clamp(12px, 2vh, 18px);
-  margin-bottom: clamp(18px, 2.8vh, 26px);
+  margin-top: clamp(8px, 1.5vh, 16px);
+  margin-bottom: clamp(16px, 2.5vh, 24px);
   box-sizing: border-box;
-}
-
-.hero-trust-marquee-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.hero-trust-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(12, 35, 64, 0.10);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 0.80rem;
-  font-weight: 600;
-  color: #0c2340;
-  box-shadow: 0 2px 10px rgba(12, 35, 64, 0.04);
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-.hero-trust-badge:hover {
-  transform: translateY(-2px);
-  border-color: rgba(197, 155, 39, 0.4);
-  box-shadow: 0 4px 14px rgba(197, 155, 39, 0.15);
-}
-
-.badge-glow {
-  border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
-}
-
-.badge-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #10b981;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  animation: pulseDot 2s infinite;
-}
-
-@keyframes pulseDot {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
-}
-
-.icon-gold {
-  color: #d97706;
-}
-
-.icon-blue {
-  color: #2563eb;
-}
-
-.icon-green {
-  color: #059669;
 }
 
 .hero-buttons {
@@ -2486,22 +2416,12 @@ input:focus, select:focus, textarea:focus {
     text-align: left;
   }
 
-  /* Mobile-Specific Animated Trust Strip Slot */
+  /* Mobile-Specific Custom Design Slot Gap (Clean Spacing) */
   .hero-custom-design-slot {
     width: 100%;
-    margin-top: 12px;
-    margin-bottom: 20px;
-    min-height: auto;
-  }
-
-  .hero-trust-marquee-wrapper {
-    gap: 8px;
-  }
-
-  .hero-trust-badge {
-    font-size: 0.74rem;
-    padding: 5px 11px;
-    gap: 6px;
+    margin-top: 24px;
+    margin-bottom: 48px;
+    min-height: 60px;
   }
 
   /* Horizontal Side-by-Side Action Buttons on Mobile */
