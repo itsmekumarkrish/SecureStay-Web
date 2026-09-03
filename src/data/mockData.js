@@ -11,6 +11,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Fully Furnished',
     city: 'Bangalore',
+    description: 'Beautiful sun-lit studio apartment located right next to Koramangala metro station and major tech parks. Fully equipped with high-speed Wi-Fi, modern modular kitchen, biometric smart lock security, and 24/7 property manager assistance.',
     images: [
       '/assets/hero_stay.jpg',
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
@@ -30,6 +31,7 @@ export const properties = [
     furnishing: 'Semi Furnished',
     feature: 'Gated Society',
     city: 'Mysuru',
+    description: 'Spacious executive 2 BHK apartment in the peaceful neighborhood of Gokulam. Features wooden wardrobes, modern kitchen cabinets, dual balconies with scenic views, and covered car parking.',
     images: [
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
@@ -49,6 +51,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Coliving',
     city: 'Hyderabad',
+    description: 'Premium private coliving room designed for working IT professionals in Gachibowli. Comes with workstation desk, attached bathroom, daily housekeeping, high-speed fiber internet, and community lounge access.',
     images: [
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80',
@@ -68,6 +71,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Fully Furnished',
     city: 'Chennai',
+    description: 'Ultra-luxurious 2.5 BHK villa unit in prime Anna Nagar. Fully furnished with air conditioning, sofa sets, dining furniture, 100% power backup, and round-the-clock gated security.',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
@@ -86,6 +90,7 @@ export const properties = [
     furnishing: 'Semi Furnished',
     feature: 'Gated Society',
     city: 'Bangalore',
+    description: 'Charming 1 BHK apartment situated in HSR Layout Sector 1. Clean residential building with lift access, power backup, water treatment facility, and walking distance to cafes and parks.',
     images: [
       'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
@@ -104,6 +109,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Fully Furnished',
     city: 'Hyderabad',
+    description: 'Minimalist fully-furnished studio close to Jubilee Hills metro station and HITEC City. Equipped with smart TV, refrigerator, microwave, and high-speed Wi-Fi.',
     images: [
       'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80',
@@ -122,6 +128,7 @@ export const properties = [
     furnishing: 'Semi Furnished',
     feature: 'Gated Society',
     city: 'Chennai',
+    description: 'Expansive 3 BHK apartment tailored for families in T. Nagar. Features large hall, 3 attached baths, modular kitchen layout, visitor parking, and 24/7 security guard.',
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=800&q=80',
@@ -140,6 +147,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Coliving',
     city: 'Mysuru',
+    description: 'Peaceful coliving stay in Vijayanagar Mysuru with modern amenities, laundry facility, high-speed Wi-Fi, and serene surroundings ideal for students and young working professionals.',
     images: [
       'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80',

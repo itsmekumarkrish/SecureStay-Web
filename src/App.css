@@ -3852,6 +3852,30 @@ input:focus, select:focus, textarea:focus {
   color: #334155;
 }
 
+/* Property Detail Description Section */
+.detail-description-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.detail-description-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0c2340;
+  margin: 0 0 6px 0;
+}
+
+.detail-description-text {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  white-space: pre-line;
+}
+
 .detail-highlights {
   display: flex;
   flex-wrap: wrap;

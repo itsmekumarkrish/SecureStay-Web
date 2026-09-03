@@ -106,6 +106,14 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
               )}
             </div>
 
+            {/* About This Property Text Block */}
+            <div className="detail-description-section">
+              <h4 className="detail-description-title">About This Property</h4>
+              <p className="detail-description-text">
+                {property.description || 'Beautiful sun-lit studio apartment located right next to key commercial hubs and public transport. Features modern furnishing, 24/7 security, high-speed Wi-Fi, and premium living amenities.'}
+              </p>
+            </div>
+
             <div className="detail-highlights">
               <div className="highlight-badge">
                 <ShieldCheck size={16} className="text-green" />

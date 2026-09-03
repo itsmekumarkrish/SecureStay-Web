@@ -52,6 +52,7 @@ export default function AdminDashboard({
     leasePrice: '',
     salePrice: '',
     type: 'Fully Furnished • 2 BHK',
+    description: '',
     images: [''],
     amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping',
     customFields: []
@@ -323,6 +324,7 @@ export default function AdminDashboard({
       leasePrice: leaseFormatted,
       salePrice: saleFormatted,
       type: newProp.type,
+      description: newProp.description || '',
       images: finalImages,
       amenities: amenitiesList.length > 0 ? amenitiesList : [
         'Biometric Smart Lock', 'High-Speed Wi-Fi', 'Power Backup', 'Housekeeping'
@@ -348,6 +350,7 @@ export default function AdminDashboard({
       leasePrice: '',
       salePrice: '',
       type: 'Fully Furnished • 2 BHK',
+      description: '',
       images: [''],
       amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping',
       customFields: []
@@ -674,6 +677,18 @@ export default function AdminDashboard({
                         onChange={(e) => setNewProp({ ...newProp, type: e.target.value })}
                       />
                     </div>
+                  </div>
+
+                  {/* Section Field Block: Property Description */}
+                  <div className="saas-field mt-3">
+                    <label className="saas-label">Property Description</label>
+                    <textarea 
+                      rows="4"
+                      className="saas-input saas-textarea"
+                      placeholder="e.g. Beautiful sun-lit studio apartment located right next to the metro station..."
+                      value={newProp.description || ''}
+                      onChange={(e) => setNewProp({ ...newProp, description: e.target.value })}
+                    />
                   </div>
                 </div>
               </div>
@@ -1291,6 +1306,18 @@ export default function AdminDashboard({
                         onChange={(e) => setEditingProp({ ...editingProp, type: e.target.value })}
                       />
                     </div>
+                  </div>
+
+                  {/* Section Field Block: Property Description */}
+                  <div className="saas-field mt-3">
+                    <label className="saas-label">Property Description</label>
+                    <textarea 
+                      rows="4"
+                      className="saas-input saas-textarea"
+                      placeholder="e.g. Beautiful sun-lit studio apartment located right next to the metro station..."
+                      value={editingProp.description || ''}
+                      onChange={(e) => setEditingProp({ ...editingProp, description: e.target.value })}
+                    />
                   </div>
                 </div>
               </div>
