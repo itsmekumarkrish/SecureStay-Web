@@ -556,7 +556,7 @@ export default function AdminDashboard({
                     <option value="Mysuru">Mysuru</option>
                     <option value="Hyderabad">Hyderabad</option>
                     <option value="Chennai">Chennai</option>
-                    <option value="Other">➕ Add Custom City Manually...</option>
+                    <option value="Other">Add Custom City Manually...</option>
                   </select>
                 </div>
 
@@ -609,7 +609,7 @@ export default function AdminDashboard({
                       checked={(newProp.purposes || ['rent']).includes('rent')} 
                       onChange={() => togglePurpose('rent')} 
                     />
-                    <span>🏠 For Monthly Rent</span>
+                    <span>For Monthly Rent</span>
                   </label>
 
                   <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('lease') ? 'active' : ''}`}>
@@ -618,7 +618,7 @@ export default function AdminDashboard({
                       checked={(newProp.purposes || []).includes('lease')} 
                       onChange={() => togglePurpose('lease')} 
                     />
-                    <span>📜 For Long-Term Lease</span>
+                    <span>For Long-Term Lease</span>
                   </label>
 
                   <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('sale') ? 'active' : ''}`}>
@@ -627,7 +627,7 @@ export default function AdminDashboard({
                       checked={(newProp.purposes || []).includes('sale')} 
                       onChange={() => togglePurpose('sale')} 
                     />
-                    <span>🏷️ For Outright Sale</span>
+                    <span>For Outright Sale</span>
                   </label>
 
                   <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('custom') ? 'active' : ''}`}>
@@ -636,7 +636,7 @@ export default function AdminDashboard({
                       checked={(newProp.purposes || []).includes('custom')} 
                       onChange={() => togglePurpose('custom')} 
                     />
-                    <span>➕ Add Custom Listing Purpose...</span>
+                    <span>Add Custom Listing Purpose...</span>
                   </label>
                 </div>
 
@@ -686,7 +686,7 @@ export default function AdminDashboard({
               <div className="admin-extra-fields-box mb-4 mt-3" style={{ background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '12px', padding: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0c2340' }}>➕ Dynamic Custom Details / Extra Fields</h4>
+                    <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0c2340' }}>Dynamic Custom Details / Extra Fields</h4>
                     <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>Add optional custom attributes (e.g. Security Deposit, Facing, Floor Number, Maintenance Fee).</p>
                   </div>
                   <button 
