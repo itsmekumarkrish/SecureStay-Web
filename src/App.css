@@ -2977,9 +2977,117 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 6px 18px rgba(12, 35, 64, 0.28);
   }
 
+  /* Mobile Native App-Style Redesign for Featured Residential Properties */
+  .properties-eyebrow {
+    display: none !important;
+  }
+
   .properties-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .property-card {
+    background: #ffffff !important;
+    border: none !important;
+    outline: none !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 30px rgba(12, 35, 64, 0.06) !important;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .property-img-container {
+    height: 230px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .property-photo-counter {
+    top: 12px;
+    right: 12px;
+    background: rgba(12, 35, 64, 0.85);
+    backdrop-filter: blur(4px);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .property-card .slider-arrow {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(4px);
+    color: #0c2340 !important;
+    border: none !important;
+    opacity: 0.9 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .property-details {
+    padding: 20px 18px 22px 18px;
+  }
+
+  .property-type {
+    display: inline-block;
+    font-size: 11px !important;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #c59b27 !important;
+    background: #fef8eb !important;
+    border: 1px solid rgba(197, 155, 39, 0.25) !important;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+  }
+
+  .property-title {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: #0c2340 !important;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .property-location {
+    font-size: 0.86rem;
+    color: #64748b;
+    margin-bottom: 12px;
+  }
+
+  .property-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .property-price {
+    font-size: 1.18rem !important;
+    font-weight: 800 !important;
+    color: #0c2340 !important;
+  }
+
+  .property-bottom .btn-secondary-sm {
+    background: #0c2340;
+    color: #ffffff !important;
+    border-radius: 50px;
+    padding: 9px 18px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: none;
+    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.15);
+    transition: background 0.2s ease;
+  }
+
+  .property-bottom .btn-secondary-sm:hover,
+  .property-bottom .btn-secondary-sm:active {
+    background: #08172c;
   }
 
   /* Reviews Marquee & Cards on Mobile */

@@ -10,7 +10,7 @@ export default function PropertiesSection({ properties, handleInquire, onSeeMore
     <section id="properties" className="section bg-light">
       <div className="container">
         <div className="section-title text-center">
-          <span className="section-eyebrow">READY TO MOVE IN</span>
+          <span className="section-eyebrow properties-eyebrow">READY TO MOVE IN</span>
           <h2>Featured Residential Properties</h2>
           <p>Explore verified homes available for monthly rent and flexible long-term lease.</p>
         </div>
