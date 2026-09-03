@@ -1261,39 +1261,39 @@ a {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
 .faq-item {
   background: #ffffff;
-  border: 1.5px solid #dbeafe;
-  outline: 1px solid rgba(12, 35, 64, 0.08);
-  border-radius: var(--radius-lg);
+  border: 1px solid #e8eef5;
+  border-radius: 12px;
   overflow: hidden;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(12, 35, 64, 0.03);
+  transition: all 0.22s ease;
+  box-shadow: 0 1px 4px rgba(12, 35, 64, 0.04);
 }
 
 .faq-item-open {
-  border-color: var(--primary-color);
-  box-shadow: 0 8px 22px rgba(12, 35, 64, 0.08);
+  border-color: #bcd0e8;
+  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.07);
 }
 
 .faq-question-btn {
   width: 100%;
   text-align: left;
-  padding: 20px 24px;
+  padding: 14px 16px;
   background: transparent;
   border: none;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: #0c2340;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
   transition: color 0.2s ease;
+  line-height: 1.4;
 }
 
 .faq-question-btn:hover {
@@ -1301,8 +1301,8 @@ a {
 }
 
 .faq-icon-wrapper {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: #f0f4f8;
   display: flex;
@@ -1330,23 +1330,48 @@ a {
 }
 
 .faq-answer-content {
-  padding: 0 24px 22px 24px;
+  padding: 0 16px 14px 16px;
   border-top: 1px solid #f1f5f9;
 }
 
 .faq-answer-content p {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: #475569;
-  padding-top: 14px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #64748b;
+  padding-top: 10px;
 }
 
 .faq-bottom-cta {
-  margin-top: 40px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .faq-container {
+    gap: 6px;
+  }
+
+  .faq-question-btn {
+    padding: 12px 14px;
+    font-size: 0.84rem;
+  }
+
+  .faq-answer-content {
+    padding: 0 14px 12px 14px;
+  }
+
+  .faq-answer-content p {
+    font-size: 0.82rem;
+    padding-top: 8px;
+  }
+
+  .faq-icon-wrapper {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* 9. Contact Card */
