@@ -176,7 +176,7 @@ export default function AdminDashboard({
       : typeStr.includes('Private') ? 'Private Ensuite' : 'Fully Furnished';
 
     const rentFormatted = newProp.rentPrice 
-      ? `₹${newProp.rentPrice.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} / month` 
+      ? `₹${newProp.rentPrice.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` 
       : '';
 
     const leaseFormatted = newProp.leasePrice 

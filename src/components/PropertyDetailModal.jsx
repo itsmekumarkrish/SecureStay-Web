@@ -86,7 +86,9 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
               {property.rentPrice && (
                 <div className="price-item">
                   <span className="price-label">Monthly Rent</span>
-                  <span className="price-value-highlight">{property.rentPrice}</span>
+                  <span className="price-value-highlight">
+                    {property.rentPrice.replace(/\s*\/\s*month/gi, '')}
+                  </span>
                 </div>
               )}
               {property.leasePrice && (
