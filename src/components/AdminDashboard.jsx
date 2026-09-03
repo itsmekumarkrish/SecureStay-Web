@@ -234,17 +234,6 @@ export default function AdminDashboard({
 
         <div className="admin-login-card">
           <div className="login-header text-center">
-            <div className="admin-brand-header mb-3">
-              <img 
-                src="/assets/logo_light.png" 
-                alt="Secure Stay Private Limited" 
-                className="admin-logo-img mx-auto"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
-
             <div className="admin-icon-halo">
               <ShieldCheck size={28} className="text-gold" />
             </div>
@@ -311,9 +300,15 @@ export default function AdminDashboard({
           </form>
 
           <div className="text-center mt-4">
-            <button type="button" className="btn-return-website" onClick={onBackToHome}>
+            <a 
+              href="/" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="btn-return-website" 
+              style={{ textDecoration: 'none', display: 'inline-block' }}
+            >
               ← Return to Main Website
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -335,9 +330,15 @@ export default function AdminDashboard({
           </div>
 
           <div className="admin-top-actions">
-            <button type="button" className="btn-secondary-sm" onClick={onBackToHome}>
+            <a 
+              href="/" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="btn-secondary-sm" 
+              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+            >
               <ArrowLeft size={16} /> View Live Website
-            </button>
+            </a>
             <button type="button" className="btn-logout" onClick={() => setIsAuthenticated(false)}>
               <LogOut size={16} /> Logout
             </button>
