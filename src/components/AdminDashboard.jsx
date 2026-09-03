@@ -45,14 +45,51 @@ export default function AdminDashboard({
     city: 'Bangalore',
     customCity: '',
     area: '',
+    purposes: ['rent'],
+    customPurpose: '',
     purpose: 'rent',
     rentPrice: '',
     leasePrice: '',
     salePrice: '',
     type: 'Fully Furnished • 2 BHK',
     images: [''],
-    amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping'
+    amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping',
+    customFields: []
   });
+
+  const togglePurpose = (pType) => {
+    setNewProp((prev) => {
+      const current = prev.purposes || ['rent'];
+      const exists = current.includes(pType);
+      const updated = exists ? current.filter((t) => t !== pType) : [...current, pType];
+      return {
+        ...prev,
+        purposes: updated.length > 0 ? updated : ['rent']
+      };
+    });
+  };
+
+  const handleAddCustomField = () => {
+    setNewProp((prev) => ({
+      ...prev,
+      customFields: [...(prev.customFields || []), { label: '', value: '' }]
+    }));
+  };
+
+  const handleCustomFieldChange = (index, field, val) => {
+    setNewProp((prev) => {
+      const updated = [...(prev.customFields || [])];
+      updated[index] = { ...updated[index], [field]: val };
+      return { ...prev, customFields: updated };
+    });
+  };
+
+  const handleRemoveCustomField = (index) => {
+    setNewProp((prev) => ({
+      ...prev,
+      customFields: (prev.customFields || []).filter((_, i) => i !== index)
+    }));
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -197,6 +234,22 @@ export default function AdminDashboard({
     const autoPropId = `SS-${cityCode}-${Math.floor(10 + Math.random() * 90)}`;
     const finalPropertyId = newProp.propertyId && newProp.propertyId.trim() ? newProp.propertyId.trim() : autoPropId;
 
+    const activePurposes = newProp.purposes || ['rent'];
+    let computedPurpose = 'rent';
+    if (activePurposes.includes('rent') && activePurposes.includes('sale')) {
+      computedPurpose = 'rent_sale';
+    } else if (activePurposes.includes('rent')) {
+      computedPurpose = 'rent';
+    } else if (activePurposes.includes('lease')) {
+      computedPurpose = 'lease';
+    } else if (activePurposes.includes('sale')) {
+      computedPurpose = 'sale';
+    } else if (activePurposes.includes('custom')) {
+      computedPurpose = newProp.customPurpose || 'custom';
+    }
+
+    const validCustomFields = (newProp.customFields || []).filter((cf) => cf.label.trim() !== '' && cf.value.trim() !== '');
+
     const propertyPayload = {
       id: Date.now(),
       propertyId: finalPropertyId,
@@ -204,7 +257,9 @@ export default function AdminDashboard({
       city: effectiveCity,
       bhk: bhk,
       feature: feature,
-      purpose: newProp.purpose || 'rent',
+      purposes: activePurposes,
+      customPurpose: newProp.customPurpose || '',
+      purpose: computedPurpose,
       location: `${newProp.area}, ${effectiveCity}`,
       rentPrice: rentFormatted,
       leasePrice: leaseFormatted,
@@ -213,7 +268,8 @@ export default function AdminDashboard({
       images: finalImages,
       amenities: amenitiesList.length > 0 ? amenitiesList : [
         'Biometric Smart Lock', 'High-Speed Wi-Fi', 'Power Backup', 'Housekeeping'
-      ]
+      ],
+      customFields: validCustomFields
     };
 
     onAddProperty(propertyPayload);
@@ -227,13 +283,16 @@ export default function AdminDashboard({
       city: 'Bangalore',
       customCity: '',
       area: '',
+      purposes: ['rent'],
+      customPurpose: '',
       purpose: 'rent',
       rentPrice: '',
       leasePrice: '',
       salePrice: '',
       type: 'Fully Furnished • 2 BHK',
       images: [''],
-      amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping'
+      amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping',
+      customFields: []
     });
   };
 
@@ -536,18 +595,61 @@ export default function AdminDashboard({
                     onChange={(e) => setNewProp({ ...newProp, type: e.target.value })}
                   />
                 </div>
-                <div className="form-group flex-1">
-                  <label>Listing Purpose *</label>
-                  <select
-                    value={newProp.purpose}
-                    onChange={(e) => setNewProp({ ...newProp, purpose: e.target.value })}
-                  >
-                    <option value="rent">For Monthly Rent</option>
-                    <option value="lease">For Long-Term Lease</option>
-                    <option value="sale">For Outright Sale</option>
-                    <option value="rent_sale">Rent &amp; Sale Available</option>
-                  </select>
+              </div>
+
+              {/* Listing Purpose Checkbox Pills */}
+              <div className="form-group mb-4">
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+                  Listing Purpose Types (Select Single or Multiple Options) *
+                </label>
+                <div className="purpose-checkbox-group">
+                  <label className={`purpose-checkbox-pill ${(newProp.purposes || ['rent']).includes('rent') ? 'active' : ''}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={(newProp.purposes || ['rent']).includes('rent')} 
+                      onChange={() => togglePurpose('rent')} 
+                    />
+                    <span>🏠 For Monthly Rent</span>
+                  </label>
+
+                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('lease') ? 'active' : ''}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={(newProp.purposes || []).includes('lease')} 
+                      onChange={() => togglePurpose('lease')} 
+                    />
+                    <span>📜 For Long-Term Lease</span>
+                  </label>
+
+                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('sale') ? 'active' : ''}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={(newProp.purposes || []).includes('sale')} 
+                      onChange={() => togglePurpose('sale')} 
+                    />
+                    <span>🏷️ For Outright Sale</span>
+                  </label>
+
+                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('custom') ? 'active' : ''}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={(newProp.purposes || []).includes('custom')} 
+                      onChange={() => togglePurpose('custom')} 
+                    />
+                    <span>➕ Add Custom Listing Purpose...</span>
+                  </label>
                 </div>
+
+                {(newProp.purposes || []).includes('custom') && (
+                  <div style={{ marginTop: '10px' }}>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. PG / Paying Guest, Commercial Lease, Short Stay"
+                      value={newProp.customPurpose || ''}
+                      onChange={(e) => setNewProp({ ...newProp, customPurpose: e.target.value })}
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="form-row">
@@ -578,6 +680,51 @@ export default function AdminDashboard({
                     onChange={(e) => setNewProp({ ...newProp, salePrice: e.target.value })}
                   />
                 </div>
+              </div>
+
+              {/* Dynamic Extra Custom Fields Section */}
+              <div className="admin-extra-fields-box mb-4 mt-3" style={{ background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '12px', padding: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0c2340' }}>➕ Dynamic Custom Details / Extra Fields</h4>
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>Add optional custom attributes (e.g. Security Deposit, Facing, Floor Number, Maintenance Fee).</p>
+                  </div>
+                  <button 
+                    type="button" 
+                    className="btn-secondary-sm" 
+                    onClick={handleAddCustomField}
+                  >
+                    + Add Extra Field
+                  </button>
+                </div>
+
+                {(newProp.customFields || []).length > 0 && (
+                  <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {newProp.customFields.map((field, idx) => (
+                      <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center' }}>
+                        <input 
+                          type="text" 
+                          placeholder="Field Label (e.g. Security Deposit)"
+                          value={field.label || ''}
+                          onChange={(e) => handleCustomFieldChange(idx, 'label', e.target.value)}
+                        />
+                        <input 
+                          type="text" 
+                          placeholder="Field Value (e.g. 2 Months Rent)"
+                          value={field.value || ''}
+                          onChange={(e) => handleCustomFieldChange(idx, 'value', e.target.value)}
+                        />
+                        <button 
+                          type="button" 
+                          className="btn-remove-url"
+                          onClick={() => handleRemoveCustomField(idx)}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Photo Upload / Image URLs Section */}

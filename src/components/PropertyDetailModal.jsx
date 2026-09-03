@@ -132,6 +132,22 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
               </div>
             </div>
 
+            {property.customFields && property.customFields.length > 0 && (
+              <div className="detail-amenities-section" style={{ marginTop: '16px' }}>
+                <h4>Additional Property Details</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
+                  {property.customFields.map((cf, idx) => (
+                    cf.label && cf.value ? (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.85rem' }}>
+                        <span style={{ fontWeight: 700, color: '#0c2340', marginRight: '6px' }}>{cf.label}:</span>
+                        <span style={{ color: '#475569' }}>{cf.value}</span>
+                      </div>
+                    ) : null
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="detail-cta-row">
               <button 
                 type="button" 
