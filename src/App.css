@@ -2737,9 +2737,17 @@ input:focus, select:focus, textarea:focus {
     padding: 8px 0 16px 0;
   }
 
+  .reviews-section-title {
+    font-size: 1.60rem !important;
+    line-height: 1.4 !important;
+    color: #0c2340 !important;
+    font-weight: 800 !important;
+    margin-bottom: 8px;
+  }
+
   .reviews-marquee-track {
     gap: 14px;
-    animation: marqueeSlider 80s linear infinite;
+    animation: marqueeSlider 160s linear infinite;
   }
 
   .marquee-card {
