@@ -935,6 +935,7 @@ export default function AdminDashboard({
                   {filteredTableProperties.map((prop) => {
                     const isOccupied = prop.availability === 'Occupied';
                     const isFeatured = !!prop.isFeatured;
+                    const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
                     return (
                       <tr key={prop.id}>
                         <td>
@@ -945,44 +946,30 @@ export default function AdminDashboard({
                           />
                         </td>
                         <td>
-                          <strong>{prop.title}</strong>
-                          <div className="text-xs text-muted">{prop.type}</div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                            <strong style={{ color: '#0c2340', fontSize: '0.95rem' }}>{prop.title}</strong>
+                            <span className="table-prop-id-badge">#{propIdCode}</span>
+                            <span style={{ fontSize: '0.78rem', color: '#64748b' }}>{prop.type}</span>
+                          </div>
                         </td>
                         <td>{prop.location}</td>
-                        <td><span className="text-green font-semibold">{prop.rentPrice}</span></td>
+                        <td><span className="text-green font-semibold">{prop.rentPrice || prop.salePrice || 'N/A'}</span></td>
                         <td>
                           <button
                             type="button"
                             onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
-                            style={{
-                              border: 'none',
-                              cursor: 'pointer',
-                              background: isOccupied ? '#fef2f2' : '#dcfce7',
-                              color: isOccupied ? '#dc2626' : '#15803d',
-                              padding: '4px 10px',
-                              borderRadius: '12px',
-                              fontSize: '0.78rem',
-                              fontWeight: 700
-                            }}
+                            className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
                             title="Click to toggle Available / Occupied status"
                           >
-                            {isOccupied ? '🔴 Occupied' : '🟢 Available'}
+                            <span className="status-dot"></span>
+                            {isOccupied ? 'Occupied' : 'Available'}
                           </button>
                         </td>
                         <td>
                           <button
                             type="button"
                             onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
-                            style={{
-                              border: 'none',
-                              cursor: 'pointer',
-                              background: isFeatured ? '#fef9c3' : '#f1f5f9',
-                              color: isFeatured ? '#ca8a04' : '#64748b',
-                              padding: '4px 10px',
-                              borderRadius: '12px',
-                              fontSize: '0.78rem',
-                              fontWeight: 700
-                            }}
+                            className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
                             title="Click to toggle Featured on Homepage"
                           >
                             {isFeatured ? '★ Featured' : '☆ Standard'}
@@ -992,15 +979,15 @@ export default function AdminDashboard({
                           <div className="table-actions-cell">
                             <button 
                               type="button" 
-                              className="btn-edit-sm" 
+                              className="btn-table-edit" 
                               onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
-                              title="Edit Property & Photos"
+                              title="Edit Property &amp; Photos"
                             >
                               <Pencil size={14} /> Edit
                             </button>
                             <button 
                               type="button" 
-                              className="btn-danger-sm" 
+                              className="btn-table-remove" 
                               onClick={() => onDeleteProperty(prop.id)}
                               title="Delete Property"
                             >
