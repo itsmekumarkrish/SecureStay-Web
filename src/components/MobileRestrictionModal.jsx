@@ -45,7 +45,7 @@ export default function MobileRestrictionModal({ onBypass }) {
             className="btn-whatsapp-mobile-card"
           >
             <WhatsAppIcon size={20} />
-            <span>Chat on WhatsApp (+91 7090902111)</span>
+            <span>Chat on WhatsApp</span>
           </a>
 
           <a href="tel:+917090902111" className="btn-call-mobile-card">
