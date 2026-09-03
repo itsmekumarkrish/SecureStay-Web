@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown } from 'lucide-react';
+import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown, X } from 'lucide-react';
 
 export default function ContactSection({ formData, setFormData, formSubmitted, handleSubmit }) {
   const videoRef = useRef(null);
@@ -290,7 +290,17 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
           />
           <div className="bottom-sheet-tray" role="dialog" aria-modal="true">
             <div className="bottom-sheet-handle" />
-            <h3 className="bottom-sheet-title">I am a</h3>
+            <div className="bottom-sheet-header">
+              <h3 className="bottom-sheet-title">I am a</h3>
+              <button 
+                type="button" 
+                className="bottom-sheet-close-btn"
+                onClick={() => setIsUserTypeSheetOpen(false)}
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
             <div className="bottom-sheet-options">
               {[
                 { key: 'owner', title: 'Property Owner / Landlord', subtitle: 'Want to list property or avail residential services' },

@@ -1835,7 +1835,7 @@ input:focus, select:focus, textarea:focus {
   background: rgba(12, 35, 64, 0.45);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  z-index: 999998;
+  z-index: 9999998;
   animation: backdropFadeIn 0.25s ease forwards;
 }
 
@@ -1843,12 +1843,15 @@ input:focus, select:focus, textarea:focus {
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   background: #ffffff;
   border-radius: 24px 24px 0 0;
-  box-shadow: 0 -8px 32px rgba(12, 35, 64, 0.12);
+  box-shadow: 0 -8px 36px rgba(12, 35, 64, 0.18);
   padding: 16px 20px 36px 20px;
-  z-index: 999999;
+  z-index: 9999999;
   box-sizing: border-box;
   animation: sheetSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   max-height: 85vh;
@@ -1860,16 +1863,42 @@ input:focus, select:focus, textarea:focus {
   height: 5px;
   background: #e2e8f0;
   border-radius: 3px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 14px auto;
   flex-shrink: 0;
+}
+
+.bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 .bottom-sheet-title {
   font-size: 1.15rem;
   font-weight: 800;
   color: #0c2340;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   text-align: left;
+}
+
+.bottom-sheet-close-btn {
+  background: rgba(12, 35, 64, 0.05);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0c2340;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.bottom-sheet-close-btn:hover {
+  background: rgba(12, 35, 64, 0.10);
 }
 
 .bottom-sheet-options {
