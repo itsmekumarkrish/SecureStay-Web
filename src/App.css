@@ -24,6 +24,15 @@
 html {
   font-size: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+#contact,
+#contact-form,
+#contact-card,
+.contact-card,
+.contact-form-wrapper {
+  scroll-margin-top: 100px !important;
 }
 
 * {

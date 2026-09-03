@@ -74,7 +74,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
   return (
     <section id="contact" className="section">
       <div className="container">
-        <div className="contact-card">
+        <div id="contact-card" className="contact-card">
           <div className="contact-info">
             <h2>Contact SecureStay</h2>
             <p>Have questions or want to partner with us? Leave your message and our team will get back to you shortly.</p>

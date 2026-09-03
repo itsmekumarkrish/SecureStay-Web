@@ -11,9 +11,17 @@ export default function Header({
     setMobileMenuOpen(false);
     if (hashTarget) {
       setTimeout(() => {
-        const elem = document.getElementById(hashTarget);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        const elem = document.getElementById(hashTarget) || document.getElementById('contact-card') || document.getElementById('contact');
+        if (elem) {
+          const headerOffset = 100;
+          const elementPosition = elem.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 120);
     }
   };
 

@@ -251,11 +251,17 @@ export default function App() {
       message: propTitle ? `Hi, I am interested in inquiring about "${propTitle}".` : prev.message
     }));
     setTimeout(() => {
-      const contactElement = document.getElementById('contact-form') || document.getElementById('contact');
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: 'smooth' });
+      const elem = document.getElementById('contact-form') || document.getElementById('contact-card') || document.getElementById('contact');
+      if (elem) {
+        const headerOffset = 100;
+        const elementPosition = elem.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
-    }, 100);
+    }, 120);
   };
 
   const handleSubmitContactForm = (e) => {
