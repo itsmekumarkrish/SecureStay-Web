@@ -537,7 +537,8 @@ export default function AdminDashboard({
                 </div>
 
                 <div className="saas-card-body">
-                  <div className="saas-grid-2">
+                  {/* Row 1: Property Title (3fr) + Property ID Number (1fr) */}
+                  <div className="saas-grid-3fr-1fr">
                     <div className="saas-field">
                       <label className="saas-label">Property Title / Building Name *</label>
                       <input 
@@ -554,14 +555,15 @@ export default function AdminDashboard({
                       <input 
                         type="text" 
                         className="saas-input"
-                        placeholder="e.g. SS-MYS-02 (Auto-generated if empty)"
+                        placeholder="e.g. SS-MYS-02 (Auto-generated)"
                         value={newProp.propertyId || ''}
                         onChange={(e) => setNewProp({ ...newProp, propertyId: e.target.value })}
                       />
                     </div>
                   </div>
 
-                  <div className="saas-grid-3 mt-3">
+                  {/* Row 2: 3 Equal Columns (33.33% each) */}
+                  <div className="saas-grid-3">
                     <div className="saas-field">
                       <label className="saas-label">City Location *</label>
                       <select 

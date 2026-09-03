@@ -4871,25 +4871,33 @@ input:focus, select:focus, textarea:focus {
 
 .saas-card-body {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* SaaS Field & Input Grid Specs */
-.saas-grid-2 {
+.saas-grid-3fr-1fr {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .saas-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  .saas-grid-2,
+  .saas-grid-3fr-1fr,
   .saas-grid-3 {
     grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
 }
 
