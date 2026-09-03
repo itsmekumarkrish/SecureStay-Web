@@ -522,172 +522,207 @@ export default function AdminDashboard({
           <div className="admin-card-section">
             <div className="admin-section-header">
               <h3>Add New Property Listing</h3>
-              <p>Upload high-resolution property photos, set monthly rent/lease details, and select target city.</p>
-            </div>
-
-            <form onSubmit={handleCreatePropertySubmit} className="add-property-form">
-              <div className="form-row">
-                <div className="form-group flex-2">
-                  <label>Property Title / Building Name *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. Skyline Luxury 2 BHK Residency"
-                    value={newProp.title}
-                    onChange={(e) => setNewProp({ ...newProp, title: e.target.value })}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label>Property ID Number</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. SS-MYS-02 (Auto-generated if empty)"
-                    value={newProp.propertyId || ''}
-                    onChange={(e) => setNewProp({ ...newProp, propertyId: e.target.value })}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label>City Location *</label>
-                  <select 
-                    value={newProp.city} 
-                    onChange={(e) => setNewProp({ ...newProp, city: e.target.value })}
-                  >
-                    <option value="Bangalore">Bangalore (Bengaluru)</option>
-                    <option value="Mysuru">Mysuru</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Chennai">Chennai</option>
-                    <option value="Other">Add Custom City Manually...</option>
-                  </select>
-                </div>
-
-                {newProp.city === 'Other' && (
-                  <div className="form-group flex-1">
-                    <label>Manual City Name *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="e.g. Pune, Mangalore, Coimbatore"
-                      value={newProp.customCity || ''}
-                      onChange={(e) => setNewProp({ ...newProp, customCity: e.target.value })}
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="form-row">
-                <div className="form-group flex-1">
-                  <label>Neighborhood / Area Address *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. Koramangala 4th Block"
-                    value={newProp.area}
-                    onChange={(e) => setNewProp({ ...newProp, area: e.target.value })}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label>Property Type / BHK *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. Fully Furnished • 2 BHK"
-                    value={newProp.type}
-                    onChange={(e) => setNewProp({ ...newProp, type: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              {/* Listing Purpose Checkbox Pills */}
-              <div className="form-group mb-4">
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-                  Listing Purpose Types (Select Single or Multiple Options) *
-                </label>
-                <div className="purpose-checkbox-group">
-                  <label className={`purpose-checkbox-pill ${(newProp.purposes || ['rent']).includes('rent') ? 'active' : ''}`}>
-                    <input 
-                      type="checkbox" 
-                      checked={(newProp.purposes || ['rent']).includes('rent')} 
-                      onChange={() => togglePurpose('rent')} 
-                    />
-                    <span>For Monthly Rent</span>
-                  </label>
-
-                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('lease') ? 'active' : ''}`}>
-                    <input 
-                      type="checkbox" 
-                      checked={(newProp.purposes || []).includes('lease')} 
-                      onChange={() => togglePurpose('lease')} 
-                    />
-                    <span>For Long-Term Lease</span>
-                  </label>
-
-                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('sale') ? 'active' : ''}`}>
-                    <input 
-                      type="checkbox" 
-                      checked={(newProp.purposes || []).includes('sale')} 
-                      onChange={() => togglePurpose('sale')} 
-                    />
-                    <span>For Outright Sale</span>
-                  </label>
-
-                  <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('custom') ? 'active' : ''}`}>
-                    <input 
-                      type="checkbox" 
-                      checked={(newProp.purposes || []).includes('custom')} 
-                      onChange={() => togglePurpose('custom')} 
-                    />
-                    <span>Add Custom Listing Purpose...</span>
-                  </label>
-                </div>
-
-                {(newProp.purposes || []).includes('custom') && (
-                  <div style={{ marginTop: '10px' }}>
-                    <input 
-                      type="text" 
-                      placeholder="e.g. PG / Paying Guest, Commercial Lease, Short Stay"
-                      value={newProp.customPurpose || ''}
-                      onChange={(e) => setNewProp({ ...newProp, customPurpose: e.target.value })}
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Monthly Rent (₹)</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 28000 (Optional if Sale only)"
-                    value={newProp.rentPrice}
-                    onChange={(e) => setNewProp({ ...newProp, rentPrice: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Long-Term Lease (₹)</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 15L (Optional)"
-                    value={newProp.leasePrice}
-                    onChange={(e) => setNewProp({ ...newProp, leasePrice: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Outright Sale Price (₹)</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 1.25 Cr (For Sale)"
-                    value={newProp.salePrice}
-                    onChange={(e) => setNewProp({ ...newProp, salePrice: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              {/* Dynamic Extra Custom Fields Section */}
-              <div className="admin-extra-fields-box mb-4 mt-3" style={{ background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '12px', padding: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <p>Upload high-resolution property photos, set monthly rent/lease details, and select targe            <form onSubmit={handleCreatePropertySubmit} className="add-property-form-saas">
+              {/* Section 1: Basic Details & Location */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">1</div>
                   <div>
-                    <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0c2340' }}>Dynamic Custom Details / Extra Fields</h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>Add optional custom attributes (e.g. Security Deposit, Facing, Floor Number, Maintenance Fee).</p>
+                    <h4 className="saas-card-title">Basic Details &amp; Location</h4>
+                    <p className="saas-card-subtitle">Set property building title, tracking ID, target city, and area address.</p>
+                  </div>
+                </div>
+
+                <div className="saas-card-body">
+                  <div className="saas-grid-2">
+                    <div className="saas-field">
+                      <label className="saas-label">Property Title / Building Name *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        className="saas-input"
+                        placeholder="e.g. Skyline Luxury 2 BHK Residency"
+                        value={newProp.title}
+                        onChange={(e) => setNewProp({ ...newProp, title: e.target.value })}
+                      />
+                    </div>
+                    <div className="saas-field">
+                      <label className="saas-label">Property ID Number</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. SS-MYS-02 (Auto-generated if empty)"
+                        value={newProp.propertyId || ''}
+                        onChange={(e) => setNewProp({ ...newProp, propertyId: e.target.value })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="saas-grid-3 mt-3">
+                    <div className="saas-field">
+                      <label className="saas-label">City Location *</label>
+                      <select 
+                        className="saas-input saas-select"
+                        value={newProp.city} 
+                        onChange={(e) => setNewProp({ ...newProp, city: e.target.value })}
+                      >
+                        <option value="Bangalore">Bangalore (Bengaluru)</option>
+                        <option value="Mysuru">Mysuru</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Other">Add Custom City Manually...</option>
+                      </select>
+                    </div>
+
+                    {newProp.city === 'Other' && (
+                      <div className="saas-field">
+                        <label className="saas-label">Manual City Name *</label>
+                        <input 
+                          type="text" 
+                          required 
+                          className="saas-input"
+                          placeholder="e.g. Pune, Mangalore, Coimbatore"
+                          value={newProp.customCity || ''}
+                          onChange={(e) => setNewProp({ ...newProp, customCity: e.target.value })}
+                        />
+                      </div>
+                    )}
+
+                    <div className="saas-field">
+                      <label className="saas-label">Neighborhood / Area Address *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        className="saas-input"
+                        placeholder="e.g. Koramangala 4th Block"
+                        value={newProp.area}
+                        onChange={(e) => setNewProp({ ...newProp, area: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="saas-field">
+                      <label className="saas-label">Property Type / BHK *</label>
+                      <input 
+                        type="text" 
+                        required 
+                        className="saas-input"
+                        placeholder="e.g. Fully Furnished • 2 BHK"
+                        value={newProp.type}
+                        onChange={(e) => setNewProp({ ...newProp, type: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: Listing Purpose & Pricing Models */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">2</div>
+                  <div>
+                    <h4 className="saas-card-title">Listing Purpose &amp; Pricing Models</h4>
+                    <p className="saas-card-subtitle">Select single or multiple availability options and set pricing structure.</p>
+                  </div>
+                </div>
+
+                <div className="saas-card-body">
+                  <div className="saas-field mb-4">
+                    <label className="saas-label">Listing Purpose Types (Select Single or Multiple Options) *</label>
+                    <div className="purpose-checkbox-group">
+                      <label className={`purpose-checkbox-pill ${(newProp.purposes || ['rent']).includes('rent') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(newProp.purposes || ['rent']).includes('rent')} 
+                          onChange={() => togglePurpose('rent')} 
+                        />
+                        <span>For Monthly Rent</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('lease') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(newProp.purposes || []).includes('lease')} 
+                          onChange={() => togglePurpose('lease')} 
+                        />
+                        <span>For Long-Term Lease</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('sale') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(newProp.purposes || []).includes('sale')} 
+                          onChange={() => togglePurpose('sale')} 
+                        />
+                        <span>For Outright Sale</span>
+                      </label>
+
+                      <label className={`purpose-checkbox-pill ${(newProp.purposes || []).includes('custom') ? 'active' : ''}`}>
+                        <input 
+                          type="checkbox" 
+                          checked={(newProp.purposes || []).includes('custom')} 
+                          onChange={() => togglePurpose('custom')} 
+                        />
+                        <span>Add Custom Listing Purpose...</span>
+                      </label>
+                    </div>
+
+                    {(newProp.purposes || []).includes('custom') && (
+                      <div className="mt-3">
+                        <input 
+                          type="text" 
+                          className="saas-input"
+                          placeholder="e.g. PG / Paying Guest, Commercial Lease, Short Stay"
+                          value={newProp.customPurpose || ''}
+                          onChange={(e) => setNewProp({ ...newProp, customPurpose: e.target.value })}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="saas-grid-3">
+                    <div className="saas-field">
+                      <label className="saas-label">Monthly Rent (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. 28000 (Optional if Sale only)"
+                        value={newProp.rentPrice}
+                        onChange={(e) => setNewProp({ ...newProp, rentPrice: e.target.value })}
+                      />
+                    </div>
+                    <div className="saas-field">
+                      <label className="saas-label">Long-Term Lease (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. 15L (Optional)"
+                        value={newProp.leasePrice}
+                        onChange={(e) => setNewProp({ ...newProp, leasePrice: e.target.value })}
+                      />
+                    </div>
+                    <div className="saas-field">
+                      <label className="saas-label">Outright Sale Price (₹)</label>
+                      <input 
+                        type="text" 
+                        className="saas-input"
+                        placeholder="e.g. 1.25 Cr (For Sale)"
+                        value={newProp.salePrice}
+                        onChange={(e) => setNewProp({ ...newProp, salePrice: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Dynamic Custom Details & Extra Fields */}
+              <div className="saas-form-card">
+                <div className="saas-card-header flex-between">
+                  <div className="flex-align">
+                    <div className="saas-card-number">3</div>
+                    <div>
+                      <h4 className="saas-card-title">Dynamic Custom Details / Extra Fields</h4>
+                      <p className="saas-card-subtitle">Add optional key-value attributes (e.g. Security Deposit, Facing, Floor Number).</p>
+                    </div>
                   </div>
                   <button 
                     type="button" 
@@ -698,125 +733,151 @@ export default function AdminDashboard({
                   </button>
                 </div>
 
-                {(newProp.customFields || []).length > 0 && (
-                  <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {newProp.customFields.map((field, idx) => (
-                      <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center' }}>
-                        <input 
-                          type="text" 
-                          placeholder="Field Label (e.g. Security Deposit)"
-                          value={field.label || ''}
-                          onChange={(e) => handleCustomFieldChange(idx, 'label', e.target.value)}
-                        />
-                        <input 
-                          type="text" 
-                          placeholder="Field Value (e.g. 2 Months Rent)"
-                          value={field.value || ''}
-                          onChange={(e) => handleCustomFieldChange(idx, 'value', e.target.value)}
-                        />
-                        <button 
-                          type="button" 
-                          className="btn-remove-url"
-                          onClick={() => handleRemoveCustomField(idx)}
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <div className="saas-card-body">
+                  {(newProp.customFields || []).length > 0 ? (
+                    <div className="extra-fields-stack">
+                      {newProp.customFields.map((field, idx) => (
+                        <div key={idx} className="extra-field-grid">
+                          <input 
+                            type="text" 
+                            className="saas-input"
+                            placeholder="Field Label (e.g. Security Deposit)"
+                            value={field.label || ''}
+                            onChange={(e) => handleCustomFieldChange(idx, 'label', e.target.value)}
+                          />
+                          <input 
+                            type="text" 
+                            className="saas-input"
+                            placeholder="Field Value (e.g. 2 Months Rent)"
+                            value={field.value || ''}
+                            onChange={(e) => handleCustomFieldChange(idx, 'value', e.target.value)}
+                          />
+                          <button 
+                            type="button" 
+                            className="btn-icon-danger"
+                            onClick={() => handleRemoveCustomField(idx)}
+                            title="Delete Field"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty-fields-text">No custom extra fields added yet. Click "+ Add Extra Field" to specify key-value property metadata.</p>
+                  )}
+                </div>
               </div>
 
-              {/* Photo Upload / Image URLs Section */}
-              <div className="form-group mt-3">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <label style={{ margin: 0 }}>Property Photos (Upload Files or Paste Image URLs)</label>
-                  <button 
-                    type="button" 
-                    className="btn-link-sm" 
-                    onClick={handleAddImageUrlField}
-                  >
-                    + Add URL Field
-                  </button>
+              {/* Section 4: Property Media & Amenities */}
+              <div className="saas-form-card">
+                <div className="saas-card-header">
+                  <div className="saas-card-number">4</div>
+                  <div>
+                    <h4 className="saas-card-title">Property Media &amp; Included Amenities</h4>
+                    <p className="saas-card-subtitle">Upload high-resolution property photos or paste direct image URLs.</p>
+                  </div>
                 </div>
 
-                {/* Multi File Picker Drop Box */}
-                <div className="multi-file-upload-box mb-3">
-                  <label className="btn-upload-multiple">
-                    <Upload size={18} />
-                    <span>📁 Upload Multiple Photo Files (Select All / Cmd+A Supported)</span>
-                    <input 
-                      type="file" 
-                      multiple 
-                      accept="image/*" 
-                      onChange={handleFileUpload}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-                  <span className="upload-help-text">You can hold Shift/Cmd to select all photo files at once.</span>
-                </div>
+                <div className="saas-card-body">
+                  {/* Redesigned Media Drag-and-Drop Area */}
+                  <div className="saas-upload-dropzone mb-4">
+                    <Upload size={28} className="saas-upload-icon" />
+                    <h5 className="saas-upload-title">Upload Property Photos</h5>
+                    <p className="saas-upload-sub">Drag &amp; drop photos here or click selector below (Hold Shift/Cmd to select multiple files)</p>
+                    
+                    <label className="btn-upload-saas mt-2">
+                      <span>📁 Select Photo Files</span>
+                      <input 
+                        type="file" 
+                        multiple 
+                        accept="image/*" 
+                        onChange={handleFileUpload}
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
 
-                {newProp.images.map((imgUrl, idx) => (
-                  <div key={idx} className="image-url-input-row mb-2">
-                    <input 
-                      type="url" 
-                      placeholder={`Photo ${idx + 1} URL (https://...)`}
-                      value={imgUrl}
-                      onChange={(e) => handleImageUrlChange(idx, e.target.value)}
-                    />
-                    {newProp.images.length > 1 && (
+                  <div className="saas-field mb-3">
+                    <div className="flex-between mb-2">
+                      <label className="saas-label margin-0">Property Image URLs (Paste Web Links)</label>
                       <button 
                         type="button" 
-                        className="btn-icon-danger"
-                        onClick={() => handleRemoveImageUrlField(idx)}
-                        title="Remove photo field"
+                        className="btn-link-sm" 
+                        onClick={handleAddImageUrlField}
                       >
-                        <Trash2 size={16} />
+                        + Add Image Link Field
                       </button>
-                    )}
-                  </div>
-                ))}
+                    </div>
 
-                {/* Sample Preset Photo Selector Chips */}
-                <div className="preset-photos-bar">
-                  <span className="preset-label"><ImageIcon size={13} /> Quick Sample Photos:</span>
-                  <button 
-                    type="button" 
-                    className="preset-chip"
-                    onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80')}
-                  >
-                    Modern Bedroom
-                  </button>
-                  <button 
-                    type="button" 
-                    className="preset-chip"
-                    onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80')}
-                  >
-                    Luxury Living Room
-                  </button>
-                  <button 
-                    type="button" 
-                    className="preset-chip"
-                    onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80')}
-                  >
-                    Coliving Suite
-                  </button>
+                    {newProp.images.map((imgUrl, idx) => (
+                      <div key={idx} className="image-url-input-row mb-2">
+                        <input 
+                          type="url" 
+                          className="saas-input"
+                          placeholder={`Photo ${idx + 1} URL (https://...)`}
+                          value={imgUrl}
+                          onChange={(e) => handleImageUrlChange(idx, e.target.value)}
+                        />
+                        {newProp.images.length > 1 && (
+                          <button 
+                            type="button" 
+                            className="btn-icon-danger"
+                            onClick={() => handleRemoveImageUrlField(idx)}
+                            title="Remove photo field"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Preset Sample Photo Chips */}
+                    <div className="preset-photos-bar">
+                      <span className="preset-label"><ImageIcon size={13} /> Quick Sample Photos:</span>
+                      <button 
+                        type="button" 
+                        className="preset-chip"
+                        onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80')}
+                      >
+                        Modern Bedroom
+                      </button>
+                      <button 
+                        type="button" 
+                        className="preset-chip"
+                        onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80')}
+                      >
+                        Luxury Living Room
+                      </button>
+                      <button 
+                        type="button" 
+                        className="preset-chip"
+                        onClick={() => handleQuickPresetImage(0, 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80')}
+                      >
+                        Coliving Suite
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="saas-field">
+                    <label className="saas-label">Included Amenities (Comma Separated)</label>
+                    <textarea 
+                      rows={3}
+                      className="saas-input saas-textarea"
+                      placeholder="Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Housekeeping, Power Backup"
+                      value={newProp.amenitiesText}
+                      onChange={(e) => setNewProp({ ...newProp, amenitiesText: e.target.value })}
+                    ></textarea>
+                  </div>
                 </div>
               </div>
 
-              <div className="form-group">
-                <label>Included Amenities (Comma Separated)</label>
-                <textarea 
-                  rows={2}
-                  placeholder="Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Housekeeping, Power Backup"
-                  value={newProp.amenitiesText}
-                  onChange={(e) => setNewProp({ ...newProp, amenitiesText: e.target.value })}
-                ></textarea>
+              {/* Premium Global Action Button */}
+              <div className="saas-submit-bar mt-4">
+                <button type="submit" className="btn-publish-saas">
+                  Upload &amp; Publish Property Live
+                </button>
               </div>
-
-              <button type="submit" className="btn-primary w-full py-3">
-                Upload & Publish Property Live
-              </button>
             </form>
           </div>
         )}
