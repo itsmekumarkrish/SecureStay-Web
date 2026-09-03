@@ -57,8 +57,29 @@ function normalizeProperty(item) {
   };
 }
 
+import { 
+  isCloudConfigured,
+  saveCloudProperty, 
+  deleteCloudProperty, 
+  saveCloudInquiry, 
+  updateCloudInquiryStatus, 
+  deleteCloudInquiry 
+} from './services/supabaseService';
+
 export default function App() {
-  const [currentView, setCurrentView] = useState('home'); // 'home' | 'catalog' | 'admin'
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      const hash = window.location.hash;
+      if (path === '/propertyadmin' || hash === '#propertyadmin' || path === '/admin' || hash === '#admin') {
+        return 'admin';
+      }
+      if (path === '/catalog' || hash === '#catalog') {
+        return 'catalog';
+      }
+    }
+    return 'home';
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [legalModal, setLegalModal] = useState(null);
   const [activeDetailProperty, setActiveDetailProperty] = useState(null);
@@ -149,13 +170,68 @@ export default function App() {
     }
   }, [inquiriesList]);
 
+  // Multi-tab real-time sync via storage event
+  useEffect(() => {
+    const handleStorage = (e) => {
+      if (e.key === 'securestay_properties' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setPropertiesList(parsed.map(normalizeProperty));
+        } catch {
+          // fallback
+        }
+      }
+      if (e.key === 'securestay_inquiries' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setInquiriesList(parsed);
+        } catch {
+          // fallback
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   const handleAddProperty = (newProp) => {
     setPropertiesList((prev) => [newProp, ...prev]);
+    saveCloudProperty(newProp);
   };
 
   const handleEditProperty = (updatedProp) => {
     setPropertiesList((prev) =>
       prev.map((p) => (p.id === updatedProp.id ? updatedProp : p))
+    );
+    saveCloudProperty(updatedProp);
+  };
+
+  const handleTogglePropertyAvailability = (id) => {
+    setPropertiesList((prev) =>
+      prev.map((p) => {
+        if (p.id === id) {
+          const currentStatus = p.availability || 'Available';
+          const nextStatus = currentStatus === 'Available' ? 'Occupied' : 'Available';
+          const updated = { ...p, availability: nextStatus };
+          saveCloudProperty(updated);
+          return updated;
+        }
+        return p;
+      })
+    );
+  };
+
+  const handleTogglePropertyFeatured = (id) => {
+    setPropertiesList((prev) =>
+      prev.map((p) => {
+        if (p.id === id) {
+          const updated = { ...p, isFeatured: !p.isFeatured };
+          saveCloudProperty(updated);
+          return updated;
+        }
+        return p;
+      })
     );
   };
 
@@ -163,6 +239,7 @@ export default function App() {
     if (window.confirm('Are you sure you want to remove this property listing from SecureStay?')) {
       setDeletedIds((prev) => [...prev, id]);
       setPropertiesList((prev) => prev.filter((p) => p.id !== id));
+      deleteCloudProperty(id);
     }
   };
 
@@ -185,12 +262,15 @@ export default function App() {
     e.preventDefault();
     setFormSubmitted(true);
 
-    // Save lead to inquiriesList
+    // Save lead to inquiriesList with unique ID and status
     const newInquiry = {
+      id: Date.now(),
       ...formData,
+      status: 'pending',
       date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
     };
     setInquiriesList((prev) => [newInquiry, ...prev]);
+    saveCloudInquiry(newInquiry);
 
     try {
       confetti({
@@ -203,16 +283,67 @@ export default function App() {
     }
   };
 
-  // Listen for #admin URL hash for direct admin portal access
+  const handleUpdateInquiryStatus = (id, status) => {
+    setInquiriesList((prev) =>
+      prev.map((inq) => (inq.id === id ? { ...inq, status } : inq))
+    );
+    updateCloudInquiryStatus(id, status);
+  };
+
+  const handleDeleteInquiry = (id) => {
+    if (window.confirm('Are you sure you want to remove this inquiry record?')) {
+      setInquiriesList((prev) => prev.filter((inq) => inq.id !== id));
+      deleteCloudInquiry(id);
+    }
+  };
+
+  const navigateToView = (viewName) => {
+    setCurrentView(viewName);
+    if (viewName === 'admin') {
+      window.location.hash = 'propertyadmin';
+    } else if (viewName === 'catalog') {
+      window.location.hash = 'catalog';
+    } else {
+      if (window.location.hash === '#propertyadmin' || window.location.hash === '#admin' || window.location.hash === '#catalog') {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+  };
+
+  // Listen for URL hash or path changes and secret hotkey (Ctrl+Shift+A / Cmd+Shift+A)
   useEffect(() => {
-    const handleHashChange = () => {
-      if (window.location.hash === '#admin') {
+    const handleUrlSync = () => {
+      const hash = window.location.hash;
+      const path = window.location.pathname;
+      if (hash === '#propertyadmin' || path === '/propertyadmin' || hash === '#admin' || path === '/admin') {
         setCurrentView('admin');
+      } else if (hash === '#catalog' || path === '/catalog') {
+        setCurrentView('catalog');
       }
     };
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        setCurrentView((prev) => {
+          const next = prev === 'admin' ? 'home' : 'admin';
+          if (next === 'admin') window.location.hash = 'propertyadmin';
+          else window.history.replaceState(null, '', window.location.pathname);
+          return next;
+        });
+      }
+    };
+
+    handleUrlSync();
+    window.addEventListener('hashchange', handleUrlSync);
+    window.addEventListener('popstate', handleUrlSync);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('hashchange', handleUrlSync);
+      window.removeEventListener('popstate', handleUrlSync);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   // Scroll to top on view change
@@ -230,10 +361,9 @@ export default function App() {
       {currentView === 'catalog' && (
         <PropertiesCatalogPage 
           properties={propertiesList}
-          onBackToHome={() => setCurrentView('home')}
+          onBackToHome={() => navigateToView('home')}
           onInquire={handleInquire}
           onOpenDetail={(prop) => setActiveDetailProperty(prop)}
-          onOpenAdmin={() => setCurrentView('admin')}
         />
       )}
 
@@ -244,8 +374,12 @@ export default function App() {
           onAddProperty={handleAddProperty}
           onEditProperty={handleEditProperty}
           onDeleteProperty={handleDeleteProperty}
-          onBackToHome={() => setCurrentView('home')}
+          onToggleAvailability={handleTogglePropertyAvailability}
+          onToggleFeatured={handleTogglePropertyFeatured}
+          onBackToHome={() => navigateToView('home')}
           inquiries={inquiriesList}
+          onUpdateInquiryStatus={handleUpdateInquiryStatus}
+          onDeleteInquiry={handleDeleteInquiry}
         />
       )}
 
@@ -255,7 +389,7 @@ export default function App() {
           <Header 
             mobileMenuOpen={mobileMenuOpen} 
             setMobileMenuOpen={setMobileMenuOpen} 
-            onNavigate={(view) => setCurrentView(view)}
+            onNavigate={(view) => navigateToView(view)}
           />
           <Hero />
           <FeaturesSection />

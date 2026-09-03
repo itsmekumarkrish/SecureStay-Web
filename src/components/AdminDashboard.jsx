@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, Building2, MessageSquare, LogOut, Upload, Pencil, X } from 'lucide-react';
+import { 
+  ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
+  Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
+  Users, Clock, CheckSquare
+} from 'lucide-react';
 
 export default function AdminDashboard({ 
-  properties, 
+  properties = [], 
   onAddProperty,
   onEditProperty,
-  onDeleteProperty, 
+  onDeleteProperty,
+  onToggleAvailability,
+  onToggleFeatured, 
   onBackToHome,
-  inquiries = []
+  inquiries = [],
+  onUpdateInquiryStatus,
+  onDeleteInquiry
 }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
@@ -15,6 +23,11 @@ export default function AdminDashboard({
 
   const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries'
   const [successMessage, setSuccessMessage] = useState('');
+
+  // Table Search and Inquiry Filters
+  const [tableSearch, setTableSearch] = useState('');
+  const [inquirySearch, setInquirySearch] = useState('');
+  const [inquiryStatusFilter, setInquiryStatusFilter] = useState('all');
 
   // Editing Property Modal State
   const [editingProp, setEditingProp] = useState(null);
@@ -39,6 +52,14 @@ export default function AdminDashboard({
     } else {
       setLoginError('Invalid Username or Password. Try admin / securestay123');
     }
+  };
+
+  const handleQuickPresetImage = (index, url) => {
+    setNewProp((prev) => {
+      const updated = [...prev.images];
+      updated[index] = url;
+      return { ...prev, images: updated };
+    });
   };
 
   const handleAddImageUrlField = () => {
@@ -159,7 +180,7 @@ export default function AdminDashboard({
     };
 
     onAddProperty(propertyPayload);
-    setSuccessMessage(`Property "${propertyPayload.title}" published live to catalog & homepage!`);
+    setSuccessMessage(`Property "${propertyPayload.title}" published live to website!`);
     setTimeout(() => setSuccessMessage(''), 4000);
 
     // Reset Form
@@ -173,10 +194,30 @@ export default function AdminDashboard({
       images: [''],
       amenitiesText: 'Biometric Smart Lock, High-Speed Wi-Fi, 24/7 CCTV, Power Backup, Housekeeping'
     });
-
-    setSuccessMessage(`Property "${propertyPayload.title}" uploaded successfully! It is now live on the website.`);
-    setTimeout(() => setSuccessMessage(''), 5000);
   };
+
+  // Metrics overview calculations
+  const citiesCount = new Set(properties.map(p => p.city || 'Bangalore')).size;
+  const pendingInquiriesCount = inquiries.filter(i => !i.status || i.status === 'pending').length;
+
+  // Filtered Properties for table search
+  const filteredTableProperties = properties.filter(p => {
+    const q = tableSearch.toLowerCase();
+    return p.title.toLowerCase().includes(q) || (p.location || '').toLowerCase().includes(q) || (p.city || '').toLowerCase().includes(q);
+  });
+
+  // Filtered Inquiries
+  const filteredInquiries = inquiries.filter(inq => {
+    const q = inquirySearch.toLowerCase();
+    const matchQuery = (inq.name || '').toLowerCase().includes(q) ||
+                       (inq.phone || '').toLowerCase().includes(q) ||
+                       (inq.message || '').toLowerCase().includes(q);
+
+    const status = inq.status || 'pending';
+    const matchStatus = inquiryStatusFilter === 'all' || status === inquiryStatusFilter;
+
+    return matchQuery && matchStatus;
+  });
 
   // If Not Authenticated, Show Login Screen
   if (!isAuthenticated) {
@@ -187,8 +228,8 @@ export default function AdminDashboard({
             <div className="admin-icon-circle">
               <ShieldCheck size={32} className="text-gold" />
             </div>
-            <h2>SecureStay Admin Portal</h2>
-            <p>Sign in to upload property photos, edit stays, and manage leads</p>
+            <h2>SecureStay Properties Dashboard</h2>
+            <p>Sign in to upload property stays, edit listings, and track leads</p>
           </div>
 
           {loginError && <div className="login-error-alert">{loginError}</div>}
@@ -241,9 +282,12 @@ export default function AdminDashboard({
       {/* Top Admin Bar */}
       <div className="admin-top-bar">
         <div className="container admin-top-content">
-          <div className="admin-brand flex-align">
+          <div className="admin-brand flex-align gap-2">
             <ShieldCheck size={22} className="text-gold" />
-            <h3>SecureStay Admin Portal</h3>
+            <h3>SecureStay Properties Dashboard</h3>
+            <span style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0', fontSize: '0.72rem', fontWeight: 700, padding: '3px 10px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              ☁️ Live Cloud Sync
+            </span>
           </div>
 
           <div className="admin-top-actions">
@@ -259,6 +303,49 @@ export default function AdminDashboard({
 
       {/* Main Container */}
       <div className="container admin-main-body">
+        {/* Overview Metrics Cards */}
+        <div className="admin-metrics-grid">
+          <div className="admin-metric-card">
+            <div className="admin-metric-icon blue">
+              <Building2 size={22} />
+            </div>
+            <div>
+              <div className="admin-metric-val">{properties.length}</div>
+              <div className="admin-metric-lbl">Active Properties</div>
+            </div>
+          </div>
+
+          <div className="admin-metric-card">
+            <div className="admin-metric-icon green">
+              <MapPin size={22} />
+            </div>
+            <div>
+              <div className="admin-metric-val">{citiesCount}</div>
+              <div className="admin-metric-lbl">Cities Covered</div>
+            </div>
+          </div>
+
+          <div className="admin-metric-card">
+            <div className="admin-metric-icon gold">
+              <MessageSquare size={22} />
+            </div>
+            <div>
+              <div className="admin-metric-val">{inquiries.length}</div>
+              <div className="admin-metric-lbl">Total Leads</div>
+            </div>
+          </div>
+
+          <div className="admin-metric-card">
+            <div className="admin-metric-icon">
+              <Clock size={22} className="text-amber" />
+            </div>
+            <div>
+              <div className="admin-metric-val">{pendingInquiriesCount}</div>
+              <div className="admin-metric-lbl">Pending Follow-ups</div>
+            </div>
+          </div>
+        </div>
+
         {/* Navigation Tabs */}
         <div className="admin-tabs-row">
           <button 
@@ -401,7 +488,7 @@ export default function AdminDashboard({
                 </div>
 
                 {newProp.images.map((imgUrl, idx) => (
-                  <div key={idx} className="image-url-input-row">
+                  <div key={idx} className="image-url-input-row mb-2">
                     <input 
                       type="url" 
                       placeholder={`Photo ${idx + 1} URL (https://...)`}
@@ -468,9 +555,22 @@ export default function AdminDashboard({
         {/* Tab 2: Manage Properties List */}
         {activeTab === 'properties-list' && (
           <div className="admin-card-section">
-            <div className="admin-section-header">
-              <h3>All Published Properties ({properties.length})</h3>
-              <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
+            <div className="admin-section-header flex-between flex-wrap gap-2">
+              <div>
+                <h3>All Published Properties ({filteredTableProperties.length})</h3>
+                <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
+              </div>
+
+              <div className="search-input-wrap" style={{ maxWidth: '300px' }}>
+                <Search size={16} className="search-icon" />
+                <input 
+                  type="text" 
+                  placeholder="Search property title or area..." 
+                  value={tableSearch}
+                  onChange={(e) => setTableSearch(e.target.value)}
+                  style={{ padding: '6px 12px 6px 36px', fontSize: '0.84rem' }}
+                />
+              </div>
             </div>
 
             <div className="admin-properties-table-wrap">
@@ -481,47 +581,98 @@ export default function AdminDashboard({
                     <th>Property Title</th>
                     <th>Location</th>
                     <th>Monthly Rent</th>
-                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Featured</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {properties.map((prop) => (
-                    <tr key={prop.id}>
-                      <td>
-                        <img 
-                          src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
-                          alt={prop.title} 
-                          className="table-prop-img"
-                          style={{ width: '60px', height: '44px', objectFit: 'cover', borderRadius: '6px', display: 'block' }}
-                        />
-                      </td>
-                      <td><strong>{prop.title}</strong></td>
-                      <td>{prop.location}</td>
-                      <td><span className="text-green font-semibold">{prop.rentPrice}</span></td>
-                      <td><span className="table-badge">{prop.type}</span></td>
-                      <td>
-                        <div className="table-actions-cell">
-                          <button 
-                            type="button" 
-                            className="btn-edit-sm" 
-                            onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
-                            title="Edit Property & Photos"
+                  {filteredTableProperties.map((prop) => {
+                    const isOccupied = prop.availability === 'Occupied';
+                    const isFeatured = !!prop.isFeatured;
+                    return (
+                      <tr key={prop.id}>
+                        <td>
+                          <img 
+                            src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                            alt={prop.title} 
+                            className="table-prop-img"
+                          />
+                        </td>
+                        <td>
+                          <strong>{prop.title}</strong>
+                          <div className="text-xs text-muted">{prop.type}</div>
+                        </td>
+                        <td>{prop.location}</td>
+                        <td><span className="text-green font-semibold">{prop.rentPrice}</span></td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                            style={{
+                              border: 'none',
+                              cursor: 'pointer',
+                              background: isOccupied ? '#fef2f2' : '#dcfce7',
+                              color: isOccupied ? '#dc2626' : '#15803d',
+                              padding: '4px 10px',
+                              borderRadius: '12px',
+                              fontSize: '0.78rem',
+                              fontWeight: 700
+                            }}
+                            title="Click to toggle Available / Occupied status"
                           >
-                            <Pencil size={14} /> Edit
+                            {isOccupied ? '🔴 Occupied' : '🟢 Available'}
                           </button>
-                          <button 
-                            type="button" 
-                            className="btn-danger-sm" 
-                            onClick={() => onDeleteProperty(prop.id)}
-                            title="Delete Property"
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                            style={{
+                              border: 'none',
+                              cursor: 'pointer',
+                              background: isFeatured ? '#fef9c3' : '#f1f5f9',
+                              color: isFeatured ? '#ca8a04' : '#64748b',
+                              padding: '4px 10px',
+                              borderRadius: '12px',
+                              fontSize: '0.78rem',
+                              fontWeight: 700
+                            }}
+                            title="Click to toggle Featured on Homepage"
                           >
-                            <Trash2 size={14} /> Remove
+                            {isFeatured ? '★ Featured' : '☆ Standard'}
                           </button>
-                        </div>
+                        </td>
+                        <td>
+                          <div className="table-actions-cell">
+                            <button 
+                              type="button" 
+                              className="btn-edit-sm" 
+                              onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                              title="Edit Property & Photos"
+                            >
+                              <Pencil size={14} /> Edit
+                            </button>
+                            <button 
+                              type="button" 
+                              className="btn-danger-sm" 
+                              onClick={() => onDeleteProperty(prop.id)}
+                              title="Delete Property"
+                            >
+                              <Trash2 size={14} /> Remove
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {filteredTableProperties.length === 0 && (
+                    <tr>
+                      <td colSpan={7} className="text-center py-4 text-muted">
+                        No properties found matching "{tableSearch}"
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -531,29 +682,104 @@ export default function AdminDashboard({
         {/* Tab 3: Customer Lead Inquiries */}
         {activeTab === 'inquiries' && (
           <div className="admin-card-section">
-            <div className="admin-section-header">
-              <h3>Submitted Lead Inquiries ({inquiries.length})</h3>
-              <p>Inquiries sent through the website contact form.</p>
+            <div className="admin-section-header flex-between flex-wrap gap-2">
+              <div>
+                <h3>Submitted Lead Inquiries ({filteredInquiries.length})</h3>
+                <p>Inquiries sent through website forms, connected directly to your management workflow.</p>
+              </div>
+
+              <div className="flex-align gap-2 flex-wrap">
+                <div className="search-input-wrap" style={{ maxWidth: '240px' }}>
+                  <Search size={16} className="search-icon" />
+                  <input 
+                    type="text" 
+                    placeholder="Search name, phone, msg..." 
+                    value={inquirySearch}
+                    onChange={(e) => setInquirySearch(e.target.value)}
+                    style={{ padding: '6px 12px 6px 36px', fontSize: '0.84rem' }}
+                  />
+                </div>
+
+                <select 
+                  value={inquiryStatusFilter}
+                  onChange={(e) => setInquiryStatusFilter(e.target.value)}
+                  style={{ padding: '6px 12px', fontSize: '0.84rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="converted">Converted</option>
+                </select>
+              </div>
             </div>
 
-            {inquiries.length > 0 ? (
+            {filteredInquiries.length > 0 ? (
               <div className="admin-inquiries-grid">
-                {inquiries.map((inq, idx) => (
-                  <div key={idx} className="inquiry-card">
-                    <div className="inquiry-header flex-between">
-                      <span className="inquiry-user-type">{inq.userType === 'owner' ? '🏠 Property Owner' : '🔑 Tenant Inquiry'}</span>
-                      <span className="inquiry-date">{inq.date || 'Just Now'}</span>
+                {filteredInquiries.map((inq, idx) => {
+                  const status = inq.status || 'pending';
+                  const cleanPhone = (inq.phone || '').replace(/[^0-9]/g, '');
+                  return (
+                    <div key={inq.id || idx} className="inquiry-card">
+                      <div className="inquiry-header flex-between mb-2">
+                        <span className="inquiry-user-type">
+                          {inq.userType === 'owner' ? '🏠 Property Owner' : '🔑 Tenant Inquiry'}
+                        </span>
+                        <span className={`status-badge ${status}`}>
+                          {status}
+                        </span>
+                      </div>
+
+                      <h4>{inq.name}</h4>
+                      <p className="inquiry-contact">
+                        📞 {inq.phone} {inq.email ? `• ✉️ ${inq.email}` : ''}
+                      </p>
+                      {inq.message && <p className="inquiry-msg">"{inq.message}"</p>}
+                      <div className="text-xs text-muted mt-1">Submitted: {inq.date || 'Recently'}</div>
+
+                      <div className="inquiry-actions-row">
+                        <div className="flex-align gap-2">
+                          <label className="text-xs font-semibold text-muted">Status:</label>
+                          <select 
+                            className="inquiry-status-select"
+                            value={status}
+                            onChange={(e) => onUpdateInquiryStatus && onUpdateInquiryStatus(inq.id, e.target.value)}
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="converted">Converted</option>
+                          </select>
+                        </div>
+
+                        <div className="flex-align gap-2">
+                          {cleanPhone && (
+                            <a 
+                              href={`https://wa.me/91${cleanPhone}?text=Hi%20${encodeURIComponent(inq.name)},%20thank%20you%20for%20contacting%20SecureStay!`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="btn-whatsapp-sm"
+                              title="Chat on WhatsApp"
+                            >
+                              <Send size={12} /> WhatsApp
+                            </a>
+                          )}
+                          <button 
+                            type="button" 
+                            className="btn-icon-danger"
+                            onClick={() => onDeleteInquiry && onDeleteInquiry(inq.id)}
+                            title="Delete Lead Record"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <h4>{inq.name}</h4>
-                    <p className="inquiry-contact">📞 {inq.phone} {inq.email ? `• ✉️ ${inq.email}` : ''}</p>
-                    {inq.message && <p className="inquiry-msg">"{inq.message}"</p>}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="catalog-empty-state text-center">
                 <MessageSquare size={40} className="text-muted mx-auto mb-2" />
-                <p>No new customer lead inquiries received yet.</p>
+                <p>No customer lead inquiries match the selected filter.</p>
               </div>
             )}
           </div>
@@ -639,7 +865,7 @@ export default function AdminDashboard({
               {/* Photo Upload & Replacement */}
               <div className="form-group">
                 <label>Property Photos (Upload Files or Edit Links)</label>
-                <div className="admin-photo-upload-box">
+                <div className="admin-photo-upload-box mb-2">
                   <input 
                     type="file" 
                     multiple 
@@ -647,11 +873,11 @@ export default function AdminDashboard({
                     id="edit-photo-file-input"
                     className="file-input-hidden"
                     onChange={(e) => handleFileUpload(e, true)}
+                    style={{ display: 'none' }}
                   />
-                  <label htmlFor="edit-photo-file-input" className="file-upload-dropzone">
-                    <Upload size={22} className="text-gold mb-1" />
-                    <span className="upload-drop-title">Click to Upload / Replace Photos</span>
-                    <span className="upload-drop-sub">Select photo files from your computer</span>
+                  <label htmlFor="edit-photo-file-input" className="file-upload-dropzone btn-upload-multiple">
+                    <Upload size={18} />
+                    <span>Upload / Add Photos</span>
                   </label>
                 </div>
 

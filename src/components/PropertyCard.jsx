@@ -42,6 +42,9 @@ export default function PropertyCard({ property, onInquire }) {
     setTouchStartX(null);
   };
 
+  const isOccupied = property.availability === 'Occupied';
+  const isFeatured = !!property.isFeatured;
+
   return (
     <div className="property-card">
       <div 
@@ -63,6 +66,20 @@ export default function PropertyCard({ property, onInquire }) {
               />
             </div>
           ))}
+        </div>
+
+        {/* Status Badges Overlay */}
+        <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 10, display: 'flex', gap: '6px' }}>
+          {isFeatured && (
+            <span style={{ background: '#ca8a04', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', boxShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
+              ★ Featured
+            </span>
+          )}
+          {isOccupied && (
+            <span style={{ background: '#dc2626', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', boxShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
+              Occupied
+            </span>
+          )}
         </div>
 
         {/* Counter Badge */}
@@ -124,9 +141,12 @@ export default function PropertyCard({ property, onInquire }) {
           <button 
             type="button" 
             className="btn-secondary-sm" 
-            onClick={() => onInquire && onInquire(property.title)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onInquire && onInquire(property.title);
+            }}
           >
-            Inquire
+            {isOccupied ? 'Inquire Next Slot' : 'Inquire'}
           </button>
         </div>
       </div>
