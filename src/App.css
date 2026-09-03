@@ -2357,7 +2357,7 @@ input:focus, select:focus, textarea:focus {
     min-height: auto;
     display: block;
     padding-top: 20px;
-    padding-bottom: clamp(48px, 8.5vh, 76px);
+    padding-bottom: clamp(56px, 12vh, 96px);
     box-sizing: border-box;
     overflow-x: hidden;
     margin-bottom: 0;
