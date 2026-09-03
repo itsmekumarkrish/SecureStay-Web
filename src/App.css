@@ -2347,13 +2347,14 @@ input:focus, select:focus, textarea:focus {
 
   /* Hero Section Mobile */
   .hero {
-    min-height: auto;
+    min-height: calc(100dvh - var(--header-height, 72px));
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 12px 0 16px 0;
+    padding: 24px 0 32px 0;
     box-sizing: border-box;
     overflow-x: hidden;
+    margin-bottom: 0;
   }
 
   .hero-text {
@@ -2369,13 +2370,13 @@ input:focus, select:focus, textarea:focus {
     justify-content: flex-start;
     align-items: center;
     font-size: 0.72rem;
-    padding: 4px 10px;
-    gap: 5px;
-    margin-top: 2px;
-    margin-bottom: 10px;
+    padding: 5px 12px;
+    gap: 6px;
+    margin-top: 4px;
+    margin-bottom: 14px;
     text-align: left;
     max-width: 100%;
-    line-height: 1.35;
+    line-height: 1.4;
   }
 
   .tag-rating {
@@ -2384,9 +2385,9 @@ input:focus, select:focus, textarea:focus {
   }
 
   .hero-text h1 {
-    font-size: clamp(1.48rem, 5.2vw, 1.8rem);
+    font-size: clamp(1.55rem, 5.5vw, 1.95rem);
     line-height: 1.2;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     letter-spacing: -0.3px;
     font-weight: 800;
     text-align: left;
@@ -2398,9 +2399,9 @@ input:focus, select:focus, textarea:focus {
   }
 
   .hero-subtitle {
-    font-size: 0.88rem;
-    line-height: 1.48;
-    margin-bottom: 14px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
     padding: 0;
     color: var(--text-muted);
     text-align: left;
@@ -2414,7 +2415,7 @@ input:focus, select:focus, textarea:focus {
     width: 100%;
     gap: 10px;
     justify-content: flex-start;
-    margin-bottom: 14px;
+    margin-bottom: 22px;
   }
 
   .hero-buttons .btn-primary,
@@ -2424,8 +2425,8 @@ input:focus, select:focus, textarea:focus {
     box-sizing: border-box;
     text-align: center;
     justify-content: center;
-    padding: 10px 12px;
-    font-size: 0.90rem;
+    padding: 12px 14px;
+    font-size: 0.92rem;
     white-space: nowrap;
   }
 
@@ -2433,14 +2434,14 @@ input:focus, select:focus, textarea:focus {
   .hero-stats-strip {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px;
-    padding: 10px 8px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 14px 10px;
+    border-radius: 14px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    margin-top: 10px;
+    margin-top: 16px;
     overflow: hidden;
     position: relative;
   }
@@ -2450,15 +2451,15 @@ input:focus, select:focus, textarea:focus {
     left: -2px;
     right: -2px;
     bottom: -3px;
-    border-radius: 14px;
+    border-radius: 16px;
   }
 
   .stat-item {
     width: 100%;
     box-sizing: border-box;
-    padding: 8px 4px;
+    padding: 10px 4px;
     background: #f8fafc;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
@@ -2468,25 +2469,31 @@ input:focus, select:focus, textarea:focus {
   }
 
   .stat-icon-wrapper {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     margin-bottom: 4px;
   }
 
   .stat-number {
-    font-size: 1.18rem;
+    font-size: 1.25rem;
     margin-bottom: 2px;
     white-space: normal;
     word-break: break-word;
   }
 
   .stat-desc {
-    font-size: 0.70rem;
-    line-height: 1.2;
+    font-size: 0.72rem;
+    line-height: 1.22;
     white-space: normal;
     word-break: break-word;
     overflow-wrap: break-word;
     text-align: center;
+  }
+
+  /* Generous Mobile Top Margin for 'Why Choose SecureStay?' Section */
+  #about.section {
+    margin-top: clamp(60px, 12vh, 120px);
+    padding-top: 48px;
   }
 
   /* Section Spacing & Headings */
