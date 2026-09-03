@@ -2410,10 +2410,18 @@ input:focus, select:focus, textarea:focus {
   .hero-subtitle {
     font-size: 0.92rem;
     line-height: 1.55;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     padding: 0;
     color: var(--text-muted);
     text-align: left;
+  }
+
+  /* Mobile-Specific Custom Design Slot Gap (Increased spacing for mobile design insertion) */
+  .hero-custom-design-slot {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 36px;
+    min-height: 44px;
   }
 
   /* Horizontal Side-by-Side Action Buttons on Mobile */
