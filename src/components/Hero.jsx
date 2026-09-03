@@ -18,7 +18,7 @@ export default function Hero() {
             End-to-end residential property services for owners with guaranteed on-time rent, verified tenants, and seamless property care across India.
           </p>
           <div className="hero-buttons">
-            <a href="#contact" className="btn-primary">
+            <a href="#contact-form" className="btn-primary">
               Get in Touch <ArrowRight size={16} className="btn-arrow" />
             </a>
             <a href="#properties" className="btn-secondary">

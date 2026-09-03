@@ -196,7 +196,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
 
           <div className="contact-form-wrapper">
             {!formSubmitted ? (
-              <form onSubmit={handleSubmit} className="contact-form">
+              <form id="contact-form" onSubmit={handleSubmit} className="contact-form">
                 <div className="form-group">
                   <label>Your Name</label>
                   <input 

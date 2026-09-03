@@ -19,7 +19,7 @@ export default function ServicesSection() {
               <li><CheckCircle size={16} className="text-green" /> Regular property inspections and digital updates</li>
               <li><CheckCircle size={16} className="text-green" /> End-to-end repair, painting, and maintenance handling</li>
             </ul>
-            <a href="#contact" className="service-link">List Your Property &rarr;</a>
+            <a href="#contact-form" className="service-link">List Your Property &rarr;</a>
           </div>
 
           <div className="service-box">
@@ -30,7 +30,7 @@ export default function ServicesSection() {
               <li><CheckCircle size={16} className="text-green" /> High-speed internet, power backup, and housekeeping</li>
               <li><CheckCircle size={16} className="text-green" /> Dedicated on-call property manager for any issues</li>
             </ul>
-            <a href="#contact" className="service-link">Find a Home &rarr;</a>
+            <a href="#contact-form" className="service-link">Find a Home &rarr;</a>
           </div>
         </div>
       </div>

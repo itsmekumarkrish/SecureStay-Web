@@ -251,7 +251,7 @@ export default function App() {
       message: propTitle ? `Hi, I am interested in inquiring about "${propTitle}".` : prev.message
     }));
     setTimeout(() => {
-      const contactElement = document.getElementById('contact');
+      const contactElement = document.getElementById('contact-form') || document.getElementById('contact');
       if (contactElement) {
         contactElement.scrollIntoView({ behavior: 'smooth' });
       }

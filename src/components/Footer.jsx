@@ -44,7 +44,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
               <li><button type="button" onClick={() => handleNavClick('home', 'about')} className="footer-btn-link">About SecureStay</button></li>
               <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Our Services</button></li>
               <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">All Properties</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'contact')} className="footer-btn-link">List Your Property</button></li>
+              <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">List Your Property</button></li>
             </ul>
           </div>
 

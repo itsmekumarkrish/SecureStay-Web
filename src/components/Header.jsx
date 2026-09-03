@@ -49,7 +49,7 @@ export default function Header({
           <button 
             type="button" 
             className="btn-nav"
-            onClick={() => handleNavClick('home', 'contact')}
+            onClick={() => handleNavClick('home', 'contact-form')}
           >
             Contact Us
           </button>
@@ -83,7 +83,7 @@ export default function Header({
           <button 
             type="button" 
             className="btn-primary" 
-            onClick={() => handleNavClick('home', 'contact')}
+            onClick={() => handleNavClick('home', 'contact-form')}
           >
             Contact Us
           </button>

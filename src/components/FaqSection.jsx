@@ -49,7 +49,7 @@ export default function FaqSection({ faqs }) {
 
         <div className="faq-bottom-cta text-center">
           <p>Still have questions about listing or renting?</p>
-          <a href="#contact" className="btn-secondary-sm">Talk to an Advisor &rarr;</a>
+          <a href="#contact-form" className="btn-secondary-sm">Talk to an Advisor &rarr;</a>
         </div>
       </div>
     </section>
