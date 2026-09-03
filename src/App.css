@@ -2575,27 +2575,57 @@ input:focus, select:focus, textarea:focus {
 
   /* Section Spacing & Headings */
   .section {
-    padding: 44px 0;
+    padding: 52px 0;
   }
 
   .section-title {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
   }
 
-  .section-title h2 {
-    font-size: 1.55rem;
-    line-height: 1.25;
+  .section-title h2,
+  .contact-info h2,
+  .faq-section-title {
+    color: #0c2340 !important;
+    font-weight: 800 !important;
+    font-size: 1.60rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+
+  .section-title p,
+  .contact-info p {
+    color: #475569;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* App-Card Framework for Features (Why Choose SecureStay) */
+  .features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .feature-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 0 4px 16px rgba(12, 35, 64, 0.04);
+  }
+
+  .feature-card h3 {
+    color: #0c2340 !important;
+    font-weight: 700 !important;
+    font-size: 1.10rem;
     margin-bottom: 6px;
   }
 
-  .section-title p {
+  .feature-card p {
+    color: #475569;
     font-size: 0.88rem;
-    line-height: 1.45;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    line-height: 1.48;
   }
 
   /* Mobile App-Style Redesign for Our Services */
@@ -2696,9 +2726,9 @@ input:focus, select:focus, textarea:focus {
     gap: 20px;
   }
 
-  /* Reviews Marquee on Mobile */
+  /* Reviews Marquee & Cards on Mobile */
   .reviews-marquee-section {
-    padding-bottom: 30px;
+    padding-bottom: 36px;
   }
 
   .reviews-marquee-wrapper {
@@ -2713,79 +2743,155 @@ input:focus, select:focus, textarea:focus {
   }
 
   .marquee-card {
-    flex: 0 0 275px;
-    width: 275px;
-    max-width: 275px;
-    padding: 18px 16px;
+    flex: 0 0 280px;
+    width: 280px;
+    max-width: 280px;
+    padding: 20px 18px;
     min-height: auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(12, 35, 64, 0.04);
   }
 
   .review-text {
-    font-size: 0.86rem;
-    line-height: 1.45;
+    font-size: 0.88rem;
+    line-height: 1.48;
   }
 
   .review-card-top {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .review-author {
-    padding-top: 10px;
+    padding-top: 12px;
   }
 
   .author-name {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    color: #0c2340;
+    font-weight: 700;
   }
 
   .author-role, .author-loc {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
   }
 
-  /* Segmented Line Indicator on Mobile */
-  .reviews-line-track {
-    gap: 5px;
-    margin-top: 6px;
-  }
-
-  .dash-1 { width: 16px; }
-  .dash-2 { width: 24px; }
-  .dash-3 { width: 34px; }
-  .dash-4 { width: 44px; }
-  .dash-5 { width: 34px; }
-  .dash-6 { width: 24px; }
-  .dash-7 { width: 16px; }
-
-  /* Contact Card on Mobile */
+  /* Contact Lead Form & Card App-Redesign on Mobile */
   .contact-card {
-    padding: 22px 16px;
-    border-radius: 16px;
+    padding: 26px 20px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(12, 35, 64, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
   }
 
   .contact-info h2 {
-    font-size: 1.55rem;
+    font-size: 1.60rem !important;
+    color: #0c2340 !important;
+    font-weight: 800 !important;
+    margin-bottom: 10px;
   }
 
   .contact-details {
-    margin-top: 24px;
+    margin-top: 20px;
+    gap: 14px;
+  }
+
+  .contact-row {
+    font-size: 0.90rem;
+    color: #1e293b;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
+    width: 100%;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
   }
 
   .toggle-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 6px;
-    padding: 4px;
+    padding: 5px;
+    background: #f1f5fa;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 4px;
   }
 
   .toggle-btn {
-    padding: 9px 8px;
-    font-size: 0.82rem;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 8px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .form-group label {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #0c2340;
+    margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    color: #0c2340;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-group textarea {
+    min-height: 100px;
+    padding: 14px 16px;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: #0c2340;
+    box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.12);
+  }
+
+  .contact-form .btn-primary {
+    width: 100%;
+    min-height: 50px;
+    background: #0c2340;
+    color: #ffffff !important;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(12, 35, 64, 0.22);
+    border: none;
+    margin-top: 6px;
   }
 
   /* Footer on Mobile: Quick Links & Our Services side-by-side */
