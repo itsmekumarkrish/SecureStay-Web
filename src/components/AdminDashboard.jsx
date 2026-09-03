@@ -641,22 +641,32 @@ export default function AdminDashboard({
         {/* Tab 2: Manage Properties List */}
         {activeTab === 'properties-list' && (
           <div className="admin-card-section">
-            <div className="admin-section-header flex-between flex-wrap gap-2">
-              <div>
-                <h3>All Published Properties ({filteredTableProperties.length})</h3>
-                <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
-              </div>
+            <div className="admin-section-header">
+              <h3>All Published Properties ({filteredTableProperties.length})</h3>
+              <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
+            </div>
 
-              <div className="search-input-wrap" style={{ maxWidth: '300px' }}>
-                <Search size={16} className="search-icon" />
+            <div className="admin-toolbar-row">
+              <div className="admin-search-wrap">
+                <Search size={16} className="admin-search-icon" />
                 <input 
                   type="text" 
-                  placeholder="Search property title or area..." 
+                  className="admin-search-input"
+                  placeholder="Search property title, city or area..." 
                   value={tableSearch}
                   onChange={(e) => setTableSearch(e.target.value)}
-                  style={{ padding: '6px 12px 6px 36px', fontSize: '0.84rem' }}
                 />
               </div>
+
+              {tableSearch && (
+                <button 
+                  type="button" 
+                  className="btn-link-sm text-muted"
+                  onClick={() => setTableSearch('')}
+                >
+                  Clear Search
+                </button>
+              )}
             </div>
 
             <div className="admin-properties-table-wrap">
@@ -768,35 +778,46 @@ export default function AdminDashboard({
         {/* Tab 3: Customer Lead Inquiries */}
         {activeTab === 'inquiries' && (
           <div className="admin-card-section">
-            <div className="admin-section-header flex-between flex-wrap gap-2">
-              <div>
-                <h3>Submitted Lead Inquiries ({filteredInquiries.length})</h3>
-                <p>Inquiries sent through website forms, connected directly to your management workflow.</p>
+            <div className="admin-section-header">
+              <h3>Submitted Lead Inquiries ({filteredInquiries.length})</h3>
+              <p>Inquiries sent through website forms, connected directly to your management workflow.</p>
+            </div>
+
+            <div className="admin-toolbar-row">
+              <div className="admin-search-wrap">
+                <Search size={16} className="admin-search-icon" />
+                <input 
+                  type="text" 
+                  className="admin-search-input"
+                  placeholder="Search lead name, phone, message..." 
+                  value={inquirySearch}
+                  onChange={(e) => setInquirySearch(e.target.value)}
+                />
               </div>
 
-              <div className="flex-align gap-2 flex-wrap">
-                <div className="search-input-wrap" style={{ maxWidth: '240px' }}>
-                  <Search size={16} className="search-icon" />
-                  <input 
-                    type="text" 
-                    placeholder="Search name, phone, msg..." 
-                    value={inquirySearch}
-                    onChange={(e) => setInquirySearch(e.target.value)}
-                    style={{ padding: '6px 12px 6px 36px', fontSize: '0.84rem' }}
-                  />
-                </div>
+              <select 
+                className="admin-filter-select"
+                value={inquiryStatusFilter}
+                onChange={(e) => setInquiryStatusFilter(e.target.value)}
+              >
+                <option value="all">All Statuses</option>
+                <option value="pending">🟡 Pending</option>
+                <option value="contacted">🔵 Contacted</option>
+                <option value="converted">🟢 Converted</option>
+              </select>
 
-                <select 
-                  value={inquiryStatusFilter}
-                  onChange={(e) => setInquiryStatusFilter(e.target.value)}
-                  style={{ padding: '6px 12px', fontSize: '0.84rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+              {(inquirySearch || inquiryStatusFilter !== 'all') && (
+                <button 
+                  type="button" 
+                  className="btn-link-sm text-muted"
+                  onClick={() => {
+                    setInquirySearch('');
+                    setInquiryStatusFilter('all');
+                  }}
                 >
-                  <option value="all">All Statuses</option>
-                  <option value="pending">Pending</option>
-                  <option value="contacted">Contacted</option>
-                  <option value="converted">Converted</option>
-                </select>
-              </div>
+                  Clear Filters
+                </button>
+              )}
             </div>
 
             {filteredInquiries.length > 0 ? (
