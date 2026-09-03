@@ -553,21 +553,24 @@ export default function AdminDashboard({
             className={`admin-tab-btn ${activeTab === 'add-property' ? 'active' : ''}`}
             onClick={() => setActiveTab('add-property')}
           >
-            <Plus size={18} /> Upload New Property
+            <Plus size={18} className="flex-shrink-0" />
+            <span className="tab-btn-title">Upload New Property</span>
           </button>
           <button 
             type="button" 
             className={`admin-tab-btn ${activeTab === 'properties-list' ? 'active' : ''}`}
             onClick={() => setActiveTab('properties-list')}
           >
-            <Building2 size={18} /> Manage Listings ({properties.length})
+            <Building2 size={18} className="flex-shrink-0" />
+            <span className="tab-btn-title">Manage Listings <span className="tab-count-badge">({properties.length})</span></span>
           </button>
           <button 
             type="button" 
             className={`admin-tab-btn ${activeTab === 'inquiries' ? 'active' : ''}`}
             onClick={() => setActiveTab('inquiries')}
           >
-            <MessageSquare size={18} /> Customer Inquiries ({inquiries.length})
+            <MessageSquare size={18} className="flex-shrink-0" />
+            <span className="tab-btn-title">Customer Inquiries <span className="tab-count-badge">({inquiries.length})</span></span>
           </button>
         </div>
 
