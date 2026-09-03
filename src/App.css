@@ -2356,8 +2356,8 @@ input:focus, select:focus, textarea:focus {
   .hero {
     min-height: auto;
     display: block;
-    padding-top: 40px;
-    padding-bottom: 80px !important;
+    padding-top: 32px;
+    padding-bottom: 72px !important;
     box-sizing: border-box;
     overflow-x: hidden;
     margin-bottom: 0 !important;
@@ -2400,8 +2400,8 @@ input:focus, select:focus, textarea:focus {
   }
 
   .hero-text h1 {
-    font-size: clamp(1.55rem, 5.5vw, 1.95rem);
-    line-height: 1.4;
+    font-size: 28px !important;
+    line-height: 1.4 !important;
     margin-bottom: 20px;
     letter-spacing: -0.3px;
     font-weight: 800;
