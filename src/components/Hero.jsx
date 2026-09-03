@@ -5,9 +5,9 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="container">
-        <div className="hero-text text-center">
+        <div className="hero-text">
           <div className="hero-tag">
-            <span className="tag-rating">★ 5/15 Rating</span>
+            <span className="tag-rating">★ 5/5 Rating</span>
             <span className="tag-divider-dot">•</span>
             <span>Managed with Trust • Delivered with Care</span>
           </div>
@@ -17,7 +17,7 @@ export default function Hero() {
           <p className="hero-subtitle">
             End-to-end residential property services for owners with guaranteed on-time rent, verified tenants, and seamless property care across India.
           </p>
-          <div className="hero-buttons justify-center">
+          <div className="hero-buttons">
             <a href="#contact" className="btn-primary">
               Get in Touch <ArrowRight size={16} className="btn-arrow" />
             </a>

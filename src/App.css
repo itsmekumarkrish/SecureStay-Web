@@ -349,8 +349,8 @@ a {
 
 .hero-text {
   max-width: min(92vw, 1040px);
-  margin: 0 auto;
-  text-align: center;
+  margin: 0;
+  text-align: left;
   width: 100%;
 }
 
@@ -366,8 +366,8 @@ a {
   font-weight: 500;
   padding: 6px 18px 6px 12px;
   border-radius: 30px;
-  margin-top: 24px;
-  margin-bottom: clamp(18px, 2.8vh, 28px);
+  margin-top: 16px;
+  margin-bottom: clamp(16px, 2.5vh, 24px);
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(12, 35, 64, 0.04);
 }
@@ -392,12 +392,13 @@ a {
 
 .hero-text h1 {
   font-size: clamp(1.9rem, 2.2vw + 0.5rem, 2.7rem);
-  line-height: 1.22;
+  line-height: 1.18;
   color: #0c2340;
-  margin: 0 auto clamp(16px, 2.5vh, 24px) auto;
+  margin: 0 0 clamp(14px, 2.2vh, 20px) 0;
   max-width: min(96%, 920px);
   font-weight: 800;
   letter-spacing: -0.02em;
+  text-align: left;
 }
 
 .text-highlight-gold {
@@ -411,18 +412,19 @@ a {
 
 .hero-subtitle {
   font-size: clamp(0.92rem, 0.45vw + 0.55rem, 1.08rem);
-  line-height: 1.65;
+  line-height: 1.6;
   max-width: min(90%, 740px);
-  margin: 0 auto clamp(22px, 3.5vh, 36px) auto;
+  margin: 0 0 clamp(20px, 3.2vh, 32px) 0;
   color: var(--text-muted);
+  text-align: left;
 }
 
 .hero-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  margin-bottom: clamp(36px, 5.5vh, 56px);
+  gap: 14px;
+  margin-bottom: clamp(32px, 5vh, 48px);
 }
 
 .hero-buttons .btn-primary {
@@ -2347,86 +2349,140 @@ input:focus, select:focus, textarea:focus {
   .hero {
     min-height: auto;
     display: block;
-    padding: 32px 0 36px 0;
+    padding: 20px 0 28px 0;
     box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .hero-text {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 
   .hero-tag {
-    font-size: 0.74rem;
-    padding: 5px 12px 5px 6px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 0.75rem;
+    padding: 5px 12px;
     gap: 6px;
+    margin-top: 4px;
     margin-bottom: 14px;
-    text-align: center;
+    text-align: left;
     max-width: 100%;
+    line-height: 1.4;
   }
 
   .tag-rating {
-    font-size: 0.70rem;
-    padding: 2px 6px;
+    font-size: 0.72rem;
+    padding: 2px 7px;
   }
 
   .hero-text h1 {
-    font-size: 1.75rem;
-    line-height: 1.24;
+    font-size: clamp(1.6rem, 5.8vw, 1.95rem);
+    line-height: 1.18;
     margin-bottom: 12px;
     letter-spacing: -0.3px;
+    font-weight: 800;
+    text-align: left;
+    word-wrap: break-word;
+  }
+
+  .text-highlight-gold {
+    display: inline;
   }
 
   .hero-subtitle {
     font-size: 0.92rem;
-    line-height: 1.58;
-    margin-bottom: 24px;
-    padding: 0 4px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    padding: 0;
     color: var(--text-muted);
+    text-align: left;
   }
 
+  /* Horizontal Side-by-Side Action Buttons on Mobile */
   .hero-buttons {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     gap: 10px;
-    margin-bottom: 28px;
+    justify-content: flex-start;
+    margin-bottom: 24px;
   }
 
   .hero-buttons .btn-primary,
   .hero-buttons .btn-secondary {
-    width: 100%;
+    flex: 1 1 calc(50% - 6px);
+    min-width: 125px;
+    box-sizing: border-box;
     text-align: center;
     justify-content: center;
-    padding: 13px 18px;
-    font-size: 0.96rem;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    white-space: nowrap;
   }
 
-  /* Stats 2x2 inside Hero on Mobile */
+  /* Strict Locked 2-Column Grid Statistics Container */
   .hero-stats-strip {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px;
     padding: 14px 10px;
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-stats-strip::after {
+    top: -3px;
+    left: -2px;
+    right: -2px;
+    bottom: -3px;
+    border-radius: 16px;
   }
 
   .stat-item {
+    width: 100%;
+    box-sizing: border-box;
     padding: 10px 4px;
     background: #f8fafc;
-    border-radius: 8px;
-    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .stat-icon-wrapper {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 4px;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 6px;
   }
 
   .stat-number {
-    font-size: 1.25rem;
-    margin-bottom: 2px;
+    font-size: 1.3rem;
+    margin-bottom: 3px;
+    white-space: normal;
   }
 
   .stat-desc {
-    font-size: 0.72rem;
-    line-height: 1.2;
+    font-size: 0.74rem;
+    line-height: 1.25;
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
   }
 
   /* Section Spacing & Headings */
