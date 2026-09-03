@@ -3687,6 +3687,14 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Property Detail Modal */
+.sheet-grab-handle {
+  width: 44px;
+  height: 5px;
+  background: #CBD5E1;
+  border-radius: 3px;
+  margin: 10px auto 4px auto;
+}
+
 .property-detail-modal-card {
   background: #ffffff;
   border-radius: var(--radius-lg);
@@ -5805,4 +5813,130 @@ input:focus, select:focus, textarea:focus {
 .btn-whatsapp-sm:hover {
   background: #1eb954;
 }
+
+/* ============================================================
+   Mobile App Bottom Sheet View for Property Detail Modal (max-width: 600px)
+   ============================================================ */
+@keyframes slideUpBottomSheet {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .legal-modal-backdrop {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .property-detail-modal-card {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: 92vh !important;
+    border-radius: 24px 24px 0 0 !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+    padding: 10px 18px 32px 18px !important;
+    border: none !important;
+    border-top: 1px solid rgba(226, 232, 240, 0.8) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25) !important;
+    animation: slideUpBottomSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    background: #ffffff !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sheet-grab-handle {
+    width: 44px !important;
+    height: 5px !important;
+    background: #CBD5E1 !important;
+    border-radius: 3px !important;
+    margin: 10px auto 4px auto !important;
+    display: block !important;
+  }
+
+  .property-modal-close-btn {
+    position: absolute !important;
+    top: 12px !important;
+    right: 16px !important;
+    width: 34px !important;
+    height: 34px !important;
+    background: rgba(241, 245, 250, 0.95) !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 50% !important;
+    z-index: 20 !important;
+  }
+
+  .detail-gallery {
+    margin-top: 4px;
+  }
+
+  .detail-main-img-wrap {
+    border-radius: 16px !important;
+    height: 250px !important;
+  }
+
+  .detail-thumbnails-row {
+    padding: 10px 12px !important;
+    gap: 12px !important;
+    background: #f8fafc !important;
+    border-radius: 14px !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 12px !important;
+    overflow-x: auto !important;
+  }
+
+  .detail-thumb-btn {
+    flex-shrink: 0 !important;
+    width: 72px !important;
+    height: 52px !important;
+    border-radius: 10px !important;
+  }
+
+  .detail-highlights {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .highlight-badge {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: #f1f5fa !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 10px 12px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #0c2340 !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .detail-highlights .highlight-badge:last-child:nth-child(odd) {
+    grid-column: span 2 !important;
+  }
+
+  .detail-property-title {
+    font-size: 1.35rem !important;
+    margin-top: 8px !important;
+  }
+
+  .detail-pricing-box {
+    padding: 14px 16px !important;
+    gap: 12px !important;
+  }
+}
+
 

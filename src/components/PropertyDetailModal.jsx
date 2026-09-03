@@ -24,6 +24,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
   return (
     <div className="legal-modal-backdrop" onClick={onClose}>
       <div className="property-detail-modal-card" onClick={(e) => e.stopPropagation()}>
+        <div className="sheet-grab-handle"></div>
         <button type="button" className="property-modal-close-btn" onClick={onClose} aria-label="Close modal">
           <X size={20} />
         </button>
