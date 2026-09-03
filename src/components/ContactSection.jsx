@@ -147,12 +147,6 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
                 )}
               </button>
 
-              {/* Top Badge Overlay */}
-              <div className="contact-video-top-bar">
-                <div className="video-tag-pill">
-                  <Sparkles size={11} /> Verified Property Tour
-                </div>
-              </div>
 
               {/* Settings Toast Overlay */}
               {showSettingsToast && (
