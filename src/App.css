@@ -2874,6 +2874,30 @@ input:focus, select:focus, textarea:focus {
     text-align: center;
   }
 
+  /* Targeted iPhone 13 (376px - 395px) Viewport Adjustments */
+  @media (min-width: 376px) and (max-width: 395px) {
+    .hero {
+      padding-top: 16px !important;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5fa 50%, #e8eef6 100%) !important;
+    }
+
+    .hero-text h1 {
+      font-size: 25px !important;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 20px !important;
+    }
+
+    .hero-stats-strip {
+      gap: 10px !important;
+    }
+
+    .stat-item {
+      padding: 10px 8px !important;
+    }
+  }
+
   /* Seamless Transition into 'Why Choose SecureStay?' Section */
   #about.section {
     margin-top: 0 !important;
