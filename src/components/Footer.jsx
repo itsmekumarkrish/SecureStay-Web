@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer({ setLegalModal, onNavigate }) {
   const handleNavClick = (viewName, hashTarget) => {
@@ -46,6 +46,19 @@ export default function Footer({ setLegalModal, onNavigate }) {
               <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">All Properties</button></li>
               <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">List Your Property</button></li>
             </ul>
+
+            {/* Mobile-Only Social Media Row */}
+            <div className="footer-social-row">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon" aria-label="Facebook">
+                <Facebook size={18} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon" aria-label="Instagram">
+                <Instagram size={18} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon" aria-label="LinkedIn">
+                <Linkedin size={18} />
+              </a>
+            </div>
           </div>
 
           {/* Column 3: Management Services */}

@@ -2158,6 +2158,11 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px;
   font-size: 0.78rem;
   font-weight: 600;
+}
+
+.footer-social-row {
+  display: none;
+}
   color: #e2e8f0;
   white-space: nowrap;
   width: fit-content;
@@ -3621,6 +3626,40 @@ input:focus, select:focus, textarea:focus {
 
   .footer-col-brand {
     grid-column: 1 / -1;
+  }
+
+  /* Mobile-Only Social Media Row Under Quick Links */
+  .footer-social-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+    align-items: center !important;
+  }
+
+  .footer-social-icon {
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    transition: background 0.3s ease, transform 0.2s ease !important;
+    text-decoration: none !important;
+  }
+
+  .footer-social-icon:hover,
+  .footer-social-icon:active {
+    background: #ca8a04 !important;
+  }
+
+  .footer-social-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+    color: #ffffff !important;
+    display: block !important;
   }
 
   .footer-bottom-row {
