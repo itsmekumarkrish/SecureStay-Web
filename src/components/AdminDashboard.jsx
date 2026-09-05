@@ -389,8 +389,12 @@ export default function AdminDashboard({
 
         <div className="admin-login-card">
           <div className="login-header text-center">
-            <div className="admin-icon-halo">
-              <ShieldCheck size={28} className="text-gold" />
+            <div className="admin-login-brand-wrap">
+              <img 
+                src="/assets/securestay_logo.png" 
+                alt="SecureStay Logo" 
+                className="admin-login-brand-logo" 
+              />
             </div>
 
             <h2>SecureStay Properties Dashboard</h2>
@@ -443,7 +447,7 @@ export default function AdminDashboard({
                 className="btn-autofill-demo"
                 onClick={handleAutoFillDemo}
               >
-                <Sparkles size={14} className="text-gold" />
+                <Sparkles size={14} style={{ color: '#0284c7' }} />
                 <span>Auto-fill Demo Credentials</span>
                 <span className="autofill-tag">admin / securestay123</span>
               </button>
