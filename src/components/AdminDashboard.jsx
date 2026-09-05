@@ -887,19 +887,24 @@ export default function AdminDashboard({
                   </div>
 
                   <div className="saas-field mb-3">
-                    <div className="flex-between mb-2">
-                      <label className="saas-label margin-0">Property Image URLs (Paste Web Links)</label>
+                    <div className="saas-media-header-row mb-3">
+                      <label className="saas-label margin-0">Property Image URLs ({newProp.images.length}):</label>
                       <button 
                         type="button" 
-                        className="btn-link-sm" 
+                        className="btn-add-photo-pill" 
                         onClick={handleAddImageUrlField}
                       >
-                        + Add Image Link Field
+                        + Add Photo Link
                       </button>
                     </div>
 
                     {newProp.images.map((imgUrl, idx) => (
                       <div key={idx} className="image-url-input-row mb-2">
+                        <img 
+                          src={imgUrl || '/assets/hero_stay.jpg'} 
+                          alt="preview" 
+                          className="media-url-thumb"
+                        />
                         <input 
                           type="url" 
                           className="saas-input"
@@ -1590,23 +1595,23 @@ export default function AdminDashboard({
                   </div>
 
                   <div className="saas-field mb-3">
-                    <div className="flex-between mb-2">
+                    <div className="saas-media-header-row mb-3">
                       <label className="saas-label margin-0">Current Photos List ({(editingProp.images || []).length}):</label>
                       <button 
                         type="button" 
-                        className="btn-link-sm" 
+                        className="btn-add-photo-pill" 
                         onClick={() => setEditingProp({ ...editingProp, images: [...(editingProp.images || []), ''] })}
                       >
-                        + Add Image Link Field
+                        + Add Photo Link
                       </button>
                     </div>
 
                     {(editingProp.images || []).map((imgUrl, idx) => (
-                      <div key={idx} className="image-url-input-row mb-2" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <div key={idx} className="image-url-input-row mb-2">
                         <img 
                           src={imgUrl || '/assets/hero_stay.jpg'} 
                           alt="preview" 
-                          style={{ width: '44px', height: '36px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                          className="media-url-thumb"
                         />
                         <input 
                           type="url" 
