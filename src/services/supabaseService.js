@@ -1,84 +1,77 @@
 /**
- * SecureStay Supabase Cloud Sync Service
- * Handles live database synchronization for /propertyadmin across all web clients.
+ * SecureStay Live Cloud Sync Service
+ * Handles real-time cloud database synchronization for /propertyadmin across all web clients & devices.
  */
 
-// Custom Supabase Env Credentials (Optional)
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const PROPERTIES_DB_ENDPOINT = 'https://api.restful-api.dev/objects/ff808181a067127101a0732ea03521e3';
+const INQUIRIES_DB_ENDPOINT  = 'https://api.restful-api.dev/objects/ff808181a067127101a0732ea1b221e4';
 
-export const isCloudConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
-
-const getHeaders = () => ({
-  'apikey': SUPABASE_ANON_KEY,
-  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-  'Content-Type': 'application/json',
-  'Prefer': 'return=representation'
-});
+export const isCloudConfigured = true;
 
 /**
  * Fetch all published properties from Cloud Database
  */
 export async function fetchCloudProperties() {
-  if (!isCloudConfigured) {
-    // Local / Cloud Hybrid Fallback
-    try {
-      const saved = localStorage.getItem('securestay_properties');
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
+  try {
+    const response = await fetch(PROPERTIES_DB_ENDPOINT, { method: 'GET' });
+    if (!response.ok) throw new Error(`Fetch properties status ${response.status}`);
+    const resData = await response.json();
+    const props = resData.data?.properties;
+    if (props && Array.isArray(props) && props.length > 0) {
+      localStorage.setItem('securestay_properties', JSON.stringify(props));
+      return props;
     }
+  } catch (err) {
+    console.warn('[CloudSync] Fetch cloud properties warning:', err.message);
   }
 
+  // Local Storage Fallback
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/properties?select=*&order=id.desc`, {
-      method: 'GET',
-      headers: getHeaders()
-    });
-    if (!response.ok) throw new Error(`Supabase fetch error: ${response.statusText}`);
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.warn('[CloudSync] Fallback to local properties store:', err.message);
     const saved = localStorage.getItem('securestay_properties');
     return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Sync entire properties list to Cloud Database
+ */
+export async function syncAllCloudProperties(propertiesList) {
+  if (!Array.isArray(propertiesList)) return;
+  try {
+    localStorage.setItem('securestay_properties', JSON.stringify(propertiesList));
+    await fetch(PROPERTIES_DB_ENDPOINT, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: "SecureStay Live Properties Database",
+        data: { properties: propertiesList }
+      })
+    });
+  } catch (err) {
+    console.warn('[CloudSync] Sync properties cloud error:', err.message);
   }
 }
 
 /**
  * Save or update property in Cloud Database
  */
-export async function saveCloudProperty(propertyPayload) {
-  if (!isCloudConfigured) {
-    // Local fallback update
-    try {
-      const saved = localStorage.getItem('securestay_properties');
-      const list = saved ? JSON.parse(saved) : [];
-      const exists = list.some((p) => p.id === propertyPayload.id);
-      const updatedList = exists
-        ? list.map((p) => (p.id === propertyPayload.id ? propertyPayload : p))
-        : [propertyPayload, ...list];
-      localStorage.setItem('securestay_properties', JSON.stringify(updatedList));
-    } catch {
-      // fallback
-    }
-    return propertyPayload;
-  }
-
+export async function saveCloudProperty(propertyPayload, fullList) {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/properties`, {
-      method: 'POST',
-      headers: {
-        ...getHeaders(),
-        'Prefer': 'resolution=merge-duplicates,return=representation'
-      },
-      body: JSON.stringify(propertyPayload)
-    });
-    if (!response.ok) throw new Error(`Supabase save error: ${response.statusText}`);
-    const data = await response.json();
-    return data[0] || propertyPayload;
+    let currentList = fullList;
+    if (!currentList) {
+      const saved = localStorage.getItem('securestay_properties');
+      currentList = saved ? JSON.parse(saved) : [];
+      const exists = currentList.some((p) => p.id === propertyPayload.id);
+      currentList = exists
+        ? currentList.map((p) => (p.id === propertyPayload.id ? propertyPayload : p))
+        : [propertyPayload, ...currentList];
+    }
+    await syncAllCloudProperties(currentList);
+    return propertyPayload;
   } catch (err) {
-    console.warn('[CloudSync] Failed to push property to cloud:', err.message);
+    console.warn('[CloudSync] saveCloudProperty error:', err.message);
     return propertyPayload;
   }
 }
@@ -86,29 +79,18 @@ export async function saveCloudProperty(propertyPayload) {
 /**
  * Delete property from Cloud Database
  */
-export async function deleteCloudProperty(id) {
-  if (!isCloudConfigured) {
-    try {
-      const saved = localStorage.getItem('securestay_properties');
-      if (saved) {
-        const list = JSON.parse(saved);
-        const filtered = list.filter((p) => p.id !== id);
-        localStorage.setItem('securestay_properties', JSON.stringify(filtered));
-      }
-    } catch {
-      // fallback
-    }
-    return true;
-  }
-
+export async function deleteCloudProperty(id, remainingList) {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/properties?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: getHeaders()
-    });
-    return response.ok;
+    let currentList = remainingList;
+    if (!currentList) {
+      const saved = localStorage.getItem('securestay_properties');
+      const list = saved ? JSON.parse(saved) : [];
+      currentList = list.filter((p) => p.id !== id);
+    }
+    await syncAllCloudProperties(currentList);
+    return true;
   } catch (err) {
-    console.warn('[CloudSync] Delete error:', err.message);
+    console.warn('[CloudSync] Delete cloud property error:', err.message);
     return false;
   }
 }
@@ -117,56 +99,62 @@ export async function deleteCloudProperty(id) {
  * Fetch lead inquiries from Cloud Database
  */
 export async function fetchCloudInquiries() {
-  if (!isCloudConfigured) {
-    try {
-      const saved = localStorage.getItem('securestay_inquiries');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
+  try {
+    const response = await fetch(INQUIRIES_DB_ENDPOINT, { method: 'GET' });
+    if (!response.ok) throw new Error(`Fetch inquiries status ${response.status}`);
+    const resData = await response.json();
+    const inqs = resData.data?.inquiries;
+    if (inqs && Array.isArray(inqs)) {
+      localStorage.setItem('securestay_inquiries', JSON.stringify(inqs));
+      return inqs;
     }
+  } catch (err) {
+    console.warn('[CloudSync] Fetch inquiries cloud warning:', err.message);
   }
 
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries?select=*&order=id.desc`, {
-      method: 'GET',
-      headers: getHeaders()
-    });
-    if (!response.ok) throw new Error(`Supabase inquiries fetch error: ${response.statusText}`);
-    return await response.json();
-  } catch (err) {
-    console.warn('[CloudSync] Fallback to local inquiries:', err.message);
     const saved = localStorage.getItem('securestay_inquiries');
     return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Sync entire inquiries list to Cloud Database
+ */
+export async function syncAllCloudInquiries(inquiriesList) {
+  if (!Array.isArray(inquiriesList)) return;
+  try {
+    localStorage.setItem('securestay_inquiries', JSON.stringify(inquiriesList));
+    await fetch(INQUIRIES_DB_ENDPOINT, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: "SecureStay Live Inquiries Database",
+        data: { inquiries: inquiriesList }
+      })
+    });
+  } catch (err) {
+    console.warn('[CloudSync] Sync inquiries cloud error:', err.message);
   }
 }
 
 /**
  * Push new inquiry to Cloud Database
  */
-export async function saveCloudInquiry(inquiryPayload) {
-  if (!isCloudConfigured) {
-    try {
+export async function saveCloudInquiry(inquiryPayload, fullList) {
+  try {
+    let currentList = fullList;
+    if (!currentList) {
       const saved = localStorage.getItem('securestay_inquiries');
       const list = saved ? JSON.parse(saved) : [];
-      const updatedList = [inquiryPayload, ...list];
-      localStorage.setItem('securestay_inquiries', JSON.stringify(updatedList));
-    } catch {
-      // fallback
+      currentList = [inquiryPayload, ...list];
     }
+    await syncAllCloudInquiries(currentList);
     return inquiryPayload;
-  }
-
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify(inquiryPayload)
-    });
-    if (!response.ok) throw new Error(`Supabase inquiry save error: ${response.statusText}`);
-    const data = await response.json();
-    return data[0] || inquiryPayload;
   } catch (err) {
-    console.warn('[CloudSync] Inquiry cloud push error:', err.message);
+    console.warn('[CloudSync] saveCloudInquiry error:', err.message);
     return inquiryPayload;
   }
 }
@@ -174,30 +162,18 @@ export async function saveCloudInquiry(inquiryPayload) {
 /**
  * Update lead inquiry status in Cloud Database
  */
-export async function updateCloudInquiryStatus(id, newStatus) {
-  if (!isCloudConfigured) {
-    try {
-      const saved = localStorage.getItem('securestay_inquiries');
-      if (saved) {
-        const list = JSON.parse(saved);
-        const updated = list.map((i) => (i.id === id ? { ...i, status: newStatus } : i));
-        localStorage.setItem('securestay_inquiries', JSON.stringify(updated));
-      }
-    } catch {
-      // fallback
-    }
-    return true;
-  }
-
+export async function updateCloudInquiryStatus(id, newStatus, fullList) {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: getHeaders(),
-      body: JSON.stringify({ status: newStatus })
-    });
-    return response.ok;
+    let currentList = fullList;
+    if (!currentList) {
+      const saved = localStorage.getItem('securestay_inquiries');
+      const list = saved ? JSON.parse(saved) : [];
+      currentList = list.map((i) => (i.id === id ? { ...i, status: newStatus } : i));
+    }
+    await syncAllCloudInquiries(currentList);
+    return true;
   } catch (err) {
-    console.warn('[CloudSync] Update inquiry status error:', err.message);
+    console.warn('[CloudSync] updateCloudInquiryStatus error:', err.message);
     return false;
   }
 }
@@ -205,29 +181,18 @@ export async function updateCloudInquiryStatus(id, newStatus) {
 /**
  * Delete inquiry record from Cloud Database
  */
-export async function deleteCloudInquiry(id) {
-  if (!isCloudConfigured) {
-    try {
-      const saved = localStorage.getItem('securestay_inquiries');
-      if (saved) {
-        const list = JSON.parse(saved);
-        const filtered = list.filter((i) => i.id !== id);
-        localStorage.setItem('securestay_inquiries', JSON.stringify(filtered));
-      }
-    } catch {
-      // fallback
-    }
-    return true;
-  }
-
+export async function deleteCloudInquiry(id, remainingList) {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: getHeaders()
-    });
-    return response.ok;
+    let currentList = remainingList;
+    if (!currentList) {
+      const saved = localStorage.getItem('securestay_inquiries');
+      const list = saved ? JSON.parse(saved) : [];
+      currentList = list.filter((i) => i.id !== id);
+    }
+    await syncAllCloudInquiries(currentList);
+    return true;
   } catch (err) {
-    console.warn('[CloudSync] Delete inquiry error:', err.message);
+    console.warn('[CloudSync] deleteCloudInquiry error:', err.message);
     return false;
   }
 }

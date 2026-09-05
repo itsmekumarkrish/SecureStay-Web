@@ -69,6 +69,8 @@ import {
   isCloudConfigured,
   fetchCloudProperties,
   fetchCloudInquiries,
+  syncAllCloudProperties,
+  syncAllCloudInquiries,
   saveCloudProperty, 
   deleteCloudProperty, 
   saveCloudInquiry, 
@@ -154,7 +156,7 @@ export default function App() {
     message: ''
   });
 
-  // Fetch latest properties and inquiries from Cloud Database on mount
+  // Fetch latest properties and inquiries from Cloud Database on mount and window focus
   useEffect(() => {
     async function syncCloudOnMount() {
       try {
@@ -175,7 +177,14 @@ export default function App() {
         console.warn('Initial cloud sync error:', err);
       }
     }
+
     syncCloudOnMount();
+
+    const handleFocus = () => {
+      syncCloudOnMount();
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   // Real-time synchronization via BroadcastChannel and Storage Event
@@ -219,10 +228,11 @@ export default function App() {
     };
   }, []);
 
-  // Save properties to localStorage and broadcast whenever updated
+  // Save properties to localStorage and sync to cloud database whenever updated
   useEffect(() => {
     try {
       localStorage.setItem('securestay_properties', JSON.stringify(propertiesList));
+      syncAllCloudProperties(propertiesList);
       if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
         const bc = new BroadcastChannel('securestay_live_channel');
         bc.postMessage({ type: 'PROPERTIES_SYNC', payload: propertiesList });
@@ -242,10 +252,11 @@ export default function App() {
     }
   }, [deletedIds]);
 
-  // Save inquiries to localStorage and broadcast whenever updated
+  // Save inquiries to localStorage and sync to cloud database whenever updated
   useEffect(() => {
     try {
       localStorage.setItem('securestay_inquiries', JSON.stringify(inquiriesList));
+      syncAllCloudInquiries(inquiriesList);
       if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
         const bc = new BroadcastChannel('securestay_live_channel');
         bc.postMessage({ type: 'INQUIRIES_SYNC', payload: inquiriesList });
