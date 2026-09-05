@@ -26,7 +26,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
                 handleNavClick('home');
               }}
             >
-              <img src="/assets/logo_light.png" alt="iGrey Holdings" className="footer-logo-img" />
+              <img src="/assets/logo_light.png" alt="SecureStay Properties" className="footer-logo-img" />
             </a>
             <p className="footer-bio">
               India's premier end-to-end residential property services company. Providing guaranteed on-time rent, 100% verified background checks, and seamless property care.
@@ -41,7 +41,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
           <div className="footer-col">
             <h4 className="footer-heading">Quick Links</h4>
             <ul className="footer-links">
-              <li><button type="button" onClick={() => handleNavClick('home', 'about')} className="footer-btn-link">About iGrey Holdings</button></li>
+              <li><button type="button" onClick={() => handleNavClick('home', 'about')} className="footer-btn-link">About SecureStay</button></li>
               <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Our Services</button></li>
               <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">All Properties</button></li>
               <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">List Your Property</button></li>
@@ -65,7 +65,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
 
         <div className="footer-bottom-row">
           <p className="footer-copy" onDoubleClick={() => handleNavClick('admin')}>
-            © {new Date().getFullYear()} iGrey Holdings. All rights reserved.
+            © {new Date().getFullYear()} SecureStay Properties. All rights reserved.
           </p>
           <div className="footer-bottom-links">
             <button type="button" onClick={() => setLegalModal('privacy')} className="footer-modal-link">Privacy Policy</button>

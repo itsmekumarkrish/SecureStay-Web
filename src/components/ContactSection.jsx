@@ -104,7 +104,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
       <div className="container">
         <div id="contact-card" className="contact-card">
           <div className="contact-info">
-            <h2>Contact iGrey Holdings</h2>
+            <h2>Contact SecureStay</h2>
             <p>Have questions or want to partner with us? Leave your message and our team will get back to you shortly.</p>
             
             {/* Interactive Custom Video Player Showcase */}

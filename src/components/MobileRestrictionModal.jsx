@@ -10,7 +10,7 @@ export default function MobileRestrictionModal({ onBypass }) {
         <div className="mobile-brand-wrap mb-3">
           <img 
             src="/favicon.png" 
-            alt="iGrey Holdings" 
+            alt="SecureStay Properties" 
             className="mobile-restriction-icon mx-auto" 
           />
         </div>
@@ -21,7 +21,7 @@ export default function MobileRestrictionModal({ onBypass }) {
 
         <h2>Desktop Access Required</h2>
         <p className="mobile-restriction-desc">
-          The <strong>iGrey Holdings Properties Portal</strong> is optimized exclusively for desktop &amp; laptop computer screens for 3D walkthroughs, listing management, and property verification.
+          The <strong>SecureStay Properties Portal</strong> is optimized exclusively for desktop &amp; laptop computer screens for 3D walkthroughs, listing management, and property verification.
         </p>
 
         {/* Info Box */}
@@ -33,13 +33,13 @@ export default function MobileRestrictionModal({ onBypass }) {
         </div>
 
         <p className="mobile-instruction-text">
-          Please open <strong>igreyholdings.com</strong> on your laptop or desktop browser.
+          Please open <strong>securestay.in</strong> on your laptop or desktop browser.
         </p>
 
         {/* Mobile Contact CTAs */}
         <div className="mobile-cta-group">
           <a
-            href="https://wa.me/917090902111?text=Hi%20iGrey%20Holdings,%20I%20am%20opening%20your%20website%20from%20a%20mobile%20phone"
+            href="https://wa.me/917090902111?text=Hi%20SecureStay,%20I%20am%20opening%20your%20website%20from%20a%20mobile%20phone"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp-mobile-card"
@@ -65,7 +65,7 @@ export default function MobileRestrictionModal({ onBypass }) {
         </div>
 
         <p className="mobile-restriction-footer mt-3">
-          © {new Date().getFullYear()} iGrey Holdings. All rights reserved.
+          © {new Date().getFullYear()} SecureStay Properties. All rights reserved.
         </p>
       </div>
     </div>

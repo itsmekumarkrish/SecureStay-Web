@@ -20,21 +20,21 @@ export default function LegalModal({ legalModal, setLegalModal }) {
         <div className="legal-modal-body">
           {legalModal === 'privacy' && (
             <>
-              <p><strong>iGrey Holdings</strong> respects your privacy. We are committed to protecting all personal and property information submitted through our platform.</p>
+              <p><strong>SecureStay Properties</strong> respects your privacy. We are committed to protecting all personal and property information submitted through our platform.</p>
               <p>All tenant KYC documents (Aadhaar, Passport, HR verification) are encrypted with enterprise-grade SSL standards and stored securely solely for background validation and registered rental agreement execution.</p>
               <p>We strictly never sell or share resident or homeowner contact details with third-party telemarketers or unauthorized agencies.</p>
             </>
           )}
           {legalModal === 'terms' && (
             <>
-              <p>Welcome to <strong>iGrey Holdings</strong>. By listing a property or booking a stay with us, you agree to our standard terms of service.</p>
+              <p>Welcome to <strong>SecureStay Properties</strong>. By listing a property or booking a stay with us, you agree to our standard terms of service.</p>
               <p><strong>Rent Payout Guarantee:</strong> For subscribed homeowners, monthly rental payments are deposited directly into the registered bank account strictly on the 1st of every month.</p>
-              <p><strong>Zero Brokerage Policy:</strong> iGrey Holdings guarantees 100% zero broker commissions for verified working professionals and resident tenants.</p>
+              <p><strong>Zero Brokerage Policy:</strong> SecureStay Properties guarantees 100% zero broker commissions for verified working professionals and resident tenants.</p>
             </>
           )}
           {legalModal === 'trust' && (
             <>
-              <p>Safety and peace of mind are the core pillars of <strong>iGrey Holdings</strong>.</p>
+              <p>Safety and peace of mind are the core pillars of <strong>SecureStay Properties</strong>.</p>
               <p><strong>100% Verified Residents:</strong> Every prospective tenant undergoes mandatory 3-tier background checks including government photo ID validation, local police verification, and employment confirmation.</p>
               <p><strong>Regular Property Audits:</strong> In-house technicians conduct digital maintenance inspections with detailed photo updates for NRI and domestic landlords.</p>
             </>
