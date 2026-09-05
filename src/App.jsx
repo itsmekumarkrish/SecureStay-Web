@@ -521,8 +521,8 @@ export default function App() {
             onSeeMore={() => setCurrentView('catalog')}
             onOpenDetail={(prop) => setActiveDetailProperty(prop)}
           />
-          <ReviewsSection reviews={reviews} />
           <FaqSection faqs={faqs} />
+          <ReviewsSection reviews={reviews} />
           <ContactSection 
             formData={formData} 
             setFormData={setFormData} 
