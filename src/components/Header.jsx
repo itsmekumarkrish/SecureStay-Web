@@ -36,7 +36,7 @@ export default function Header({
             handleNavClick('home');
           }}
         >
-          <img src="/assets/header_brand_logo.png?v=99" alt="SecureStay Private Limited" className="brand-logo-img" />
+          <img src="/assets/logo_transparent.png?v=200" alt="SecureStay Private Limited" className="brand-logo-img" />
         </a>
 
         <nav className="nav-desktop">
