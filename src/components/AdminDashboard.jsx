@@ -1094,27 +1094,18 @@ export default function AdminDashboard({
                 const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
                 return (
                   <div className="admin-mobile-prop-card" key={prop.id}>
-                    {/* Top Row: ID Badge & Status Pills */}
+                    {/* Top Row: ID Badge & Availability Status */}
                     <div className="mobile-card-top-bar">
                       <span className="mobile-card-id-chip">#{propIdCode}</span>
-                      <div className="flex-align gap-2">
-                        <button
-                          type="button"
-                          onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
-                          className={`mobile-card-featured-btn ${isFeatured ? 'active' : ''}`}
-                          title="Toggle Featured on homepage"
-                        >
-                          {isFeatured ? '★ Featured' : '☆ Standard'}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
-                          className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
-                        >
-                          <span className="status-dot"></span>
-                          {isOccupied ? 'Occupied' : 'Available'}
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                        className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                        title="Click to toggle Available / Occupied status"
+                      >
+                        <span className="status-dot"></span>
+                        {isOccupied ? 'Occupied' : 'Available'}
+                      </button>
                     </div>
 
                     {/* Main Content Body: Image + Details */}
@@ -1135,21 +1126,29 @@ export default function AdminDashboard({
                       </div>
                     </div>
 
-                    {/* Bottom Row: Action Buttons */}
+                    {/* Bottom Row: 3 Touch Action Buttons */}
                     <div className="mobile-card-footer">
+                      <button
+                        type="button"
+                        onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                        className={`mobile-card-btn featured-btn ${isFeatured ? 'active' : ''}`}
+                        title="Toggle Featured status on Homepage"
+                      >
+                        {isFeatured ? '★ Featured' : '☆ Standard'}
+                      </button>
                       <button 
                         type="button" 
                         className="mobile-card-btn edit-btn" 
                         onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
                       >
-                        <Pencil size={15} /> Edit Listing
+                        <Pencil size={14} /> Edit
                       </button>
                       <button 
                         type="button" 
                         className="mobile-card-btn remove-btn" 
                         onClick={() => onDeleteProperty(prop.id)}
                       >
-                        <Trash2 size={15} /> Remove
+                        <Trash2 size={14} /> Remove
                       </button>
                     </div>
                   </div>
