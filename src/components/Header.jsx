@@ -36,7 +36,7 @@ export default function Header({
             handleNavClick('home');
           }}
         >
-          <img src="/assets/logo.png" alt="SecureStay Properties" className="brand-logo-img" />
+          <img src="/assets/logo_transparent.png?v=3" alt="SecureStay Properties" className="brand-logo-img" />
         </a>
 
         <nav className="nav-desktop">
