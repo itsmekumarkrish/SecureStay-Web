@@ -481,10 +481,11 @@ export default function AdminDashboard({
       <div className="admin-top-bar">
         <div className="container admin-top-content">
           <div className="admin-brand">
-            <h3 className="admin-brand-heading">SecureStay Properties Dashboard</h3>
-            <span className="cloud-sync-badge">
-              ☁️ Live Cloud Sync
-            </span>
+            <img src="/assets/securestay_logo.png" alt="SecureStay" className="admin-header-logo" />
+            <div className="admin-brand-text">
+              <h3 className="admin-brand-heading">SecureStay</h3>
+              <span className="cloud-sync-badge">● Live</span>
+            </div>
           </div>
 
           <div className="admin-top-actions">
@@ -492,12 +493,12 @@ export default function AdminDashboard({
               href="/" 
               target="_blank" 
               rel="noreferrer" 
-              className="btn-secondary-sm btn-header-live" 
+              className="btn-header-live" 
             >
-              <ArrowLeft size={15} /> View Live Website
+              <ArrowLeft size={14} /> Website
             </a>
-            <button type="button" className="btn-logout btn-header-logout" onClick={() => setIsAuthenticated(false)}>
-              <LogOut size={15} /> Logout
+            <button type="button" className="btn-header-logout" onClick={() => setIsAuthenticated(false)}>
+              <LogOut size={14} /> Logout
             </button>
           </div>
         </div>

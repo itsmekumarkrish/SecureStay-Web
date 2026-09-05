@@ -4716,9 +4716,12 @@ input:focus, select:focus, textarea:focus {
 .admin-top-bar {
   background: linear-gradient(135deg, #071529 0%, #0c2340 100%);
   color: #ffffff;
-  padding: 18px 0;
+  padding: 14px 0;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .admin-top-content {
@@ -4726,43 +4729,97 @@ input:focus, select:focus, textarea:focus {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
 }
 
 .admin-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-header-logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.admin-brand-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .admin-brand h3 {
   color: #ffffff;
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
   white-space: nowrap;
+  letter-spacing: -0.02em;
 }
 
 .cloud-sync-badge {
   background: rgba(34, 197, 94, 0.15);
   color: #4ade80;
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  font-size: 0.72rem;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   white-space: nowrap;
+  letter-spacing: 0.3px;
 }
 
 .admin-top-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-header-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-header-live:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-header-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-header-logout:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fecaca;
 }
 
 .admin-main-body {
@@ -6109,84 +6166,84 @@ input:focus, select:focus, textarea:focus {
 
   /* Admin Header Bar Mobile Application Styling (max-width: 600px) */
   .admin-top-bar {
-    padding: 12px 0 !important;
-    border-radius: 0 0 16px 16px !important;
+    padding: 10px 0 !important;
+    border-radius: 0 !important;
   }
 
   .admin-top-content {
     display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
     width: 100% !important;
+    flex-wrap: nowrap !important;
   }
 
   .admin-brand {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .admin-header-logo {
+    height: 28px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-brand-text {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: 0 !important;
   }
 
   .admin-brand-heading {
     color: #ffffff !important;
-    font-size: 0.95rem !important;
-    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
     margin: 0 !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    flex: 1 !important;
-    min-width: 0 !important;
   }
 
   .cloud-sync-badge {
-    font-size: 0.7rem !important;
-    padding: 3px 8px !important;
-    border-radius: 10px !important;
+    font-size: 0.6rem !important;
+    padding: 2px 6px !important;
+    border-radius: 8px !important;
     flex-shrink: 0 !important;
-    margin: 0 !important;
   }
 
   .admin-top-actions {
-    display: grid !important;
-    grid-template-columns: 1fr auto !important;
-    gap: 8px !important;
-    width: 100% !important;
-    align-items: center !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
   }
 
   .btn-header-live {
-    width: 100% !important;
-    height: 38px !important;
-    padding: 0 12px !important;
+    height: 32px !important;
+    padding: 0 10px !important;
     border-radius: 8px !important;
-    font-size: 0.82rem !important;
-    font-weight: 700 !important;
-    display: flex !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    text-decoration: none !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-    background: #ffffff !important;
-    color: #0c2340 !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
   }
 
   .btn-header-logout {
-    height: 38px !important;
-    padding: 0 14px !important;
+    height: 32px !important;
+    padding: 0 10px !important;
     border-radius: 8px !important;
-    font-size: 0.82rem !important;
-    font-weight: 700 !important;
-    display: flex !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    margin: 0 !important;
+    gap: 4px !important;
     white-space: nowrap !important;
-    box-sizing: border-box !important;
   }
 
   /* Admin Control Panel Navigation Segmented Control Bar for Mobile (max-width: 600px) */
