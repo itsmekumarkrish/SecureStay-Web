@@ -510,41 +510,53 @@ export default function AdminDashboard({
         <div className="admin-metrics-grid">
           <div className="admin-metric-card">
             <div className="admin-metric-icon blue">
-              <Building2 size={22} />
+              <Building2 size={20} />
             </div>
-            <div>
+            <div className="admin-metric-info">
               <div className="admin-metric-val">{properties.length}</div>
-              <div className="admin-metric-lbl">Active Properties</div>
+              <div className="admin-metric-lbl">
+                <span className="desktop-metric-lbl">Active Properties</span>
+                <span className="mobile-metric-lbl">Properties</span>
+              </div>
             </div>
           </div>
 
           <div className="admin-metric-card">
             <div className="admin-metric-icon green">
-              <MapPin size={22} />
+              <MapPin size={20} />
             </div>
-            <div>
+            <div className="admin-metric-info">
               <div className="admin-metric-val">{citiesCount}</div>
-              <div className="admin-metric-lbl">Cities Covered</div>
+              <div className="admin-metric-lbl">
+                <span className="desktop-metric-lbl">Cities Covered</span>
+                <span className="mobile-metric-lbl">Cities</span>
+              </div>
             </div>
           </div>
 
           <div className="admin-metric-card">
             <div className="admin-metric-icon gold">
-              <MessageSquare size={22} />
+              <MessageSquare size={20} />
             </div>
-            <div>
+            <div className="admin-metric-info">
               <div className="admin-metric-val">{inquiries.length}</div>
-              <div className="admin-metric-lbl">Total Leads</div>
+              <div className="admin-metric-lbl">
+                <span className="desktop-metric-lbl">Total Leads</span>
+                <span className="mobile-metric-lbl">Leads</span>
+              </div>
             </div>
           </div>
 
           <div className="admin-metric-card">
             <div className="admin-metric-icon">
-              <Clock size={22} className="text-amber" />
+              <Clock size={20} className="text-amber" />
             </div>
-            <div>
+            <div className="admin-metric-info">
               <div className="admin-metric-val">{pendingInquiriesCount}</div>
-              <div className="admin-metric-lbl">Pending Follow-ups</div>
+              <div className="admin-metric-lbl">
+                <span className="desktop-metric-lbl">Pending Follow-ups</span>
+                <span className="mobile-metric-lbl">Pending</span>
+              </div>
             </div>
           </div>
         </div>
