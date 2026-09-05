@@ -4781,32 +4781,34 @@ input:focus, select:focus, textarea:focus {
   position: relative;
   display: flex;
   align-items: center;
-  width: 320px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 480px;
 }
 
 .admin-search-wrap .admin-search-icon {
   position: absolute;
   left: 14px;
-  color: #94a3b8;
+  color: #64748b;
   pointer-events: none;
 }
 
 .admin-search-wrap input.admin-search-input {
   width: 100% !important;
+  height: 44px !important;
   padding: 10px 14px 10px 42px !important;
   font-size: 0.88rem !important;
-  border-radius: 10px !important;
-  border: 1px solid #cbd5e1 !important;
-  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  background: #f8fafc !important;
   color: #0c2340 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-  transition: all 0.2s ease !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .admin-search-wrap input.admin-search-input:focus {
+  background: #ffffff !important;
   border-color: #0c2340 !important;
-  box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.12) !important;
   outline: none !important;
 }
 
@@ -5746,15 +5748,29 @@ input:focus, select:focus, textarea:focus {
 }
 
 .table-status-pill.available {
-  background: #dcfce7 !important;
-  color: #15803d !important;
-  border: 1px solid #bbf7d0 !important;
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  border: 1px solid #a7f3d0 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+
+.table-status-pill.available .status-dot {
+  background: #10b981 !important;
 }
 
 .table-status-pill.occupied {
-  background: #fef2f2 !important;
-  color: #dc2626 !important;
-  border: 1px solid #fecaca !important;
+  background: #fff1f2 !important;
+  color: #be123c !important;
+  border: 1px solid #fecdd3 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+
+.table-status-pill.occupied .status-dot {
+  background: #f43f5e !important;
 }
 
 .status-dot {
@@ -5789,24 +5805,24 @@ input:focus, select:focus, textarea:focus {
 }
 
 .btn-table-edit {
-  background: #f1f5f9;
-  color: #2563eb;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  background: #f8fafc !important;
+  color: #0c2340 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
 }
 
 .btn-table-edit:hover {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
-  color: #1d4ed8;
+  background: #0c2340 !important;
+  border-color: #0c2340 !important;
+  color: #ffffff !important;
 }
 
 .btn-table-remove {
@@ -6736,14 +6752,17 @@ input:focus, select:focus, textarea:focus {
 }
 
 .mobile-card-btn.edit-btn {
-  background: #f0fdf4;
-  border: 1.5px solid #bbf7d0;
-  color: #166534;
+  background: #f8fafc !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: #0c2340 !important;
+  font-weight: 600 !important;
 }
 
-.mobile-card-btn.edit-btn:hover {
-  background: #dcfce7;
-  border-color: #86efac;
+.mobile-card-btn.edit-btn:hover,
+.mobile-card-btn.edit-btn:active {
+  background: #0c2340 !important;
+  border-color: #0c2340 !important;
+  color: #ffffff !important;
 }
 
 .mobile-card-btn.remove-btn {
