@@ -477,8 +477,10 @@ export default function AdminDashboard({
       <div className="admin-top-bar">
         <div className="container admin-top-content">
           <div className="admin-brand">
-            <ShieldCheck size={22} className="text-gold" />
-            <h3>SecureStay Properties Dashboard</h3>
+            <div className="flex-align gap-2">
+              <ShieldCheck size={20} className="text-gold flex-shrink-0" />
+              <h3 className="admin-brand-heading">SecureStay Admin</h3>
+            </div>
             <span className="cloud-sync-badge">
               ☁️ Live Cloud Sync
             </span>
@@ -489,13 +491,12 @@ export default function AdminDashboard({
               href="/" 
               target="_blank" 
               rel="noreferrer" 
-              className="btn-secondary-sm" 
-              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              className="btn-secondary-sm btn-header-live" 
             >
-              <ArrowLeft size={16} /> View Live Website
+              <ArrowLeft size={15} /> View Live Website
             </a>
-            <button type="button" className="btn-logout" onClick={() => setIsAuthenticated(false)}>
-              <LogOut size={16} /> Logout
+            <button type="button" className="btn-logout btn-header-logout" onClick={() => setIsAuthenticated(false)}>
+              <LogOut size={15} /> Logout
             </button>
           </div>
         </div>

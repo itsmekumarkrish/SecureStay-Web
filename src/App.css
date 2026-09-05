@@ -6027,6 +6027,84 @@ input:focus, select:focus, textarea:focus {
     margin: 8px auto 0 auto !important;
   }
 
+  /* Admin Header Bar Mobile Application Styling (max-width: 600px) */
+  .admin-top-bar {
+    padding: 12px 0 !important;
+    border-radius: 0 0 16px 16px !important;
+  }
+
+  .admin-top-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .admin-brand {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .admin-brand-heading {
+    color: #ffffff !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .cloud-sync-badge {
+    font-size: 0.7rem !important;
+    padding: 3px 8px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+  }
+
+  .admin-top-actions {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .btn-header-live {
+    width: 100% !important;
+    height: 38px !important;
+    padding: 0 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    color: #0c2340 !important;
+  }
+
+  .btn-header-logout {
+    height: 38px !important;
+    padding: 0 14px !important;
+    border-radius: 8px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+
   /* Admin Control Panel Navigation Grid for Mobile (max-width: 600px) */
   .admin-tabs-row {
     display: grid !important;
