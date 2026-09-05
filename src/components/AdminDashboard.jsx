@@ -1094,59 +1094,62 @@ export default function AdminDashboard({
                 const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
                 return (
                   <div className="admin-mobile-prop-card" key={prop.id}>
-                    <div className="mobile-prop-card-top">
-                      <img 
-                        src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
-                        alt={prop.title} 
-                        className="mobile-prop-card-img"
-                      />
-                      <div className="mobile-prop-card-info">
-                        <div className="mobile-prop-card-header-row">
-                          <span className="table-prop-id-badge">#{propIdCode}</span>
-                          <span className="mobile-prop-rent">{prop.rentPrice || prop.salePrice || 'N/A'}</span>
-                        </div>
-                        <h4 className="mobile-prop-title">{prop.title}</h4>
-                        <div className="mobile-prop-location">
-                          <MapPin size={13} className="flex-shrink-0" />
-                          <span>{prop.location}</span>
-                        </div>
-                        <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{prop.type}</span>
+                    {/* Top Row: ID Badge & Status Pills */}
+                    <div className="mobile-card-top-bar">
+                      <span className="mobile-card-id-chip">#{propIdCode}</span>
+                      <div className="flex-align gap-2">
+                        <button
+                          type="button"
+                          onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                          className={`mobile-card-featured-btn ${isFeatured ? 'active' : ''}`}
+                          title="Toggle Featured on homepage"
+                        >
+                          {isFeatured ? '★ Featured' : '☆ Standard'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                          className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                        >
+                          <span className="status-dot"></span>
+                          {isOccupied ? 'Occupied' : 'Available'}
+                        </button>
                       </div>
                     </div>
 
-                    <div className="mobile-prop-card-pills">
-                      <button
-                        type="button"
-                        onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
-                        className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
-                      >
-                        <span className="status-dot"></span>
-                        {isOccupied ? 'Occupied' : 'Available'}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
-                        className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
-                      >
-                        {isFeatured ? '★ Featured' : '☆ Standard'}
-                      </button>
+                    {/* Main Content Body: Image + Details */}
+                    <div className="mobile-card-body">
+                      <img 
+                        src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                        alt={prop.title} 
+                        className="mobile-card-img"
+                      />
+                      <div className="mobile-card-details">
+                        <div className="mobile-card-price">{prop.rentPrice || prop.salePrice || 'N/A'}</div>
+                        <h4 className="mobile-card-title">{prop.title}</h4>
+                        <div className="mobile-card-location">
+                          <MapPin size={13} className="flex-shrink-0 text-muted" />
+                          <span>{prop.location}</span>
+                        </div>
+                        {prop.type && <div className="mobile-card-subtext">{prop.type}</div>}
+                      </div>
                     </div>
 
-                    <div className="mobile-prop-card-actions">
+                    {/* Bottom Row: Action Buttons */}
+                    <div className="mobile-card-footer">
                       <button 
                         type="button" 
-                        className="btn-table-edit" 
+                        className="mobile-card-btn edit-btn" 
                         onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
                       >
-                        <Pencil size={14} /> Edit
+                        <Pencil size={15} /> Edit Listing
                       </button>
                       <button 
                         type="button" 
-                        className="btn-table-remove" 
+                        className="mobile-card-btn remove-btn" 
                         onClick={() => onDeleteProperty(prop.id)}
                       >
-                        <Trash2 size={14} /> Remove
+                        <Trash2 size={15} /> Remove
                       </button>
                     </div>
                   </div>
