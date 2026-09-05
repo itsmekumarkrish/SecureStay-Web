@@ -551,24 +551,33 @@ export default function AdminDashboard({
             className={`admin-tab-btn ${activeTab === 'add-property' ? 'active' : ''}`}
             onClick={() => setActiveTab('add-property')}
           >
-            <Plus size={18} className="flex-shrink-0" />
-            <span className="tab-btn-title">Upload New Property</span>
+            <Plus size={16} className="flex-shrink-0" />
+            <span className="tab-btn-title">
+              <span className="desktop-tab-label">Upload New Property</span>
+              <span className="mobile-tab-label">+ Upload</span>
+            </span>
           </button>
           <button 
             type="button" 
             className={`admin-tab-btn ${activeTab === 'properties-list' ? 'active' : ''}`}
             onClick={() => setActiveTab('properties-list')}
           >
-            <Building2 size={18} className="flex-shrink-0" />
-            <span className="tab-btn-title">Manage Listings <span className="tab-count-badge">({properties.length})</span></span>
+            <Building2 size={16} className="flex-shrink-0" />
+            <span className="tab-btn-title">
+              <span className="desktop-tab-label">Manage Listings <span className="tab-count-badge">({properties.length})</span></span>
+              <span className="mobile-tab-label">Listings ({properties.length})</span>
+            </span>
           </button>
           <button 
             type="button" 
             className={`admin-tab-btn ${activeTab === 'inquiries' ? 'active' : ''}`}
             onClick={() => setActiveTab('inquiries')}
           >
-            <MessageSquare size={18} className="flex-shrink-0" />
-            <span className="tab-btn-title">Customer Inquiries <span className="tab-count-badge">({inquiries.length})</span></span>
+            <MessageSquare size={16} className="flex-shrink-0" />
+            <span className="tab-btn-title">
+              <span className="desktop-tab-label">Customer Inquiries <span className="tab-count-badge">({inquiries.length})</span></span>
+              <span className="mobile-tab-label">Inquiries ({inquiries.length})</span>
+            </span>
           </button>
         </div>
 
