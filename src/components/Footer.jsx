@@ -26,7 +26,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
                 handleNavClick('home');
               }}
             >
-              <img src="/assets/logo_transparent.png?v=200" alt="SecureStay Properties" className="footer-logo-img" />
+              <img src="/assets/logo_light.png?v=300" alt="SecureStay Properties" className="footer-logo-img" />
             </a>
             <p className="footer-bio">
               India's premier end-to-end residential property services company. Providing guaranteed on-time rent, 100% verified background checks, and seamless property care.
