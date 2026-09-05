@@ -994,7 +994,8 @@ export default function AdminDashboard({
               )}
             </div>
 
-            <div className="admin-properties-table-wrap">
+            {/* Desktop Table View */}
+            <div className="admin-properties-table-wrap desktop-only-table">
               <table className="admin-table">
                 <thead>
                   <tr>
@@ -1083,6 +1084,80 @@ export default function AdminDashboard({
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Application Style Cards View */}
+            <div className="admin-mobile-properties-cards mobile-only-cards">
+              {filteredTableProperties.map((prop) => {
+                const isOccupied = prop.availability === 'Occupied';
+                const isFeatured = !!prop.isFeatured;
+                const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
+                return (
+                  <div className="admin-mobile-prop-card" key={prop.id}>
+                    <div className="mobile-prop-card-top">
+                      <img 
+                        src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                        alt={prop.title} 
+                        className="mobile-prop-card-img"
+                      />
+                      <div className="mobile-prop-card-info">
+                        <div className="mobile-prop-card-header-row">
+                          <span className="table-prop-id-badge">#{propIdCode}</span>
+                          <span className="mobile-prop-rent">{prop.rentPrice || prop.salePrice || 'N/A'}</span>
+                        </div>
+                        <h4 className="mobile-prop-title">{prop.title}</h4>
+                        <div className="mobile-prop-location">
+                          <MapPin size={13} className="flex-shrink-0" />
+                          <span>{prop.location}</span>
+                        </div>
+                        <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{prop.type}</span>
+                      </div>
+                    </div>
+
+                    <div className="mobile-prop-card-pills">
+                      <button
+                        type="button"
+                        onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                        className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                      >
+                        <span className="status-dot"></span>
+                        {isOccupied ? 'Occupied' : 'Available'}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                        className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
+                      >
+                        {isFeatured ? '★ Featured' : '☆ Standard'}
+                      </button>
+                    </div>
+
+                    <div className="mobile-prop-card-actions">
+                      <button 
+                        type="button" 
+                        className="btn-table-edit" 
+                        onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                      >
+                        <Pencil size={14} /> Edit
+                      </button>
+                      <button 
+                        type="button" 
+                        className="btn-table-remove" 
+                        onClick={() => onDeleteProperty(prop.id)}
+                      >
+                        <Trash2 size={14} /> Remove
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {filteredTableProperties.length === 0 && (
+                <div className="text-center py-6 text-muted">
+                  No properties found matching "{tableSearch}"
+                </div>
+              )}
             </div>
           </div>
         )}
