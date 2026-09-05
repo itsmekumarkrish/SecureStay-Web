@@ -2695,8 +2695,10 @@ input:focus, select:focus, textarea:focus {
   }
 
   .brand-logo-img {
-    height: 48px;
-    max-width: 170px;
+    height: 48px !important;
+    width: auto !important;
+    max-width: 210px !important;
+    object-fit: contain !important;
   }
 
   .nav-desktop {
@@ -3173,20 +3175,25 @@ input:focus, select:focus, textarea:focus {
   }
 
   .property-bottom .btn-secondary-sm {
-    background: #0c2340;
+    background: #0c2340 !important;
     color: #ffffff !important;
-    border-radius: 50px;
-    padding: 9px 18px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    border: none;
-    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.15);
-    transition: background 0.2s ease;
+    border-radius: 50px !important;
+    padding: 9px 18px !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.15) !important;
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background 0.2s ease !important;
   }
 
   .property-bottom .btn-secondary-sm:hover,
   .property-bottom .btn-secondary-sm:active {
-    background: #08172c;
+    background: #08172c !important;
+    color: #ffffff !important;
   }
 
   .properties-see-more-bar {
@@ -6530,7 +6537,8 @@ input:focus, select:focus, textarea:focus {
     gap: 12px !important;
   }
 
-  .btn-secondary-sm {
+  .saas-card-header .btn-secondary-sm,
+  .saas-field .btn-secondary-sm {
     width: 100% !important;
     padding: 10px 14px !important;
     border-radius: 10px !important;
