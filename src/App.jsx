@@ -156,6 +156,25 @@ export default function App() {
     message: ''
   });
 
+  // Tab identifier to avoid self-echo in BroadcastChannel
+  const [tabId] = useState(() => Math.random().toString(36).substring(2));
+
+  // Helper state setters with deep equality check to prevent infinite re-render cascades
+  const updatePropertiesIfChanged = (newList) => {
+    setPropertiesList((prev) => {
+      const normalized = newList.map(normalizeProperty);
+      if (JSON.stringify(prev) === JSON.stringify(normalized)) return prev;
+      return normalized;
+    });
+  };
+
+  const updateInquiriesIfChanged = (newList) => {
+    setInquiriesList((prev) => {
+      if (JSON.stringify(prev) === JSON.stringify(newList)) return prev;
+      return newList;
+    });
+  };
+
   // Fetch latest properties and inquiries from Cloud Database on mount and window focus
   useEffect(() => {
     async function syncCloudOnMount() {
@@ -165,13 +184,13 @@ export default function App() {
           const savedDeleted = localStorage.getItem('securestay_deleted_ids');
           const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
           const deletedSet = new Set(deletedArr);
-          const filtered = cloudProps.filter((p) => !deletedSet.has(p.id)).map(normalizeProperty);
-          setPropertiesList(filtered);
+          const filtered = cloudProps.filter((p) => !deletedSet.has(p.id));
+          updatePropertiesIfChanged(filtered);
         }
 
         const cloudInqs = await fetchCloudInquiries();
         if (cloudInqs && Array.isArray(cloudInqs) && cloudInqs.length > 0) {
-          setInquiriesList(cloudInqs);
+          updateInquiriesIfChanged(cloudInqs);
         }
       } catch (err) {
         console.warn('Initial cloud sync error:', err);
@@ -193,11 +212,12 @@ export default function App() {
     if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
       bc = new BroadcastChannel('securestay_live_channel');
       bc.onmessage = (event) => {
+        if (event.data?.sender === tabId) return; // ignore self-messages
         if (event.data?.type === 'PROPERTIES_SYNC' && Array.isArray(event.data.payload)) {
-          setPropertiesList(event.data.payload.map(normalizeProperty));
+          updatePropertiesIfChanged(event.data.payload);
         }
         if (event.data?.type === 'INQUIRIES_SYNC' && Array.isArray(event.data.payload)) {
-          setInquiriesList(event.data.payload);
+          updateInquiriesIfChanged(event.data.payload);
         }
       };
     }
@@ -206,7 +226,7 @@ export default function App() {
       if (e.key === 'securestay_properties' && e.newValue) {
         try {
           const parsed = JSON.parse(e.newValue);
-          setPropertiesList(parsed.map(normalizeProperty));
+          updatePropertiesIfChanged(parsed);
         } catch {
           // fallback
         }
@@ -214,7 +234,7 @@ export default function App() {
       if (e.key === 'securestay_inquiries' && e.newValue) {
         try {
           const parsed = JSON.parse(e.newValue);
-          setInquiriesList(parsed);
+          updateInquiriesIfChanged(parsed);
         } catch {
           // fallback
         }
@@ -226,22 +246,26 @@ export default function App() {
       window.removeEventListener('storage', handleStorage);
       if (bc) bc.close();
     };
-  }, []);
+  }, [tabId]);
 
-  // Save properties to localStorage and sync to cloud database whenever updated
+  // Save properties to localStorage and sync to cloud database ONLY when data actually changes
   useEffect(() => {
     try {
-      localStorage.setItem('securestay_properties', JSON.stringify(propertiesList));
-      syncAllCloudProperties(propertiesList);
-      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-        const bc = new BroadcastChannel('securestay_live_channel');
-        bc.postMessage({ type: 'PROPERTIES_SYNC', payload: propertiesList });
-        bc.close();
+      const currentSaved = localStorage.getItem('securestay_properties');
+      const serialized = JSON.stringify(propertiesList);
+      if (currentSaved !== serialized) {
+        localStorage.setItem('securestay_properties', serialized);
+        syncAllCloudProperties(propertiesList);
+        if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+          const bc = new BroadcastChannel('securestay_live_channel');
+          bc.postMessage({ type: 'PROPERTIES_SYNC', payload: propertiesList, sender: tabId });
+          bc.close();
+        }
       }
     } catch {
       // fallback
     }
-  }, [propertiesList]);
+  }, [propertiesList, tabId]);
 
   // Save deleted IDs to localStorage whenever updated
   useEffect(() => {
@@ -252,20 +276,24 @@ export default function App() {
     }
   }, [deletedIds]);
 
-  // Save inquiries to localStorage and sync to cloud database whenever updated
+  // Save inquiries to localStorage and sync to cloud database ONLY when data actually changes
   useEffect(() => {
     try {
-      localStorage.setItem('securestay_inquiries', JSON.stringify(inquiriesList));
-      syncAllCloudInquiries(inquiriesList);
-      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-        const bc = new BroadcastChannel('securestay_live_channel');
-        bc.postMessage({ type: 'INQUIRIES_SYNC', payload: inquiriesList });
-        bc.close();
+      const currentSaved = localStorage.getItem('securestay_inquiries');
+      const serialized = JSON.stringify(inquiriesList);
+      if (currentSaved !== serialized) {
+        localStorage.setItem('securestay_inquiries', serialized);
+        syncAllCloudInquiries(inquiriesList);
+        if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+          const bc = new BroadcastChannel('securestay_live_channel');
+          bc.postMessage({ type: 'INQUIRIES_SYNC', payload: inquiriesList, sender: tabId });
+          bc.close();
+        }
       }
     } catch {
       // fallback
     }
-  }, [inquiriesList]);
+  }, [inquiriesList, tabId]);
 
   const handleAddProperty = (newProp) => {
     setPropertiesList((prev) => [newProp, ...prev]);
