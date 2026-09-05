@@ -491,8 +491,12 @@ export default function AdminDashboard({
           <div className="admin-top-actions">
             <a 
               href="/" 
-              target="_blank" 
-              rel="noreferrer" 
+              onClick={(e) => {
+                if (onBackToHome) {
+                  e.preventDefault();
+                  onBackToHome();
+                }
+              }}
               className="btn-header-live" 
             >
               <ArrowLeft size={14} /> Website

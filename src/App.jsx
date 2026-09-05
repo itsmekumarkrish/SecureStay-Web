@@ -67,6 +67,8 @@ function normalizeProperty(item) {
 
 import { 
   isCloudConfigured,
+  fetchCloudProperties,
+  fetchCloudInquiries,
   saveCloudProperty, 
   deleteCloudProperty, 
   saveCloudInquiry, 
@@ -152,35 +154,45 @@ export default function App() {
     message: ''
   });
 
-  // Save properties to localStorage whenever updated
+  // Fetch latest properties and inquiries from Cloud Database on mount
   useEffect(() => {
-    try {
-      localStorage.setItem('securestay_properties', JSON.stringify(propertiesList));
-    } catch {
-      // fallback
-    }
-  }, [propertiesList]);
+    async function syncCloudOnMount() {
+      try {
+        const cloudProps = await fetchCloudProperties();
+        if (cloudProps && Array.isArray(cloudProps) && cloudProps.length > 0) {
+          const savedDeleted = localStorage.getItem('securestay_deleted_ids');
+          const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
+          const deletedSet = new Set(deletedArr);
+          const filtered = cloudProps.filter((p) => !deletedSet.has(p.id)).map(normalizeProperty);
+          setPropertiesList(filtered);
+        }
 
-  // Save deleted IDs to localStorage whenever updated
-  useEffect(() => {
-    try {
-      localStorage.setItem('securestay_deleted_ids', JSON.stringify(deletedIds));
-    } catch {
-      // fallback
+        const cloudInqs = await fetchCloudInquiries();
+        if (cloudInqs && Array.isArray(cloudInqs) && cloudInqs.length > 0) {
+          setInquiriesList(cloudInqs);
+        }
+      } catch (err) {
+        console.warn('Initial cloud sync error:', err);
+      }
     }
-  }, [deletedIds]);
+    syncCloudOnMount();
+  }, []);
 
-  // Save inquiries to localStorage whenever updated
+  // Real-time synchronization via BroadcastChannel and Storage Event
   useEffect(() => {
-    try {
-      localStorage.setItem('securestay_inquiries', JSON.stringify(inquiriesList));
-    } catch {
-      // fallback
+    let bc;
+    if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+      bc = new BroadcastChannel('securestay_live_channel');
+      bc.onmessage = (event) => {
+        if (event.data?.type === 'PROPERTIES_SYNC' && Array.isArray(event.data.payload)) {
+          setPropertiesList(event.data.payload.map(normalizeProperty));
+        }
+        if (event.data?.type === 'INQUIRIES_SYNC' && Array.isArray(event.data.payload)) {
+          setInquiriesList(event.data.payload);
+        }
+      };
     }
-  }, [inquiriesList]);
 
-  // Multi-tab real-time sync via storage event
-  useEffect(() => {
     const handleStorage = (e) => {
       if (e.key === 'securestay_properties' && e.newValue) {
         try {
@@ -201,8 +213,48 @@ export default function App() {
     };
 
     window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      if (bc) bc.close();
+    };
   }, []);
+
+  // Save properties to localStorage and broadcast whenever updated
+  useEffect(() => {
+    try {
+      localStorage.setItem('securestay_properties', JSON.stringify(propertiesList));
+      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+        const bc = new BroadcastChannel('securestay_live_channel');
+        bc.postMessage({ type: 'PROPERTIES_SYNC', payload: propertiesList });
+        bc.close();
+      }
+    } catch {
+      // fallback
+    }
+  }, [propertiesList]);
+
+  // Save deleted IDs to localStorage whenever updated
+  useEffect(() => {
+    try {
+      localStorage.setItem('securestay_deleted_ids', JSON.stringify(deletedIds));
+    } catch {
+      // fallback
+    }
+  }, [deletedIds]);
+
+  // Save inquiries to localStorage and broadcast whenever updated
+  useEffect(() => {
+    try {
+      localStorage.setItem('securestay_inquiries', JSON.stringify(inquiriesList));
+      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+        const bc = new BroadcastChannel('securestay_live_channel');
+        bc.postMessage({ type: 'INQUIRIES_SYNC', payload: inquiriesList });
+        bc.close();
+      }
+    } catch {
+      // fallback
+    }
+  }, [inquiriesList]);
 
   const handleAddProperty = (newProp) => {
     setPropertiesList((prev) => [newProp, ...prev]);
