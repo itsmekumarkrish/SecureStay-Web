@@ -6396,6 +6396,61 @@ input:focus, select:focus, textarea:focus {
     margin-right: 4px !important;
     margin-bottom: 4px !important;
   }
+
+  /* Edit Property Modal Mobile Overrides */
+  .admin-edit-modal-saas {
+    width: 96% !important;
+    padding: 16px 12px !important;
+    max-height: 94vh !important;
+    border-radius: 18px !important;
+    margin: 12px auto !important;
+  }
+
+  .image-url-input-row {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .image-url-input-row img {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 8px !important;
+    object-fit: cover !important;
+  }
+
+  .image-url-input-row .saas-input {
+    height: 38px !important;
+    font-size: 0.82rem !important;
+    padding: 0 10px !important;
+    flex: 1 !important;
+  }
+
+  .saas-modal-actions {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 16px !important;
+  }
+
+  .saas-modal-actions button {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    font-size: 0.98rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
 }
 
 /* Customer Reviews Rating Subtitle Styling (Global) */
