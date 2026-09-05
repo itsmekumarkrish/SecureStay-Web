@@ -961,7 +961,7 @@ a {
 }
 
 .property-img-container {
-  height: 220px;
+  height: 280px;
   position: relative;
   overflow: hidden;
   background-color: #0f172a;
@@ -3100,7 +3100,7 @@ input:focus, select:focus, textarea:focus {
   }
 
   .property-img-container {
-    height: 230px;
+    height: 270px !important;
     border-radius: 18px 18px 0 0;
   }
 
@@ -3713,7 +3713,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 #properties .property-img-container {
-  height: 185px;
+  height: 270px !important;
 }
 
 #properties .property-details {
