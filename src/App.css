@@ -6266,21 +6266,135 @@ input:focus, select:focus, textarea:focus {
     accent-color: #0c2340 !important;
   }
 
-  .saas-upload-dropzone {
-    padding: 20px 14px !important;
-    border-radius: 12px !important;
+  /* Section 3 Header: Responsive Stack for Mobile */
+  .saas-card-header.flex-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
   }
 
+  .btn-secondary-sm {
+    width: 100% !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    background: #f1f5f9 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0c2340 !important;
+  }
+
+  /* Extra Fields Stack on Mobile */
+  .extra-field-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px !important;
+    background: #f8fafc !important;
+    border-radius: 12px !important;
+    border: 1px dashed #cbd5e1 !important;
+  }
+
+  .btn-icon-danger {
+    align-self: flex-end !important;
+    padding: 6px 12px !important;
+  }
+
+  /* Section 4 Photo Upload Dropzone on Mobile */
+  .saas-upload-dropzone {
+    padding: 20px 14px !important;
+    border-radius: 14px !important;
+    border: 2px dashed #0c2340 !important;
+    background: #f8fafc !important;
+    text-align: center !important;
+  }
+
+  .saas-upload-title {
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: #0c2340 !important;
+  }
+
+  .saas-upload-sub {
+    font-size: 0.78rem !important;
+    color: #64748b !important;
+    margin-bottom: 12px !important;
+  }
+
+  .btn-upload-saas {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #0c2340 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(12, 35, 64, 0.2) !important;
+  }
+
+  /* Image Links Header & Button on Mobile */
+  .saas-field .flex-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .btn-link-sm {
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    background: #eff6ff !important;
+    border: 1px solid #bfdbfe !important;
+    color: #1d4ed8 !important;
+    align-self: flex-start !important;
+  }
+
+  /* Image URL Row on Mobile */
+  .image-url-input-row {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* Preset Sample Photos Bar & Chips on Mobile */
   .preset-photos-bar {
     display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    background: #f8fafc !important;
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .preset-label {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
   }
 
   .preset-chip {
-    padding: 6px 10px !important;
-    font-size: 0.75rem !important;
+    padding: 6px 12px !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
     border-radius: 20px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0c2340 !important;
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
   }
 }
 
