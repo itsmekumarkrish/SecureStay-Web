@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Landmark } from 'lucide-react';
 
 export default function Header({ 
   mobileMenuOpen, 
@@ -30,13 +30,16 @@ export default function Header({
       <div className="container header-content">
         <a 
           href="#" 
-          className="logo-brand"
+          className="logo-brand flex items-center gap-2 text-decoration-none"
           onClick={(e) => {
             e.preventDefault();
             handleNavClick('home');
           }}
         >
-          <img src="/assets/logo.png" alt="iGrey Holdings" className="brand-logo-img" />
+          <div className="brand-icon-box">
+            <Landmark size={24} className="brand-gold-icon" />
+          </div>
+          <span className="brand-name-text">iGrey Holdings</span>
         </a>
 
         <nav className="nav-desktop">
@@ -50,16 +53,23 @@ export default function Header({
           <button 
             type="button" 
             className="nav-link-btn"
+            onClick={() => handleNavClick('home', 'services')}
+          >
+            Capabilities
+          </button>
+          <button 
+            type="button" 
+            className="nav-link-btn"
             onClick={() => handleNavClick('catalog')}
           >
-            Properties
+            Developments Portfolio
           </button>
           <button 
             type="button" 
             className="btn-nav"
             onClick={() => handleNavClick('home', 'contact-form')}
           >
-            Contact Us
+            Investor & Leasing Contact
           </button>
         </nav>
 
@@ -79,21 +89,28 @@ export default function Header({
             className="nav-mobile-btn"
             onClick={() => handleNavClick('home', 'about')}
           >
-            About Us
+            About iGrey Holdings
+          </button>
+          <button 
+            type="button" 
+            className="nav-mobile-btn"
+            onClick={() => handleNavClick('home', 'services')}
+          >
+            Capabilities
           </button>
           <button 
             type="button" 
             className="nav-mobile-btn"
             onClick={() => handleNavClick('catalog')}
           >
-            All Properties
+            Portfolio
           </button>
           <button 
             type="button" 
             className="btn-primary" 
             onClick={() => handleNavClick('home', 'contact-form')}
           >
-            Contact Us
+            Investor Contact
           </button>
         </div>
       )}

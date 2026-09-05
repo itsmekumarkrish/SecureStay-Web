@@ -6,7 +6,7 @@ export default function FeaturesSection() {
     <section id="about" className="section bg-light">
       <div className="container">
         <div className="section-title text-center">
-          <h2>Why Choose SecureStay?</h2>
+          <h2>Why Choose iGrey Holdings?</h2>
           <p>We provide a seamless and transparent experience for both homeowners and tenants.</p>
         </div>
 

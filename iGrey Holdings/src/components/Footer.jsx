@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Landmark } from 'lucide-react';
 
 export default function Footer({ setLegalModal, onNavigate }) {
   const handleNavClick = (viewName, hashTarget) => {
@@ -20,20 +20,23 @@ export default function Footer({ setLegalModal, onNavigate }) {
           <div className="footer-col footer-col-brand">
             <a 
               href="#" 
-              className="footer-logo-link"
+              className="footer-logo-link flex items-center gap-2"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick('home');
               }}
             >
-              <img src="/assets/logo_light.png" alt="iGrey Holdings" className="footer-logo-img" />
+              <div className="brand-icon-box">
+                <Landmark size={24} className="brand-gold-icon" />
+              </div>
+              <span className="brand-name-text text-white">iGrey Holdings</span>
             </a>
             <p className="footer-bio">
-              India's premier end-to-end residential property services company. Providing guaranteed on-time rent, 100% verified background checks, and seamless property care.
+              Premier real estate development and asset management group. Architecting Grade-A commercial towers, ultra-luxury residences, and strategic logistics parks.
             </p>
             <div className="footer-badge-trust">
               <ShieldCheck size={15} className="text-gold flex-shrink-0" />
-              <span>Registered Corporate Entity</span>
+              <span>Registered Real Estate Holding Entity</span>
             </div>
           </div>
 
@@ -42,21 +45,20 @@ export default function Footer({ setLegalModal, onNavigate }) {
             <h4 className="footer-heading">Quick Links</h4>
             <ul className="footer-links">
               <li><button type="button" onClick={() => handleNavClick('home', 'about')} className="footer-btn-link">About iGrey Holdings</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Our Services</button></li>
-              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">All Properties</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">List Your Property</button></li>
+              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Capabilities & Asset Management</button></li>
+              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">Real Estate Portfolio</button></li>
+              <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">Investor Relations</button></li>
             </ul>
           </div>
 
-          {/* Column 3: Management Services */}
+          {/* Column 3: Capabilities */}
           <div className="footer-col">
-            <h4 className="footer-heading">Our Services</h4>
+            <h4 className="footer-heading">Holding Portfolios</h4>
             <ul className="footer-links">
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Guaranteed Rent Payouts</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Tenant KYC Verification</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Property Inspections & Repairs</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Legal Rental Agreements</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Zero Brokerage Stays</button></li>
+              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">Grade-A Commercial Skyscraper Towers</button></li>
+              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">Ultra-Luxury High-Rise Sky Residences</button></li>
+              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">Integrated Mixed-Use Tech & Retail Hubs</button></li>
+              <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">Industrial Robotics & Logistics Parks</button></li>
             </ul>
           </div>
         </div>
@@ -70,9 +72,9 @@ export default function Footer({ setLegalModal, onNavigate }) {
           <div className="footer-bottom-links">
             <button type="button" onClick={() => setLegalModal('privacy')} className="footer-modal-link">Privacy Policy</button>
             <span className="dot-sep">•</span>
-            <button type="button" onClick={() => setLegalModal('terms')} className="footer-modal-link">Terms of Service</button>
+            <button type="button" onClick={() => setLegalModal('terms')} className="footer-modal-link">Terms & Governance</button>
             <span className="dot-sep">•</span>
-            <button type="button" onClick={() => setLegalModal('trust')} className="footer-modal-link">Trust & Safety</button>
+            <button type="button" onClick={() => setLegalModal('trust')} className="footer-modal-link">ESG & Sustainability Commitment</button>
           </div>
         </div>
       </div>

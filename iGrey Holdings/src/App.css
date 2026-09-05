@@ -6,7 +6,7 @@
   --primary-color: #0c2340; /* Deep Navy Blue */
   --primary-hover: #08172c;
   --primary-light: #e8f0f8; /* Crisp cool ice light */
-  --accent-gold: #c59b27;   /* Warm Gold from Logo Key */
+  --accent-gold: #c59b27;   /* Warm Gold */
   --accent-gold-light: #fef8eb;
   --text-dark: #0f172a;    /* Modern deep slate navy */
   --text-muted: #475569;   /* Cool slate */
@@ -19,6 +19,29 @@
   --radius: 8px;
   --radius-lg: 12px;
   --header-height: 80px;
+}
+
+.brand-icon-box {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 100%);
+  border: 1px solid rgba(197, 155, 39, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(12, 35, 64, 0.2);
+}
+
+.brand-gold-icon {
+  color: #c59b27;
+}
+
+.brand-name-text {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  color: #0c2340;
 }
 
 html {
