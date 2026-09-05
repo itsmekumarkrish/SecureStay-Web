@@ -477,10 +477,7 @@ export default function AdminDashboard({
       <div className="admin-top-bar">
         <div className="container admin-top-content">
           <div className="admin-brand">
-            <div className="flex-align gap-2">
-              <ShieldCheck size={20} className="text-gold flex-shrink-0" />
-              <h3 className="admin-brand-heading">SecureStay Admin</h3>
-            </div>
+            <h3 className="admin-brand-heading">SecureStay Properties Dashboard</h3>
             <span className="cloud-sync-badge">
               ☁️ Live Cloud Sync
             </span>

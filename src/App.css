@@ -6050,10 +6050,14 @@ input:focus, select:focus, textarea:focus {
 
   .admin-brand-heading {
     color: #ffffff !important;
-    font-size: 1.05rem !important;
+    font-size: 0.95rem !important;
     font-weight: 800 !important;
     margin: 0 !important;
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 !important;
+    min-width: 0 !important;
   }
 
   .cloud-sync-badge {
