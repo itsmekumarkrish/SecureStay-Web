@@ -961,7 +961,7 @@ a {
 }
 
 .property-img-container {
-  height: 280px;
+  height: 210px;
   position: relative;
   overflow: hidden;
   background-color: #0f172a;
@@ -2135,11 +2135,11 @@ input:focus, select:focus, textarea:focus {
 }
 
 .footer-logo-img {
-  height: 48px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.15)) !important;
 }
 
 .footer-bio {
@@ -3100,7 +3100,7 @@ input:focus, select:focus, textarea:focus {
   }
 
   .property-img-container {
-    height: 270px !important;
+    height: 200px !important;
     border-radius: 18px 18px 0 0;
   }
 
@@ -3714,7 +3714,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 #properties .property-img-container {
-  height: 270px !important;
+  height: 200px !important;
 }
 
 #properties .property-details {
