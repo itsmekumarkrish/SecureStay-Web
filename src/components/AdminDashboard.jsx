@@ -391,7 +391,7 @@ export default function AdminDashboard({
           <div className="login-header text-center">
             <div className="admin-login-brand-wrap">
               <img 
-                src="/assets/securestay_logo.png" 
+                src="/assets/admin_dashboard_logo.png?v=1" 
                 alt="SecureStay Logo" 
                 className="admin-login-brand-logo" 
               />
