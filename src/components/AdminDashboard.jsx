@@ -481,7 +481,7 @@ export default function AdminDashboard({
       <div className="admin-top-bar">
         <div className="container admin-top-content">
           <div className="admin-brand">
-            <img src="/assets/logo_transparent.png?v=200" alt="SecureStay" className="admin-header-logo" />
+            <img src="/assets/admin_dashboard_logo.png?v=1" alt="SecureStay Admin" className="admin-header-logo" />
             <div className="admin-brand-text">
               <h3 className="admin-brand-heading">SecureStay</h3>
               <span className="cloud-sync-badge">● Live</span>
