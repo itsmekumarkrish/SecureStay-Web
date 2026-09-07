@@ -1148,7 +1148,7 @@ export default function AdminDashboard({
                             className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
                             title="Click to toggle Featured on Homepage"
                           >
-                            <span className="status-dot">●</span>
+                            <span className="featured-dot">{isFeatured ? '★' : '☆'}</span>
                             {isFeatured ? 'Featured' : 'Standard'}
                           </button>
                         </td>

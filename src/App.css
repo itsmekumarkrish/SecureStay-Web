@@ -7372,22 +7372,27 @@ input:focus, select:focus, textarea:focus {
   transition: all 0.2s ease;
   border: 1px solid #e2e8f0;
   background: #f8fafc;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .table-featured-btn:hover {
   background: #f1f5f9;
-  color: #1e293b;
+  color: #64748b;
 }
 
 .table-featured-btn.active {
-  background: #ecfdf5 !important;
-  color: #059669 !important;
-  border-color: #a7f3d0 !important;
+  background: #fffbeb !important;
+  color: #d97706 !important;
+  border-color: #fcd34d !important;
 }
 
 .table-featured-btn.active:hover {
-  background: #d1fae5 !important;
+  background: #fef3c7 !important;
+}
+
+.featured-dot {
+  font-size: 0.9rem;
+  line-height: 1;
 }
 
 .btn-table-edit {
