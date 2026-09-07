@@ -4587,19 +4587,19 @@ input:focus, select:focus, textarea:focus {
 
 .btn-view-details-overlay {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(12, 35, 64, 0.9);
+  bottom: 12px;
+  right: 12px;
+  background: rgba(12, 35, 64, 0.88);
   backdrop-filter: blur(8px);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.76rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 16px;
+  padding: 5px 12px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  z-index: 5;
+  z-index: 8;
   font-family: inherit;
   letter-spacing: 0.02em;
 }
