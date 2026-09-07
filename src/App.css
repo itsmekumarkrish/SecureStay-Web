@@ -2158,14 +2158,13 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px;
   font-size: 0.78rem;
   font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .footer-social-row {
   display: none;
-}
-  color: #e2e8f0;
-  white-space: nowrap;
-  width: fit-content;
 }
 
 .text-gold {
