@@ -195,17 +195,24 @@ export default function App() {
   useEffect(() => {
     async function syncCloudOnMount() {
       try {
-        const cloudProps = await fetchCloudProperties();
         const currentLocal = localStorage.getItem('securestay_properties');
-        const seedProps = cloudProps && Array.isArray(cloudProps) && cloudProps.length > 0
-          ? cloudProps
-          : (currentLocal ? JSON.parse(currentLocal) : initialProperties);
+        let localList = null;
+        try {
+          localList = currentLocal ? JSON.parse(currentLocal) : null;
+        } catch {
+          localList = null;
+        }
+
+        const cloudProps = await fetchCloudProperties();
+        const seedProps = localList && Array.isArray(localList) && localList.length > 0
+          ? localList
+          : (cloudProps && Array.isArray(cloudProps) && cloudProps.length > 0 ? cloudProps : initialProperties);
 
         const combined = getCombinedProperties(seedProps);
         updatePropertiesIfChanged(combined);
 
-        // Sync complete list to cloud database if cloud had fewer items or wasn't seeded
-        if (!cloudProps || !Array.isArray(cloudProps) || cloudProps.length < combined.length) {
+        // Sync complete list to cloud database
+        if (localList && Array.isArray(localList) && localList.length > 0) {
           syncAllCloudProperties(combined);
         }
 
