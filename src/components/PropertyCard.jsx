@@ -131,6 +131,11 @@ export default function PropertyCard({ property, onInquire }) {
             ))}
           </div>
         )}
+
+        {/* Image Hover Overlay Pill */}
+        <div className="property-img-hover-overlay">
+          <span>View Details &amp; Photos</span>
+        </div>
       </div>
 
       <div className="property-details">

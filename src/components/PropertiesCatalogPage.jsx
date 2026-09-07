@@ -244,17 +244,7 @@ export default function PropertiesCatalogPage({
                 className="catalog-card-wrapper"
                 onClick={() => onOpenDetail(prop)}
               >
-                <PropertyCard property={prop} onInquire={onInquire} />
-                <button
-                  type="button"
-                  className="btn-view-details-overlay"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenDetail(prop);
-                  }}
-                >
-                  View Full Details &amp; Photos
-                </button>
+                <PropertyCard property={prop} onInquire={onInquire} onOpenDetail={onOpenDetail} />
               </div>
             ))}
           </div>
