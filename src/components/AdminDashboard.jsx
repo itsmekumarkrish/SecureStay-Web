@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
   Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
-  Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound
+  Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound, List, LayoutGrid
 } from 'lucide-react';
 
 export default function AdminDashboard({ 
@@ -30,8 +30,10 @@ export default function AdminDashboard({
   const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries'
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Table Search and Inquiry Filters
+  // Table Search, Status Filters, and View Mode
   const [tableSearch, setTableSearch] = useState('');
+  const [tableStatusFilter, setTableStatusFilter] = useState('all'); // 'all' | 'available' | 'occupied' | 'featured'
+  const [adminViewMode, setAdminViewMode] = useState('table'); // 'table' | 'grid'
   const [inquirySearch, setInquirySearch] = useState('');
   const [inquiryStatusFilter, setInquiryStatusFilter] = useState('all');
 
@@ -396,10 +398,20 @@ export default function AdminDashboard({
   const citiesCount = new Set(properties.map(p => p.city || 'Bangalore')).size;
   const pendingInquiriesCount = inquiries.filter(i => !i.status || i.status === 'pending').length;
 
-  // Filtered Properties for table search
+  // Filtered Properties for table search and status filter
   const filteredTableProperties = properties.filter(p => {
     const q = tableSearch.toLowerCase();
-    return p.title.toLowerCase().includes(q) || (p.location || '').toLowerCase().includes(q) || (p.city || '').toLowerCase().includes(q);
+    const matchesSearch = p.title.toLowerCase().includes(q) || 
+                          (p.location || '').toLowerCase().includes(q) || 
+                          (p.city || '').toLowerCase().includes(q) ||
+                          (p.propertyId || '').toLowerCase().includes(q);
+
+    if (!matchesSearch) return false;
+
+    if (tableStatusFilter === 'available') return p.availability !== 'Occupied';
+    if (tableStatusFilter === 'occupied') return p.availability === 'Occupied';
+    if (tableStatusFilter === 'featured') return !!p.isFeatured;
+    return true;
   });
 
   // Filtered Inquiries
@@ -1039,120 +1051,259 @@ export default function AdminDashboard({
               <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
             </div>
 
-            <div className="admin-toolbar-row">
-              <div className="admin-search-wrap">
-                <Search size={16} className="admin-search-icon" />
-                <input 
-                  type="text" 
-                  className="admin-search-input"
-                  placeholder="Search property title, city or area..." 
-                  value={tableSearch}
-                  onChange={(e) => setTableSearch(e.target.value)}
-                />
+            {/* Polished Admin Toolbar Container */}
+            <div className="admin-toolbar-container">
+              {/* Left Side: Status Filter Pills */}
+              <div className="admin-filter-pills">
+                <button
+                  type="button"
+                  className={`admin-filter-btn ${tableStatusFilter === 'all' ? 'active' : ''}`}
+                  onClick={() => setTableStatusFilter('all')}
+                >
+                  All Properties <span className="pill-count">{properties.length}</span>
+                </button>
+                <button
+                  type="button"
+                  className={`admin-filter-btn ${tableStatusFilter === 'available' ? 'active' : ''}`}
+                  onClick={() => setTableStatusFilter('available')}
+                >
+                  <span className="dot-available">●</span> Available <span className="pill-count">{properties.filter(p => p.availability !== 'Occupied').length}</span>
+                </button>
+                <button
+                  type="button"
+                  className={`admin-filter-btn ${tableStatusFilter === 'occupied' ? 'active' : ''}`}
+                  onClick={() => setTableStatusFilter('occupied')}
+                >
+                  <span className="dot-occupied">●</span> Occupied <span className="pill-count">{properties.filter(p => p.availability === 'Occupied').length}</span>
+                </button>
+                <button
+                  type="button"
+                  className={`admin-filter-btn ${tableStatusFilter === 'featured' ? 'active' : ''}`}
+                  onClick={() => setTableStatusFilter('featured')}
+                >
+                  <span className="dot-featured">★</span> Featured <span className="pill-count">{properties.filter(p => p.isFeatured).length}</span>
+                </button>
               </div>
 
-              {tableSearch && (
-                <button 
-                  type="button" 
-                  className="btn-link-sm text-muted"
-                  onClick={() => setTableSearch('')}
-                >
-                  Clear Search
-                </button>
-              )}
+              {/* Right Side: Search + View Switcher */}
+              <div className="admin-toolbar-right">
+                <div className="admin-search-wrap">
+                  <Search size={15} className="admin-search-icon" />
+                  <input 
+                    type="text" 
+                    className="admin-search-input"
+                    placeholder="Search title, ID, city..." 
+                    value={tableSearch}
+                    onChange={(e) => setTableSearch(e.target.value)}
+                  />
+                  {tableSearch && (
+                    <button 
+                      type="button" 
+                      className="admin-search-clear"
+                      onClick={() => setTableSearch('')}
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+
+                <div className="admin-view-toggle desktop-only-table">
+                  <button
+                    type="button"
+                    className={`view-toggle-btn ${adminViewMode === 'table' ? 'active' : ''}`}
+                    onClick={() => setAdminViewMode('table')}
+                    title="Table List View"
+                  >
+                    <List size={15} /> Table
+                  </button>
+                  <button
+                    type="button"
+                    className={`view-toggle-btn ${adminViewMode === 'grid' ? 'active' : ''}`}
+                    onClick={() => setAdminViewMode('grid')}
+                    title="Grid Card View"
+                  >
+                    <LayoutGrid size={15} /> Grid
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* Desktop Table View */}
-            <div className="admin-properties-table-wrap desktop-only-table">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Photo</th>
-                    <th>Property Title</th>
-                    <th>Location</th>
-                    <th>Monthly Rent</th>
-                    <th>Status</th>
-                    <th>Featured</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredTableProperties.map((prop) => {
-                    const isOccupied = prop.availability === 'Occupied';
-                    const isFeatured = !!prop.isFeatured;
-                    const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
-                    return (
-                      <tr key={prop.id}>
-                        <td>
-                          <img 
-                            src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
-                            alt={prop.title} 
-                            className="table-prop-img"
-                          />
-                        </td>
-                        <td>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                            <strong style={{ color: '#0c2340', fontSize: '0.95rem' }}>{prop.title}</strong>
-                            <span className="table-prop-id-badge">#{propIdCode}</span>
-                            <span style={{ fontSize: '0.78rem', color: '#64748b' }}>{prop.type}</span>
-                          </div>
-                        </td>
-                        <td>{prop.location}</td>
-                        <td><span className="text-green font-semibold">{prop.rentPrice || prop.salePrice || 'N/A'}</span></td>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
-                            className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
-                            title="Click to toggle Available / Occupied status"
-                          >
-                            <span className="status-dot"></span>
-                            {isOccupied ? 'Occupied' : 'Available'}
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
-                            className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
-                            title="Click to toggle Featured on Homepage"
-                          >
-                            {isFeatured ? '★ Featured' : '☆ Standard'}
-                          </button>
-                        </td>
-                        <td>
-                          <div className="table-actions-cell">
-                            <button 
-                              type="button" 
-                              className="btn-table-edit" 
-                              onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
-                              title="Edit Property &amp; Photos"
+            {adminViewMode === 'table' ? (
+              <div className="admin-properties-table-wrap desktop-only-table">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '90px' }}>PHOTO</th>
+                      <th>PROPERTY DETAILS</th>
+                      <th>LOCATION</th>
+                      <th>PRICING</th>
+                      <th>AVAILABILITY</th>
+                      <th>FEATURED</th>
+                      <th style={{ textAlign: 'right' }}>ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredTableProperties.map((prop) => {
+                      const isOccupied = prop.availability === 'Occupied';
+                      const isFeatured = !!prop.isFeatured;
+                      const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
+                      const photoCount = prop.images?.length || 1;
+                      return (
+                        <tr key={prop.id} className="admin-table-row">
+                          <td>
+                            <div className="table-img-wrap">
+                              <img 
+                                src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                                alt={prop.title} 
+                                className="table-prop-img"
+                              />
+                              {photoCount > 1 && (
+                                <span className="table-img-badge">{photoCount}📷</span>
+                              )}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="table-prop-title-block">
+                              <div className="table-title-header">
+                                <strong className="table-prop-name">{prop.title}</strong>
+                                <span className="table-prop-id-chip">#{propIdCode}</span>
+                              </div>
+                              <span className="table-prop-type-sub">{prop.type}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="table-loc-block">
+                              <MapPin size={13} className="text-primary flex-shrink-0" />
+                              <span>{prop.location}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="table-price-block">
+                              <span className="table-main-price">{prop.rentPrice || prop.salePrice || 'N/A'}</span>
+                              {prop.leasePrice && <span className="table-sub-lease">Lease: {prop.leasePrice}</span>}
+                            </div>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                              className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                              title="Click to toggle Available / Occupied status"
                             >
-                              <Pencil size={14} /> Edit
+                              <span className="status-dot"></span>
+                              {isOccupied ? 'Occupied' : 'Available'}
                             </button>
-                            <button 
-                              type="button" 
-                              className="btn-table-remove" 
-                              onClick={() => onDeleteProperty(prop.id)}
-                              title="Delete Property"
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                              className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
+                              title="Click to toggle Featured on Homepage"
                             >
-                              <Trash2 size={14} /> Remove
+                              {isFeatured ? '★ Featured' : '☆ Standard'}
                             </button>
-                          </div>
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <div className="table-actions-cell" style={{ justifyContent: 'flex-end' }}>
+                              <button 
+                                type="button" 
+                                className="btn-table-edit" 
+                                onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                                title="Edit Property &amp; Photos"
+                              >
+                                <Pencil size={13} /> Edit
+                              </button>
+                              <button 
+                                type="button" 
+                                className="btn-table-remove" 
+                                onClick={() => onDeleteProperty(prop.id)}
+                                title="Delete Property"
+                              >
+                                <Trash2 size={13} /> Remove
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {filteredTableProperties.length === 0 && (
+                      <tr>
+                        <td colSpan={7} className="text-center py-6 text-muted">
+                          No properties found matching "{tableSearch}"
                         </td>
                       </tr>
-                    );
-                  })}
-                  {filteredTableProperties.length === 0 && (
-                    <tr>
-                      <td colSpan={7} className="text-center py-4 text-muted">
-                        No properties found matching "{tableSearch}"
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              /* Desktop Grid View */
+              <div className="admin-grid-view desktop-only-table">
+                {filteredTableProperties.map((prop) => {
+                  const isOccupied = prop.availability === 'Occupied';
+                  const isFeatured = !!prop.isFeatured;
+                  const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
+                  return (
+                    <div className="admin-grid-card" key={prop.id}>
+                      <div className="grid-card-media">
+                        <img 
+                          src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                          alt={prop.title} 
+                          className="grid-card-img"
+                        />
+                        <span className="grid-card-id">#{propIdCode}</span>
+                        <button
+                          type="button"
+                          onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                          className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                        >
+                          <span className="status-dot"></span>
+                          {isOccupied ? 'Occupied' : 'Available'}
+                        </button>
+                      </div>
+
+                      <div className="grid-card-content">
+                        <span className="grid-card-type">{prop.type}</span>
+                        <h4 className="grid-card-title">{prop.title}</h4>
+                        <div className="grid-card-loc">
+                          <MapPin size={13} /> {prop.location}
+                        </div>
+                        <div className="grid-card-pricing">
+                          <span className="grid-card-price">{prop.rentPrice || prop.salePrice || 'N/A'}</span>
+                          {prop.leasePrice && <span className="grid-card-lease">• Lease: {prop.leasePrice}</span>}
+                        </div>
+                      </div>
+
+                      <div className="grid-card-footer">
+                        <button
+                          type="button"
+                          onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                          className={`mobile-card-btn featured-btn ${isFeatured ? 'active' : ''}`}
+                        >
+                          {isFeatured ? '★ Featured' : '☆ Standard'}
+                        </button>
+                        <button 
+                          type="button" 
+                          className="mobile-card-btn edit-btn" 
+                          onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                        >
+                          <Pencil size={13} /> Edit
+                        </button>
+                        <button 
+                          type="button" 
+                          className="mobile-card-btn remove-btn" 
+                          onClick={() => onDeleteProperty(prop.id)}
+                        >
+                          <Trash2 size={13} /> Remove
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Mobile Application Style Cards View */}
             <div className="admin-mobile-properties-cards mobile-only-cards">
