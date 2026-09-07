@@ -11,6 +11,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Fully Furnished',
     city: 'Bangalore',
+    isFeatured: true,
     description: 'Beautiful sun-lit studio apartment located right next to Koramangala metro station and major tech parks. Fully equipped with high-speed Wi-Fi, modern modular kitchen, biometric smart lock security, and 24/7 property manager assistance.',
     images: [
       '/assets/hero_stay.jpg',
@@ -31,6 +32,7 @@ export const properties = [
     furnishing: 'Semi Furnished',
     feature: 'Gated Society',
     city: 'Mysuru',
+    isFeatured: true,
     description: 'Spacious executive 2 BHK apartment in the peaceful neighborhood of Gokulam. Features wooden wardrobes, modern kitchen cabinets, dual balconies with scenic views, and covered car parking.',
     images: [
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
@@ -51,6 +53,7 @@ export const properties = [
     furnishing: 'Fully Furnished',
     feature: 'Coliving',
     city: 'Hyderabad',
+    isFeatured: true,
     description: 'Premium private coliving room designed for working IT professionals in Gachibowli. Comes with workstation desk, attached bathroom, daily housekeeping, high-speed fiber internet, and community lounge access.',
     images: [
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',

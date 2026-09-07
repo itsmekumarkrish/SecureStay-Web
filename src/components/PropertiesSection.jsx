@@ -3,8 +3,11 @@ import { ArrowRight } from 'lucide-react';
 import PropertyCard from './PropertyCard';
 
 export default function PropertiesSection({ properties, handleInquire, onSeeMore, onOpenDetail }) {
-  // Show 3 property cards on the homepage landing section
-  const homepageProperties = properties.slice(0, 3);
+  // Show 3 property cards on the homepage landing section, prioritizing properties toggled as "★ Featured" in Admin Dashboard
+  const featuredProps = (properties || []).filter((p) => p.isFeatured);
+  const standardProps = (properties || []).filter((p) => !p.isFeatured);
+  const displayList = featuredProps.length > 0 ? [...featuredProps, ...standardProps] : (properties || []);
+  const homepageProperties = displayList.slice(0, 3);
 
   return (
     <section id="properties" className="section bg-light">
