@@ -120,17 +120,33 @@ export default function App() {
     }
   });
 
-  // Properties state initialized from localStorage or initialProperties minus deleted IDs
-  const [propertiesList, setPropertiesList] = useState(() => {
+  // Helper to ensure properties array contains all non-deleted initial properties
+  const getCombinedProperties = (inputProps) => {
     try {
       const savedDeleted = localStorage.getItem('securestay_deleted_ids');
       const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
       const deletedSet = new Set(deletedArr);
 
+      let list = Array.isArray(inputProps) && inputProps.length > 0 ? inputProps : [];
+      list = list.filter((p) => p && !deletedSet.has(p.id));
+
+      const existingIds = new Set(list.map((p) => p.id));
+      const missingInitial = initialProperties.filter(
+        (p) => !deletedSet.has(p.id) && !existingIds.has(p.id)
+      );
+
+      return [...list, ...missingInitial].map(normalizeProperty);
+    } catch {
+      return (inputProps && inputProps.length > 0 ? inputProps : initialProperties).map(normalizeProperty);
+    }
+  };
+
+  // Properties state initialized from localStorage or initialProperties minus deleted IDs
+  const [propertiesList, setPropertiesList] = useState(() => {
+    try {
       const savedProps = localStorage.getItem('securestay_properties');
       const baseProps = savedProps ? JSON.parse(savedProps) : initialProperties;
-
-      return baseProps.filter((p) => !deletedSet.has(p.id)).map(normalizeProperty);
+      return getCombinedProperties(baseProps);
     } catch {
       return initialProperties.map(normalizeProperty);
     }
@@ -180,18 +196,17 @@ export default function App() {
     async function syncCloudOnMount() {
       try {
         const cloudProps = await fetchCloudProperties();
-        if (cloudProps && Array.isArray(cloudProps) && cloudProps.length > 0) {
-          const savedDeleted = localStorage.getItem('securestay_deleted_ids');
-          const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
-          const deletedSet = new Set(deletedArr);
-          const filtered = cloudProps.filter((p) => !deletedSet.has(p.id));
-          updatePropertiesIfChanged(filtered);
-        } else {
-          const currentLocal = localStorage.getItem('securestay_properties');
-          const seedProps = currentLocal ? JSON.parse(currentLocal) : initialProperties;
-          if (seedProps && seedProps.length > 0) {
-            syncAllCloudProperties(seedProps);
-          }
+        const currentLocal = localStorage.getItem('securestay_properties');
+        const seedProps = cloudProps && Array.isArray(cloudProps) && cloudProps.length > 0
+          ? cloudProps
+          : (currentLocal ? JSON.parse(currentLocal) : initialProperties);
+
+        const combined = getCombinedProperties(seedProps);
+        updatePropertiesIfChanged(combined);
+
+        // Sync complete list to cloud database if cloud had fewer items or wasn't seeded
+        if (!cloudProps || !Array.isArray(cloudProps) || cloudProps.length < combined.length) {
+          syncAllCloudProperties(combined);
         }
 
         const cloudInqs = await fetchCloudInquiries();
@@ -205,8 +220,13 @@ export default function App() {
 
     syncCloudOnMount();
 
+    let lastSyncTime = 0;
     const handleFocus = () => {
-      syncCloudOnMount();
+      const now = Date.now();
+      if (now - lastSyncTime > 30000) {
+        lastSyncTime = now;
+        syncCloudOnMount();
+      }
     };
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
