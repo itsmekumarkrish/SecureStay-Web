@@ -160,25 +160,60 @@ export default function AdminDashboard({
     setNewProp((prev) => ({ ...prev, images: updatedImages.length ? updatedImages : [''] }));
   };
 
+  const compressImageFile = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX_SIZE = 900;
+
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
+          resolve(dataUrl);
+        };
+        img.onerror = () => resolve(event.target.result);
+        img.src = event.target.result;
+      };
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleFileUpload = (e, isEditMode = false) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
-    const filePromises = files.map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (event) => resolve(event.target.result);
-        reader.readAsDataURL(file);
-      });
-    });
+    const filePromises = files.map((file) => compressImageFile(file));
 
     Promise.all(filePromises).then((base64Images) => {
+      const validNew = base64Images.filter((img) => img && img.trim() !== '');
+      if (!validNew.length) return;
+
       if (isEditMode && editingProp) {
         setEditingProp((prev) => {
           const existing = prev.images || [];
           return {
             ...prev,
-            images: [...existing.filter(i => i.trim() !== ''), ...base64Images]
+            images: [...existing.filter(i => i.trim() !== ''), ...validNew]
           };
         });
       } else {
@@ -186,7 +221,7 @@ export default function AdminDashboard({
           const existingValid = prev.images.filter((img) => img.trim() !== '');
           return {
             ...prev,
-            images: [...existingValid, ...base64Images]
+            images: [...existingValid, ...validNew]
           };
         });
       }

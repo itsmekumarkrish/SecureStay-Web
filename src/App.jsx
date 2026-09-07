@@ -186,6 +186,12 @@ export default function App() {
           const deletedSet = new Set(deletedArr);
           const filtered = cloudProps.filter((p) => !deletedSet.has(p.id));
           updatePropertiesIfChanged(filtered);
+        } else {
+          const currentLocal = localStorage.getItem('securestay_properties');
+          const seedProps = currentLocal ? JSON.parse(currentLocal) : initialProperties;
+          if (seedProps && seedProps.length > 0) {
+            syncAllCloudProperties(seedProps);
+          }
         }
 
         const cloudInqs = await fetchCloudInquiries();
@@ -296,15 +302,19 @@ export default function App() {
   }, [inquiriesList, tabId]);
 
   const handleAddProperty = (newProp) => {
-    setPropertiesList((prev) => [newProp, ...prev]);
-    saveCloudProperty(newProp);
+    setPropertiesList((prev) => {
+      const nextList = [newProp, ...prev];
+      syncAllCloudProperties(nextList);
+      return nextList;
+    });
   };
 
   const handleEditProperty = (updatedProp) => {
-    setPropertiesList((prev) =>
-      prev.map((p) => (p.id === updatedProp.id ? updatedProp : p))
-    );
-    saveCloudProperty(updatedProp);
+    setPropertiesList((prev) => {
+      const nextList = prev.map((p) => (p.id === updatedProp.id ? updatedProp : p));
+      syncAllCloudProperties(nextList);
+      return nextList;
+    });
   };
 
   const handleTogglePropertyAvailability = (id) => {
