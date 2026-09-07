@@ -3,8 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import PropertyCard from './PropertyCard';
 
 export default function PropertiesSection({ properties, handleInquire, onSeeMore, onOpenDetail }) {
-  // Show 4 property cards on the homepage landing section
-  const homepageProperties = properties.slice(0, 4);
+  // Show 3 property cards on the homepage landing section
+  const homepageProperties = properties.slice(0, 3);
 
   return (
     <section id="properties" className="section bg-light">
