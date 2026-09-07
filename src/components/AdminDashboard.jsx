@@ -1074,13 +1074,13 @@ export default function AdminDashboard({
               <table className="admin-table">
                 <thead>
                   <tr>
-                    <th style={{ width: '85px' }}>PHOTO</th>
-                    <th style={{ minWidth: '180px' }}>PROPERTY TITLE</th>
-                    <th style={{ minWidth: '140px' }}>LOCATION</th>
-                    <th style={{ minWidth: '130px' }}>MONTHLY RENT</th>
-                    <th style={{ minWidth: '115px' }}>STATUS</th>
-                    <th style={{ minWidth: '115px' }}>FEATURED</th>
-                    <th style={{ minWidth: '150px', textAlign: 'right', paddingRight: '20px' }}>ACTION</th>
+                    <th style={{ width: '80px' }}>PHOTO</th>
+                    <th style={{ minWidth: '170px' }}>PROPERTY TITLE</th>
+                    <th style={{ minWidth: '130px' }}>LOCATION</th>
+                    <th style={{ minWidth: '120px' }}>MONTHLY RENT</th>
+                    <th style={{ minWidth: '110px' }}>STATUS</th>
+                    <th style={{ minWidth: '110px' }}>FEATURED</th>
+                    <th style={{ minWidth: '160px', textAlign: 'right', paddingRight: '24px' }}>ACTION</th>
                   </tr>
                 </thead>
                 <tbody>
