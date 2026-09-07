@@ -7217,7 +7217,9 @@ input:focus, select:focus, textarea:focus {
 /* Modern Redesigned Admin Table matching mockup */
 .admin-properties-table-wrap {
   border-radius: 14px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
   border: 1.5px solid #e2e8f0;
   background: #ffffff;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
@@ -7225,6 +7227,7 @@ input:focus, select:focus, textarea:focus {
 
 .admin-table {
   width: 100%;
+  min-width: 900px;
   border-collapse: separate;
   border-spacing: 0;
 }

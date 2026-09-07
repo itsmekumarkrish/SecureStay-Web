@@ -1074,13 +1074,13 @@ export default function AdminDashboard({
               <table className="admin-table">
                 <thead>
                   <tr>
-                    <th style={{ width: '100px' }}>PHOTO</th>
-                    <th style={{ minWidth: '220px' }}>PROPERTY TITLE</th>
-                    <th style={{ minWidth: '160px' }}>LOCATION</th>
-                    <th style={{ minWidth: '150px' }}>MONTHLY RENT</th>
-                    <th style={{ minWidth: '130px' }}>STATUS</th>
-                    <th style={{ minWidth: '130px' }}>FEATURED</th>
-                    <th style={{ minWidth: '180px', textAlign: 'right' }}>ACTION</th>
+                    <th style={{ width: '85px' }}>PHOTO</th>
+                    <th style={{ minWidth: '180px' }}>PROPERTY TITLE</th>
+                    <th style={{ minWidth: '140px' }}>LOCATION</th>
+                    <th style={{ minWidth: '130px' }}>MONTHLY RENT</th>
+                    <th style={{ minWidth: '115px' }}>STATUS</th>
+                    <th style={{ minWidth: '115px' }}>FEATURED</th>
+                    <th style={{ minWidth: '150px', textAlign: 'right', paddingRight: '20px' }}>ACTION</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1092,6 +1092,12 @@ export default function AdminDashboard({
 
                     // Format type / furnishings display
                     const typeDisplay = prop.type || 'Fully Furnished';
+
+                    // Format rent price cleanly without repeating / month
+                    const rawRent = prop.rentPrice || prop.salePrice || 'N/A';
+                    const rentDisplay = rawRent.toLowerCase().includes('/month') || rawRent.toLowerCase().includes('/ month')
+                      ? rawRent
+                      : (prop.rentPrice ? `${prop.rentPrice} / month` : rawRent);
 
                     return (
                       <tr key={prop.id} className="admin-table-row">
@@ -1121,7 +1127,7 @@ export default function AdminDashboard({
                         </td>
                         <td>
                           <div className="table-price-text">
-                            {prop.rentPrice ? `${prop.rentPrice} / month` : prop.salePrice || 'N/A'}
+                            {rentDisplay}
                           </div>
                         </td>
                         <td>
@@ -1145,7 +1151,7 @@ export default function AdminDashboard({
                             {isFeatured ? '★ Featured' : '☆ Standard'}
                           </button>
                         </td>
-                        <td style={{ textAlign: 'right' }}>
+                        <td style={{ textAlign: 'right', paddingRight: '20px' }}>
                           <div className="table-actions-cell" style={{ justifyContent: 'flex-end' }}>
                             <button 
                               type="button" 
