@@ -141,7 +141,7 @@ export const properties = [
   {
     id: 8,
     propertyId: 'SS-MYS-08',
-    title: 'Heritage Coliving Rooms',
+    title: 'Heritage Coliving Apartments',
     location: 'Vijayanagar, Mysuru',
     rentPrice: '₹12,000 / month',
     leasePrice: '₹6L (1 Yr)',
