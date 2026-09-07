@@ -7363,7 +7363,7 @@ input:focus, select:focus, textarea:focus {
 .table-featured-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.78rem;
@@ -7381,9 +7381,13 @@ input:focus, select:focus, textarea:focus {
 }
 
 .table-featured-btn.active {
-  background: #fef3c7 !important;
-  color: #b45309 !important;
-  border-color: #fde047 !important;
+  background: #ecfdf5 !important;
+  color: #059669 !important;
+  border-color: #a7f3d0 !important;
+}
+
+.table-featured-btn.active:hover {
+  background: #d1fae5 !important;
 }
 
 .btn-table-edit {

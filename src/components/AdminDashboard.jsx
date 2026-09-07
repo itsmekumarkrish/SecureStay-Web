@@ -1148,7 +1148,8 @@ export default function AdminDashboard({
                             className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
                             title="Click to toggle Featured on Homepage"
                           >
-                            {isFeatured ? '★ Featured' : '☆ Standard'}
+                            <span className="status-dot">●</span>
+                            {isFeatured ? 'Featured' : 'Standard'}
                           </button>
                         </td>
                         <td style={{ textAlign: 'right', paddingRight: '20px' }}>
