@@ -1046,198 +1046,138 @@ export default function AdminDashboard({
         {/* Tab 2: Manage Properties List */}
         {activeTab === 'properties-list' && (
           <div className="admin-card-section">
-            <div className="admin-section-header">
-              <h3>All Published Properties ({filteredTableProperties.length})</h3>
-              <p>Manage active listings displayed on the SecureStay catalog and homepage.</p>
-            </div>
-
-            {/* Polished Admin Toolbar Container */}
-            <div className="admin-toolbar-container">
-              {/* Left Side: Status Filter Pills */}
-              <div className="admin-filter-pills">
-                <button
-                  type="button"
-                  className={`admin-filter-btn ${tableStatusFilter === 'all' ? 'active' : ''}`}
-                  onClick={() => setTableStatusFilter('all')}
-                >
-                  All Properties <span className="pill-count">{properties.length}</span>
-                </button>
-                <button
-                  type="button"
-                  className={`admin-filter-btn ${tableStatusFilter === 'available' ? 'active' : ''}`}
-                  onClick={() => setTableStatusFilter('available')}
-                >
-                  <span className="dot-available">●</span> Available <span className="pill-count">{properties.filter(p => p.availability !== 'Occupied').length}</span>
-                </button>
-                <button
-                  type="button"
-                  className={`admin-filter-btn ${tableStatusFilter === 'occupied' ? 'active' : ''}`}
-                  onClick={() => setTableStatusFilter('occupied')}
-                >
-                  <span className="dot-occupied">●</span> Occupied <span className="pill-count">{properties.filter(p => p.availability === 'Occupied').length}</span>
-                </button>
-                <button
-                  type="button"
-                  className={`admin-filter-btn ${tableStatusFilter === 'featured' ? 'active' : ''}`}
-                  onClick={() => setTableStatusFilter('featured')}
-                >
-                  <span className="dot-featured">★</span> Featured <span className="pill-count">{properties.filter(p => p.isFeatured).length}</span>
-                </button>
-              </div>
-
-              {/* Right Side: Search + View Switcher */}
-              <div className="admin-toolbar-right">
-                <div className="admin-search-wrap">
-                  <Search size={15} className="admin-search-icon" />
-                  <input 
-                    type="text" 
-                    className="admin-search-input"
-                    placeholder="Search title, ID, city..." 
-                    value={tableSearch}
-                    onChange={(e) => setTableSearch(e.target.value)}
-                  />
-                  {tableSearch && (
-                    <button 
-                      type="button" 
-                      className="admin-search-clear"
-                      onClick={() => setTableSearch('')}
-                    >
-                      ×
-                    </button>
-                  )}
-                </div>
-
-                <div className="admin-view-toggle desktop-only-table">
-                  <button
-                    type="button"
-                    className={`view-toggle-btn ${adminViewMode === 'table' ? 'active' : ''}`}
-                    onClick={() => setAdminViewMode('table')}
-                    title="Table List View"
+            {/* Clean Top Search Bar as in mockup */}
+            <div className="admin-search-top-bar">
+              <div className="admin-search-box-wrap">
+                <Search size={18} className="admin-search-icon" />
+                <input 
+                  type="text" 
+                  className="admin-search-input-field"
+                  placeholder="Search property title, city or area..." 
+                  value={tableSearch}
+                  onChange={(e) => setTableSearch(e.target.value)}
+                />
+                {tableSearch && (
+                  <button 
+                    type="button" 
+                    className="admin-search-clear-btn"
+                    onClick={() => setTableSearch('')}
                   >
-                    <List size={15} /> Table
+                    ×
                   </button>
-                  <button
-                    type="button"
-                    className={`view-toggle-btn ${adminViewMode === 'grid' ? 'active' : ''}`}
-                    onClick={() => setAdminViewMode('grid')}
-                    title="Grid Card View"
-                  >
-                    <LayoutGrid size={15} /> Grid
-                  </button>
-                </div>
+                )}
               </div>
             </div>
 
-            {/* Desktop Table View */}
-            {adminViewMode === 'table' ? (
-              <div className="admin-properties-table-wrap desktop-only-table">
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th style={{ width: '90px' }}>PHOTO</th>
-                      <th>PROPERTY DETAILS</th>
-                      <th>LOCATION</th>
-                      <th>PRICING</th>
-                      <th>AVAILABILITY</th>
-                      <th>FEATURED</th>
-                      <th style={{ textAlign: 'right' }}>ACTIONS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredTableProperties.map((prop) => {
-                      const isOccupied = prop.availability === 'Occupied';
-                      const isFeatured = !!prop.isFeatured;
-                      const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
-                      const photoCount = prop.images?.length || 1;
-                      return (
-                        <tr key={prop.id} className="admin-table-row">
-                          <td>
-                            <div className="table-img-wrap">
-                              <img 
-                                src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
-                                alt={prop.title} 
-                                className="table-prop-img"
-                              />
-                              {photoCount > 1 && (
-                                <span className="table-img-badge">{photoCount}📷</span>
-                              )}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="table-prop-title-block">
-                              <div className="table-title-header">
-                                <strong className="table-prop-name">{prop.title}</strong>
-                                <span className="table-prop-id-chip">#{propIdCode}</span>
-                              </div>
-                              <span className="table-prop-type-sub">{prop.type}</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="table-loc-block">
-                              <MapPin size={13} className="text-primary flex-shrink-0" />
-                              <span>{prop.location}</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="table-price-block">
-                              <span className="table-main-price">{prop.rentPrice || prop.salePrice || 'N/A'}</span>
-                              {prop.leasePrice && <span className="table-sub-lease">Lease: {prop.leasePrice}</span>}
-                            </div>
-                          </td>
-                          <td>
-                            <button
-                              type="button"
-                              onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
-                              className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
-                              title="Click to toggle Available / Occupied status"
+            {/* Desktop Table View matching reference layout */}
+            <div className="admin-properties-table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '100px' }}>PHOTO</th>
+                    <th style={{ minWidth: '220px' }}>PROPERTY TITLE</th>
+                    <th style={{ minWidth: '160px' }}>LOCATION</th>
+                    <th style={{ minWidth: '150px' }}>MONTHLY RENT</th>
+                    <th style={{ minWidth: '130px' }}>STATUS</th>
+                    <th style={{ minWidth: '130px' }}>FEATURED</th>
+                    <th style={{ minWidth: '180px', textAlign: 'right' }}>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredTableProperties.map((prop) => {
+                    const isOccupied = prop.availability === 'Occupied';
+                    const isFeatured = !!prop.isFeatured;
+                    const propIdCode = prop.propertyId || `SS-${(prop.city || 'BLR').substring(0,3).toUpperCase()}-${String(prop.id).padStart(2,'0')}`;
+                    const photoCount = prop.images?.length || 1;
+
+                    // Format type / furnishings display
+                    const typeDisplay = prop.type || 'Fully Furnished';
+
+                    return (
+                      <tr key={prop.id} className="admin-table-row">
+                        <td>
+                          <div className="table-img-wrap">
+                            <img 
+                              src={prop.images?.[0] || prop.image || '/assets/hero_stay.jpg'} 
+                              alt={prop.title} 
+                              className="table-prop-img"
+                            />
+                            {photoCount > 1 && (
+                              <span className="table-img-badge">{photoCount}📷</span>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="table-prop-title-block">
+                            <strong className="table-prop-name">{prop.title}</strong>
+                            <span className="table-prop-id-sub">#{propIdCode}</span>
+                            <span className="table-prop-type-sub">{typeDisplay}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="table-loc-text">
+                            {prop.location}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="table-price-text">
+                            {prop.rentPrice ? `${prop.rentPrice} / month` : prop.salePrice || 'N/A'}
+                          </div>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => onToggleAvailability && onToggleAvailability(prop.id)}
+                            className={`table-status-pill ${isOccupied ? 'occupied' : 'available'}`}
+                            title="Click to toggle Available / Occupied status"
+                          >
+                            <span className="status-dot">●</span>
+                            {isOccupied ? 'Occupied' : 'Available'}
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
+                            className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
+                            title="Click to toggle Featured on Homepage"
+                          >
+                            {isFeatured ? '★ Featured' : '☆ Standard'}
+                          </button>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div className="table-actions-cell" style={{ justifyContent: 'flex-end' }}>
+                            <button 
+                              type="button" 
+                              className="btn-table-edit" 
+                              onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
+                              title="Edit Property &amp; Photos"
                             >
-                              <span className="status-dot"></span>
-                              {isOccupied ? 'Occupied' : 'Available'}
+                              <Pencil size={13} /> Edit
                             </button>
-                          </td>
-                          <td>
-                            <button
-                              type="button"
-                              onClick={() => onToggleFeatured && onToggleFeatured(prop.id)}
-                              className={`table-featured-btn ${isFeatured ? 'active' : ''}`}
-                              title="Click to toggle Featured on Homepage"
+                            <button 
+                              type="button" 
+                              className="btn-table-remove" 
+                              onClick={() => onDeleteProperty(prop.id)}
+                              title="Delete Property"
                             >
-                              {isFeatured ? '★ Featured' : '☆ Standard'}
+                              <Trash2 size={13} /> Remove
                             </button>
-                          </td>
-                          <td style={{ textAlign: 'right' }}>
-                            <div className="table-actions-cell" style={{ justifyContent: 'flex-end' }}>
-                              <button 
-                                type="button" 
-                                className="btn-table-edit" 
-                                onClick={() => setEditingProp({ ...prop, images: prop.images || [prop.image || ''] })}
-                                title="Edit Property &amp; Photos"
-                              >
-                                <Pencil size={13} /> Edit
-                              </button>
-                              <button 
-                                type="button" 
-                                className="btn-table-remove" 
-                                onClick={() => onDeleteProperty(prop.id)}
-                                title="Delete Property"
-                              >
-                                <Trash2 size={13} /> Remove
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                    {filteredTableProperties.length === 0 && (
-                      <tr>
-                        <td colSpan={7} className="text-center py-6 text-muted">
-                          No properties found matching "{tableSearch}"
+                          </div>
                         </td>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                    );
+                  })}
+                  {filteredTableProperties.length === 0 && (
+                    <tr>
+                      <td colSpan={7} className="text-center py-6 text-muted">
+                        No properties found matching "{tableSearch}"
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             ) : (
               /* Desktop Grid View */
               <div className="admin-grid-view desktop-only-table">
