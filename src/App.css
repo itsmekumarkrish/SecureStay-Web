@@ -6825,11 +6825,10 @@ input:focus, select:focus, textarea:focus {
 }
 
 .mobile-only-cards {
-  display: none;
+  display: none !important;
 }
 
 .admin-mobile-properties-cards {
-  display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
