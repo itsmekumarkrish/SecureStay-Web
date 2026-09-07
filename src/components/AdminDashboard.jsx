@@ -1732,11 +1732,11 @@ export default function AdminDashboard({
               </div>
 
               {/* Modal Submit Actions */}
-              <div className="saas-modal-actions flex-between mt-4">
-                <button type="button" className="btn-secondary px-4 py-2" onClick={() => setEditingProp(null)}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '24px', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-secondary" style={{ padding: '11px 24px', borderRadius: '10px', fontWeight: 600, fontSize: '0.9rem' }} onClick={() => setEditingProp(null)}>
                   Cancel
                 </button>
-                <button type="submit" className="btn-publish-saas" style={{ width: 'auto', padding: '12px 28px' }}>
+                <button type="submit" className="btn-publish-saas" style={{ width: 'auto', padding: '11px 28px', borderRadius: '10px', margin: 0 }}>
                   Save Property Changes
                 </button>
               </div>

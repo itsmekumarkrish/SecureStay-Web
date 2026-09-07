@@ -6793,20 +6793,21 @@ input:focus, select:focus, textarea:focus {
 
   .saas-modal-actions {
     display: flex !important;
-    flex-direction: column-reverse !important;
+    flex-direction: row !important;
     gap: 10px !important;
     width: 100% !important;
     margin-top: 16px !important;
+    justify-content: flex-end !important;
   }
 
   .saas-modal-actions button {
-    width: 100% !important;
+    flex: 0 0 auto !important;
     text-align: center !important;
     justify-content: center !important;
-    border-radius: 12px !important;
-    padding: 14px !important;
-    font-size: 0.98rem !important;
-    font-weight: 700 !important;
+    border-radius: 10px !important;
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
   }
