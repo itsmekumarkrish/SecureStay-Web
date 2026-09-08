@@ -67,8 +67,8 @@ export const properties = [
     propertyId: 'SS-CHE-04',
     title: 'Premium Villa Residence',
     location: 'Anna Nagar, Chennai',
-    rentPrice: '₹34,000 / month',
-    leasePrice: '₹19L (2-3 Yrs)',
+    rentPrice: '₹35,000 / month',
+    leasePrice: '₹30L (2-3 Yrs)',
     type: 'Fully Furnished • 2.5 BHK',
     bhk: '2 BHK',
     furnishing: 'Fully Furnished',
@@ -76,9 +76,13 @@ export const properties = [
     city: 'Chennai',
     description: 'Ultra-luxurious 2.5 BHK villa unit in prime Anna Nagar. Fully furnished with air conditioning, sofa sets, dining furniture, 100% power backup, and round-the-clock gated security.',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=800&q=80'
+      '/assets/properties/ss-che-04-1.jpeg',
+      '/assets/properties/ss-che-04-2.jpeg',
+      '/assets/properties/ss-che-04-3.jpeg',
+      '/assets/properties/ss-che-04-4.jpeg',
+      '/assets/properties/ss-che-04-5.jpeg',
+      '/assets/properties/ss-che-04-6.jpeg',
+      '/assets/properties/ss-che-04-7.jpeg'
     ]
   },
   {
