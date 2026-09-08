@@ -18,6 +18,20 @@ import MobileRestrictionModal from './components/MobileRestrictionModal';
 import { properties as initialProperties, reviews, faqs } from './data/mockData';
 import './App.css';
 
+// Increment this version string whenever mockData.js properties are updated.
+// This forces all devices to clear stale localStorage and reload fresh data.
+const DATA_VERSION = '2026-09-08-v2';
+(function clearStaleCache() {
+  try {
+    const stored = localStorage.getItem('securestay_data_version');
+    if (stored !== DATA_VERSION) {
+      localStorage.removeItem('securestay_properties');
+      localStorage.removeItem('securestay_deleted_ids');
+      localStorage.setItem('securestay_data_version', DATA_VERSION);
+    }
+  } catch {}
+})();
+
 function normalizeProperty(item) {
   if (!item) return item;
   const locStr = item.location || '';
@@ -120,24 +134,28 @@ export default function App() {
     }
   });
 
-  // Helper to ensure properties array contains all non-deleted initial properties
+  // Helper to ensure properties always use mockData.js as the base source of truth.
+  // Admin-added cloud-only properties (not in mockData.js) are appended on top.
   const getCombinedProperties = (inputProps) => {
     try {
       const savedDeleted = localStorage.getItem('securestay_deleted_ids');
       const deletedArr = savedDeleted ? JSON.parse(savedDeleted) : [];
       const deletedSet = new Set(deletedArr);
 
-      let list = Array.isArray(inputProps) && inputProps.length > 0 ? inputProps : [];
-      list = list.filter((p) => p && !deletedSet.has(p.id));
+      // Always start from initialProperties (mockData.js) as the base
+      const mockIds = new Set(initialProperties.map((p) => p.id));
+      const baseList = initialProperties
+        .filter((p) => !deletedSet.has(p.id))
+        .map(normalizeProperty);
 
-      const existingIds = new Set(list.map((p) => p.id));
-      const missingInitial = initialProperties.filter(
-        (p) => !deletedSet.has(p.id) && !existingIds.has(p.id)
-      );
+      // Append any cloud/admin-added properties that are NOT in mockData.js
+      const cloudOnlyProps = Array.isArray(inputProps)
+        ? inputProps.filter((p) => p && !mockIds.has(p.id) && !deletedSet.has(p.id)).map(normalizeProperty)
+        : [];
 
-      return [...list, ...missingInitial].map(normalizeProperty);
+      return [...baseList, ...cloudOnlyProps];
     } catch {
-      return (inputProps && inputProps.length > 0 ? inputProps : initialProperties).map(normalizeProperty);
+      return initialProperties.map(normalizeProperty);
     }
   };
 
