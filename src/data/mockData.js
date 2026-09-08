@@ -65,8 +65,7 @@ export const properties = [
       '/assets/properties/ss-blr-03/ss-blr-03-5.jpeg',
       '/assets/properties/ss-blr-03/ss-blr-03-6.jpeg',
       '/assets/properties/ss-blr-03/ss-blr-03-7.jpeg',
-      '/assets/properties/ss-blr-03/ss-blr-03-8.jpeg',
-      '/assets/properties/ss-blr-03/ss-blr-03-9.jpeg'
+      '/assets/properties/ss-blr-03/ss-blr-03-8.jpeg'
     ]
   },
   {
