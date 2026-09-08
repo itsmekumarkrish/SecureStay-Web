@@ -35,10 +35,11 @@ export const properties = [
     isFeatured: true,
     description: 'Spacious executive 2 BHK apartment in the peaceful neighborhood of Gokulam. Features wooden wardrobes, modern kitchen cabinets, dual balconies with scenic views, and covered car parking.',
     images: [
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80'
+      '/assets/properties/ss-mys-02/ss-mys-02-1.jpeg',
+      '/assets/properties/ss-mys-02/ss-mys-02-2.jpeg',
+      '/assets/properties/ss-mys-02/ss-mys-02-3.jpeg',
+      '/assets/properties/ss-mys-02/ss-mys-02-4.jpeg',
+      '/assets/properties/ss-mys-02/ss-mys-02-5.jpeg'
     ]
   },
   {
