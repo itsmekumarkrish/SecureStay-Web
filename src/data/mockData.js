@@ -82,13 +82,13 @@ export const properties = [
     city: 'Chennai',
     description: 'Ultra-luxurious 2.5 BHK villa unit in prime Anna Nagar. Fully furnished with air conditioning, sofa sets, dining furniture, 100% power backup, and round-the-clock gated security.',
     images: [
-      '/assets/properties/ss-che-04-1.jpeg',
-      '/assets/properties/ss-che-04-2.jpeg',
-      '/assets/properties/ss-che-04-3.jpeg',
-      '/assets/properties/ss-che-04-4.jpeg',
-      '/assets/properties/ss-che-04-5.jpeg',
-      '/assets/properties/ss-che-04-6.jpeg',
-      '/assets/properties/ss-che-04-7.jpeg'
+      '/assets/properties/ss-che-04/ss-che-04-1.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-2.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-3.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-4.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-5.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-6.jpeg',
+      '/assets/properties/ss-che-04/ss-che-04-7.jpeg'
     ]
   },
   {

@@ -20,7 +20,7 @@ import './App.css';
 
 // Increment this version string whenever mockData.js properties are updated.
 // This forces all devices to clear stale localStorage and reload fresh data.
-const DATA_VERSION = '2026-09-08-v6';
+const DATA_VERSION = '2026-09-08-v7';
 (function clearStaleCache() {
   try {
     const stored = localStorage.getItem('securestay_data_version');
