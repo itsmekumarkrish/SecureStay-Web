@@ -6303,22 +6303,24 @@ input:focus, select:focus, textarea:focus {
     word-break: break-word !important;
   }
 
-  /* Pricing box — flex vertical layout for mobile so NO text is truncated or hidden */
+  /* Pricing box — keep items side-by-side in one line on mobile */
   .detail-pricing-box {
     background: #f8fafc !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 14px !important;
-    padding: 14px 16px !important;
+    padding: 12px 14px !important;
     display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
     box-sizing: border-box !important;
     width: 100% !important;
     margin-bottom: 18px !important;
   }
 
   .price-item {
-    width: 100% !important;
+    flex: 1 1 0px !important;
     min-width: 0 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -6326,35 +6328,28 @@ input:focus, select:focus, textarea:focus {
   }
 
   .price-label {
-    font-size: 0.7rem !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    color: #64748b !important;
+    font-size: 0.65rem !important;
     font-weight: 700 !important;
-    letter-spacing: 0.03em !important;
+    color: #64748b !important;
+    letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .price-value-highlight {
-    font-size: 1.15rem !important;
+    font-size: 1.05rem !important;
     font-weight: 800 !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
     color: #0c2340 !important;
+    white-space: nowrap !important;
   }
 
   .price-value {
-    font-size: 1.05rem !important;
+    font-size: 0.95rem !important;
     font-weight: 700 !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
     color: #334155 !important;
+    white-space: nowrap !important;
   }
 
   /* Description — full word wrap, clear padding */
