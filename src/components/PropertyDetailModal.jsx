@@ -134,7 +134,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
               <div className="amenities-grid">
                 {amenities.map((item, idx) => (
                   <div key={idx} className="amenity-chip">
-                    <CheckCircle size={14} className="text-green" />
+                    <CheckCircle size={15} className="text-green" style={{ flexShrink: 0, marginTop: '2px' }} />
                     <span>{item}</span>
                   </div>
                 ))}

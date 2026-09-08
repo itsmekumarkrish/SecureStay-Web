@@ -4106,11 +4106,12 @@ input:focus, select:focus, textarea:focus {
 
 .amenity-chip {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   font-size: 0.88rem;
   color: #334155;
-  white-space: nowrap;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 /* ============================================
