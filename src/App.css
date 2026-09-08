@@ -6233,13 +6233,17 @@ input:focus, select:focus, textarea:focus {
   .detail-gallery {
     margin-top: 4px !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
   .detail-main-img-wrap {
     border-radius: 16px !important;
     height: 230px !important;
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
   }
 
@@ -6252,7 +6256,11 @@ input:focus, select:focus, textarea:focus {
     margin-top: 10px !important;
     overflow-x: auto !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .detail-thumb-btn {
@@ -6264,6 +6272,8 @@ input:focus, select:focus, textarea:focus {
 
   .detail-modal-grid {
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     display: block !important;
     box-sizing: border-box !important;
   }
