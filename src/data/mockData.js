@@ -14,10 +14,11 @@ export const properties = [
     isFeatured: true,
     description: 'Beautiful sun-lit studio apartment located right next to Koramangala metro station and major tech parks. Fully equipped with high-speed Wi-Fi, modern modular kitchen, biometric smart lock security, and 24/7 property manager assistance.',
     images: [
-      '/assets/hero_stay.jpg',
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80'
+      '/assets/properties/ss-blr-01/ss-blr-01-1.avif',
+      '/assets/properties/ss-blr-01/ss-blr-01-2.jpg',
+      '/assets/properties/ss-blr-01/ss-blr-01-3.jpg',
+      '/assets/properties/ss-blr-01/ss-blr-01-4.jpg',
+      '/assets/properties/ss-blr-01/ss-blr-01-5.jpg'
     ]
   },
   {
