@@ -3865,11 +3865,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Property Detail Modal */
 .sheet-grab-handle {
-  width: 44px;
-  height: 5px;
-  background: #CBD5E1;
-  border-radius: 3px;
-  margin: 10px auto 4px auto;
+  display: none;
 }
 
 .property-detail-modal-card {
@@ -3954,9 +3950,13 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   gap: 10px;
   margin-top: 12px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 4px;
 }
 
 .detail-thumb-btn {
+  flex-shrink: 0;
   width: 72px;
   height: 54px;
   border-radius: 8px;
@@ -3985,11 +3985,16 @@ input:focus, select:focus, textarea:focus {
 
 .detail-property-loc {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 4px 8px;
   color: var(--text-muted);
   font-size: 0.95rem;
   margin-bottom: 18px;
+}
+
+.property-id-tag {
+  white-space: nowrap;
 }
 
 .detail-pricing-box {
@@ -3997,9 +4002,11 @@ input:focus, select:focus, textarea:focus {
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 16px 18px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 28px;
   margin-bottom: 20px;
 }
 
