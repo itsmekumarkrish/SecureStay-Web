@@ -105,9 +105,16 @@ export const properties = [
     city: 'Bangalore',
     description: 'Modern and well-ventilated 2 BHK apartment located in prime HSR Layout, Bengaluru. Comes with modular kitchen, lift access, covered car parking, power backup, and 24/7 security.',
     images: [
-      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80'
+      '/assets/properties/ss-blr-05/ss-blr-05-1.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-2.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-3.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-4.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-5.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-6.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-7.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-8.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-9.jpg',
+      '/assets/properties/ss-blr-05/ss-blr-05-10.jpg'
     ]
   },
   {
