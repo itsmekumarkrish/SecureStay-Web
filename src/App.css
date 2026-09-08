@@ -6283,8 +6283,82 @@ input:focus, select:focus, textarea:focus {
 
   .detail-pricing-box {
     padding: 14px 16px !important;
-    gap: 12px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    grid-template-columns: 1fr 1fr !important;
+    overflow: hidden !important;
   }
+
+  .price-item {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .price-label {
+    font-size: 0.62rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .price-value-highlight {
+    font-size: 1.05rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .price-value {
+    font-size: 0.95rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Fix amenities - single column so text never gets cut */
+  .amenities-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .amenity-chip {
+    font-size: 0.88rem !important;
+    padding: 4px 0 !important;
+  }
+
+  /* Fix description text wrapping */
+  .detail-description-text {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+  }
+
+  /* Ensure modal content never overflows horizontally */
+  .detail-info-col {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .detail-modal-grid {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Fix highlight badges on mobile - single column for clarity */
+  .detail-highlights {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .detail-highlights .highlight-badge:last-child:nth-child(odd) {
+    grid-column: span 1 !important;
+  }
+
 
   /* Property See More Button Spacing on Mobile */
   .properties-see-more-bar {
