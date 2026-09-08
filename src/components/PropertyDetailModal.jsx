@@ -29,10 +29,10 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
           <X size={20} />
         </button>
 
-        <div className="detail-modal-grid">
+        <div className="detail-modal-grid" style={{ minWidth: 0, width: '100%' }}>
           {/* Left Column: Image Gallery */}
-          <div className="detail-gallery">
-            <div className="detail-main-img-wrap">
+          <div className="detail-gallery" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
+            <div className="detail-main-img-wrap" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
               <img 
                 src={images[activeImgIndex]} 
                 alt={`${property.title} - View ${activeImgIndex + 1}`} 
@@ -60,7 +60,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
 
             {/* Thumbnails Strip */}
             {images.length > 1 && (
-              <div className="detail-thumbnails-row">
+              <div className="detail-thumbnails-row" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
                 {images.map((img, idx) => (
                   <button
                     key={idx}
@@ -76,7 +76,7 @@ export default function PropertyDetailModal({ property, onClose, onInquire }) {
           </div>
 
           {/* Right Column: Property Info & Features */}
-          <div className="detail-info-col">
+          <div className="detail-info-col" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
             <span className="property-type">{property.type}</span>
             <h2 className="detail-property-title">{property.title}</h2>
             <p className="detail-property-loc">
