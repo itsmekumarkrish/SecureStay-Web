@@ -3863,20 +3863,20 @@ input:focus, select:focus, textarea:focus {
   gap: 8px;
 }
 
-/* Property Detail Modal */
+/* Property Detail Modal - Desktop Layout */
 .sheet-grab-handle {
   display: none;
 }
 
 .property-detail-modal-card {
   background: #ffffff;
-  border-radius: var(--radius-lg);
-  max-width: 980px;
-  width: 100%;
-  max-height: 90vh;
+  border-radius: 20px;
+  max-width: 960px;
+  width: 95%;
+  max-height: 92vh;
   overflow-y: auto;
-  padding: 32px 36px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  padding: 24px 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
   position: relative;
   border: 1px solid #e2e8f0;
   animation: fadeIn 0.25s ease;
@@ -3884,12 +3884,12 @@ input:focus, select:focus, textarea:focus {
 
 .property-modal-close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 16px;
+  right: 16px;
   background: #f1f5fa;
   border: none;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -3907,15 +3907,16 @@ input:focus, select:focus, textarea:focus {
 
 .detail-modal-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
 }
 
 .detail-main-img-wrap {
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: 14px;
   overflow: hidden;
-  height: 340px;
+  height: 290px;
   background: #0c2340;
 }
 
@@ -3948,17 +3949,17 @@ input:focus, select:focus, textarea:focus {
 
 .detail-thumbnails-row {
   display: flex;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 10px;
   overflow-x: auto;
   max-width: 100%;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .detail-thumb-btn {
   flex-shrink: 0;
-  width: 72px;
-  height: 54px;
+  width: 66px;
+  height: 48px;
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid transparent;
@@ -3977,10 +3978,10 @@ input:focus, select:focus, textarea:focus {
 }
 
 .detail-property-title {
-  font-size: 1.65rem;
+  font-size: 1.45rem;
   color: #0c2340;
-  margin: 4px 0 6px 0;
-  line-height: 1.25;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
   font-weight: 800;
 }
 
@@ -3988,10 +3989,10 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 12px;
+  gap: 4px 8px;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 18px;
+  font-size: 0.88rem;
+  margin-bottom: 12px;
 }
 
 .property-id-tag {
@@ -4001,32 +4002,32 @@ input:focus, select:focus, textarea:focus {
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   border: 1px solid #e2e8f0;
 }
 
 .detail-pricing-box {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 16px 20px;
+  border-radius: 12px;
+  padding: 10px 16px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 32px;
-  margin-bottom: 20px;
+  gap: 24px;
+  margin-bottom: 12px;
 }
 
 .price-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   flex: 0 0 auto;
 }
 
 .price-label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   color: #64748b;
   font-weight: 700;
@@ -4035,14 +4036,14 @@ input:focus, select:focus, textarea:focus {
 }
 
 .price-value-highlight {
-  font-size: 1.25rem;
+  font-size: 1.18rem;
   font-weight: 800;
   color: #0c2340;
   white-space: nowrap;
 }
 
 .price-value {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #334155;
   white-space: nowrap;
@@ -4052,22 +4053,22 @@ input:focus, select:focus, textarea:focus {
 .detail-description-section {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
 }
 
 .detail-description-title {
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #0c2340;
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
 }
 
 .detail-description-text {
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   color: #475569;
-  line-height: 1.5;
+  line-height: 1.4;
   margin: 0;
   white-space: pre-line;
 }
@@ -4075,42 +4076,44 @@ input:focus, select:focus, textarea:focus {
 .detail-highlights {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .highlight-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   background: #f1f5fa;
+  border: 1px solid #e2e8f0;
   border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 0.82rem;
+  padding: 4px 10px;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #0c2340;
 }
 
 .detail-amenities-section h4 {
-  font-size: 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
   color: #0c2340;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .amenities-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 16px;
-  margin-bottom: 24px;
+  gap: 6px 12px;
+  margin-bottom: 16px;
 }
 
 .amenity-chip {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 0.88rem;
+  gap: 6px;
+  font-size: 0.82rem;
   color: #334155;
-  line-height: 1.4;
+  line-height: 1.3;
   word-break: break-word;
 }
 
