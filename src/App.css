@@ -3908,15 +3908,24 @@ input:focus, select:focus, textarea:focus {
 .detail-modal-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.detail-gallery {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
 }
 
 .detail-main-img-wrap {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  height: 290px;
+  height: 410px;
+  flex: 1;
+  min-height: 360px;
   background: #0c2340;
 }
 
@@ -3934,8 +3943,8 @@ input:focus, select:focus, textarea:focus {
   backdrop-filter: blur(4px);
   color: #ffffff;
   border: none;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -3944,13 +3953,13 @@ input:focus, select:focus, textarea:focus {
   transition: background 0.2s ease;
 }
 
-.gallery-arrow-left { left: 10px; }
-.gallery-arrow-right { right: 10px; }
+.gallery-arrow-left { left: 12px; }
+.gallery-arrow-right { right: 12px; }
 
 .detail-thumbnails-row {
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
   overflow-x: auto;
   max-width: 100%;
   padding-bottom: 2px;
