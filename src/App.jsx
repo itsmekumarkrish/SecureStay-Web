@@ -20,7 +20,7 @@ import './App.css';
 
 // Increment this version string whenever mockData.js properties are updated.
 // This forces all devices to clear stale localStorage and reload fresh data.
-const DATA_VERSION = '2026-09-08-v8';
+const DATA_VERSION = '2026-09-09-v9';
 (function clearStaleCache() {
   try {
     const stored = localStorage.getItem('securestay_data_version');
@@ -35,7 +35,11 @@ const DATA_VERSION = '2026-09-08-v8';
 function normalizeProperty(item) {
   if (!item) return item;
   const locStr = item.location || '';
-  const typeStr = item.type || '';
+  let typeStr = item.type || '';
+
+  if (typeStr.includes('1 RK')) {
+    typeStr = typeStr.replace('1 RK', '1 BHK');
+  }
 
   let city = item.city;
   if (!city) {
@@ -47,12 +51,11 @@ function normalizeProperty(item) {
   }
 
   let bhk = item.bhk;
-  if (!bhk) {
-    if (typeStr.includes('1 RK')) bhk = '1 RK';
-    else if (typeStr.includes('1 BHK')) bhk = '1 BHK';
+  if (!bhk || bhk === '1 RK') {
+    if (typeStr.includes('1 BHK')) bhk = '1 BHK';
     else if (typeStr.includes('2 BHK') || typeStr.includes('2.5 BHK')) bhk = '2 BHK';
     else if (typeStr.includes('3 BHK')) bhk = '3 BHK';
-    else bhk = '2 BHK';
+    else bhk = '1 BHK';
   }
 
   let feature = item.feature;

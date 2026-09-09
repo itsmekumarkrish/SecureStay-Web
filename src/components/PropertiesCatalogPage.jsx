@@ -158,8 +158,7 @@ export default function PropertiesCatalogPage({
               <label><SlidersHorizontal size={13} /> BHK &amp; Configuration</label>
               <select value={selectedBHK} onChange={(e) => setSelectedBHK(e.target.value)}>
                 <option value="All">All Configurations</option>
-                <option value="1 RK">1 RK / Studio</option>
-                <option value="1 BHK">1 BHK</option>
+                <option value="1 BHK">1 BHK / Studio</option>
                 <option value="2 BHK">2 BHK</option>
                 <option value="3 BHK">3 BHK</option>
                 <option value="Coliving">Coliving / Shared</option>

@@ -236,8 +236,7 @@ export default function AdminDashboard({
 
     const validImages = (editingProp.images || []).filter(img => img.trim() !== '');
     const typeStr = editingProp.type || '';
-    const bhk = typeStr.includes('1 RK') ? '1 RK' 
-      : typeStr.includes('1 BHK') ? '1 BHK' 
+    const bhk = (typeStr.includes('1 BHK') || typeStr.includes('1 RK')) ? '1 BHK' 
       : typeStr.includes('2 BHK') ? '2 BHK' 
       : typeStr.includes('3 BHK') ? '3 BHK' : '2 BHK';
 
@@ -302,8 +301,7 @@ export default function AdminDashboard({
       .filter((item) => item !== '');
 
     const typeStr = newProp.type || '';
-    const bhk = typeStr.includes('1 RK') ? '1 RK' 
-      : typeStr.includes('1 BHK') ? '1 BHK' 
+    const bhk = (typeStr.includes('1 BHK') || typeStr.includes('1 RK')) ? '1 BHK' 
       : typeStr.includes('2 BHK') ? '2 BHK' 
       : typeStr.includes('3 BHK') ? '3 BHK' : '2 BHK';
 
