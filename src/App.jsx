@@ -185,6 +185,7 @@ export default function App() {
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [lastRefNumber, setLastRefNumber] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -444,11 +445,14 @@ export default function App() {
 
   const handleSubmitContactForm = async (e) => {
     e.preventDefault();
+    const generatedRef = 'SS-' + Math.floor(100000 + Math.random() * 900000);
+    setLastRefNumber(generatedRef);
     setFormSubmitted(true);
 
-    // Save lead to inquiriesList with unique ID and status
+    // Save lead to inquiriesList with unique ID, status, and reference number
     const newInquiry = {
       id: Date.now(),
+      refNumber: generatedRef,
       ...formData,
       status: 'pending',
       date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -587,7 +591,9 @@ export default function App() {
             formData={formData} 
             setFormData={setFormData} 
             formSubmitted={formSubmitted} 
+            setFormSubmitted={setFormSubmitted}
             handleSubmit={handleSubmitContactForm} 
+            lastRefNumber={lastRefNumber}
           />
           <Footer 
             setLegalModal={setLegalModal} 

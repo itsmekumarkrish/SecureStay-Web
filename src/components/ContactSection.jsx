@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Sparkles, Pause, Play, Volume2, VolumeX, Maximize, MapPin, CheckCircle, ChevronDown, X, RotateCcw, RotateCw, Settings } from 'lucide-react';
 
-export default function ContactSection({ formData, setFormData, formSubmitted, handleSubmit }) {
+export default function ContactSection({ formData, setFormData, formSubmitted, setFormSubmitted, handleSubmit, lastRefNumber }) {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -334,8 +334,30 @@ export default function ContactSection({ formData, setFormData, formSubmitted, h
               <div className="form-success text-center">
                 <CheckCircle size={48} className="text-green mx-auto mb-2" />
                 <h3>Thank You!</h3>
+                {lastRefNumber && (
+                  <div style={{
+                    display: 'inline-block',
+                    margin: '12px 0 16px 0',
+                    padding: '8px 18px',
+                    backgroundColor: '#f0fdf4',
+                    border: '1px solid #bbf7d0',
+                    borderRadius: '24px',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    color: '#166534',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                  }}>
+                    Reference No: <span style={{ fontFamily: 'monospace', fontSize: '1rem', letterSpacing: '0.5px' }}>#{lastRefNumber}</span>
+                  </div>
+                )}
                 <p>We have received your message. Our representative will contact you within 24 hours.</p>
-                <button className="btn-secondary mt-3" onClick={() => setFormData({ name: '', phone: '', email: '', userType: 'owner', location: '', message: '' })}>
+                <button 
+                  className="btn-secondary mt-3" 
+                  onClick={() => {
+                    if (setFormSubmitted) setFormSubmitted(false);
+                    setFormData({ name: '', phone: '', email: '', userType: 'owner', location: '', message: '' });
+                  }}
+                >
                   Send Another Message
                 </button>
               </div>
