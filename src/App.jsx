@@ -9,6 +9,7 @@ import ReviewsSection from './components/ReviewsSection';
 import FaqSection from './components/FaqSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import { sendInquiryEmail } from './services/emailService';
 import LiveChat from './components/LiveChat';
 import LegalModal from './components/LegalModal';
 import PropertyDetailModal from './components/PropertyDetailModal';
@@ -441,7 +442,7 @@ export default function App() {
     }, 120);
   };
 
-  const handleSubmitContactForm = (e) => {
+  const handleSubmitContactForm = async (e) => {
     e.preventDefault();
     setFormSubmitted(true);
 
@@ -454,6 +455,7 @@ export default function App() {
     };
     setInquiriesList((prev) => [newInquiry, ...prev]);
     saveCloudInquiry(newInquiry);
+    await sendInquiryEmail(newInquiry);
 
     try {
       confetti({
