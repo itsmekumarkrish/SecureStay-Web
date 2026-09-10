@@ -11,6 +11,22 @@ export default function ContactSection({ formData, setFormData, formSubmitted, s
   const [showControls, setShowControls] = useState(false);
   const [isUserTypeSheetOpen, setIsUserTypeSheetOpen] = useState(false);
   const [showSettingsToast, setShowSettingsToast] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const digitsOnly = (formData.phone || '').replace(/\D/g, '');
+    if (digitsOnly.length < 10) {
+      setPhoneError('Please enter a valid 10-digit mobile number');
+      return;
+    }
+    if (digitsOnly.length > 12) {
+      setPhoneError('Mobile number cannot exceed 10 digits (excluding country code)');
+      return;
+    }
+    setPhoneError('');
+    handleSubmit(e);
+  };
 
   const userTypeLabels = {
     owner: 'Property Owner / Landlord',
@@ -256,7 +272,7 @@ export default function ContactSection({ formData, setFormData, formSubmitted, s
 
           <div className="contact-form-wrapper">
             {!formSubmitted ? (
-              <form id="contact-form" onSubmit={handleSubmit} className="contact-form">
+              <form id="contact-form" onSubmit={handleFormSubmit} className="contact-form">
                 <div className="form-group">
                   <label>Your Name</label>
                   <input 
@@ -274,10 +290,24 @@ export default function ContactSection({ formData, setFormData, formSubmitted, s
                     <input 
                       type="tel" 
                       required 
+                      maxLength={15}
                       placeholder="+91 98765 00000"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormData({ ...formData, phone: val });
+                        const digits = val.replace(/\D/g, '');
+                        if (digits.length >= 10 && digits.length <= 12) {
+                          setPhoneError('');
+                        }
+                      }}
+                      style={phoneError ? { borderColor: '#ef4444', backgroundColor: '#fef2f2' } : {}}
                     />
+                    {phoneError && (
+                      <span style={{ color: '#ef4444', fontSize: '0.8rem', fontWeight: '500', marginTop: '4px', display: 'block' }}>
+                        ⚠️ {phoneError}
+                      </span>
+                    )}
                   </div>
                   <div className="form-group">
                     <label>Email Address</label>
