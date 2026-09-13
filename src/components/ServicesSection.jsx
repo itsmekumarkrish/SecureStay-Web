@@ -252,7 +252,8 @@ export default function ServicesSection() {
           padding: '44px 32px',
           color: '#FFFFFF',
           boxShadow: '0 16px 40px rgba(12, 35, 64, 0.3)',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxSizing: 'border-box'
         }}>
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 32px auto' }}>
             <h3 style={{ fontSize: 'clamp(22px, 4.5vw, 28px)', fontWeight: '800', marginBottom: '10px', color: '#FFFFFF', letterSpacing: '-0.5px' }}>
@@ -263,29 +264,29 @@ export default function ServicesSection() {
             </p>
           </div>
 
-          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: '8px' }}>
-            <table style={{ width: '100%', minWidth: '460px', borderCollapse: 'separate', borderSpacing: '0 8px' }}>
+          <div className="services-table-scroll-wrapper">
+            <table className="services-comparison-table">
               <thead>
                 <tr>
-                  <th style={{ textAlign: 'left', padding: '12px 16px', color: '#94A3B8', fontSize: '13px', fontWeight: '700' }}>Features &amp; Guarantees</th>
-                  <th style={{ textAlign: 'center', padding: '12px 16px', color: '#C59B27', fontSize: '14px', fontWeight: '800', backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '10px 10px 0 0', borderTop: '2px solid #C59B27' }}>Secure Stay</th>
-                  <th style={{ textAlign: 'center', padding: '12px 16px', color: '#94A3B8', fontSize: '13px', fontWeight: '600' }}>Traditional Brokers</th>
+                  <th className="th-feature">Features &amp; Guarantees</th>
+                  <th className="th-ss">Secure Stay</th>
+                  <th className="th-trad">Traditional Brokers</th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonItems.map((comp, i) => (
-                  <tr key={i} style={{ backgroundColor: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'transparent' }}>
-                    <td style={{ padding: '14px 16px', fontSize: '13.5px', fontWeight: '600', color: '#FFFFFF', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}>
+                  <tr key={i} className={i % 2 === 0 ? 'tr-even' : ''}>
+                    <td className="td-feature">
                       {comp.feature}
                     </td>
-                    <td style={{ textAlign: 'center', padding: '14px 16px', backgroundColor: 'rgba(255, 255, 255, 0.08)' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', borderRadius: '50%', backgroundColor: '#C59B27', color: '#0C2340', boxShadow: '0 2px 8px rgba(197, 155, 39, 0.4)' }}>
-                        <Check size={16} strokeWidth={3} />
+                    <td className="td-ss">
+                      <div className="badge-check">
+                        <Check size={15} strokeWidth={3} />
                       </div>
                     </td>
-                    <td style={{ textAlign: 'center', padding: '14px 16px', borderTopRightRadius: '8px', borderBottomRightRadius: '8px' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.08)', color: '#64748B' }}>
-                        <X size={15} strokeWidth={2.5} />
+                    <td className="td-trad">
+                      <div className="badge-cross">
+                        <X size={14} strokeWidth={2.5} />
                       </div>
                     </td>
                   </tr>
