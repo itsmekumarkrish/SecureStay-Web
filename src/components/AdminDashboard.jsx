@@ -37,7 +37,8 @@ export default function AdminDashboard({
     customerName: 'Bharath S.',
     customerEmail: 'bharath.s@securestay.in',
     rmUrl: 'https://wa.me/919999999999',
-    agreementUrl: 'https://www.securestay.in/docs/sample_agreement.pdf'
+    agreementUrl: 'https://www.securestay.in/docs/sample_agreement.pdf',
+    mediaFolderUrl: 'https://drive.google.com/drive/folders/sample_property_photos'
   });
   const [emailCopied, setEmailCopied] = useState(false);
   const [emailSendingStatus, setEmailSendingStatus] = useState('');
@@ -55,6 +56,7 @@ export default function AdminDashboard({
     const name = emailForm.customerName || 'Valued Customer';
     const rmUrl = emailForm.rmUrl || 'https://wa.me/919999999999';
     const agreementUrl = emailForm.agreementUrl || 'https://www.securestay.in/docs/sample_agreement.pdf';
+    const mediaFolderUrl = emailForm.mediaFolderUrl || 'https://drive.google.com/drive/folders/sample_property_photos';
     const domainOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://www.securestay.in';
 
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -152,7 +154,7 @@ export default function AdminDashboard({
         </table>
 
         <!-- CARD 4 -->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;margin-bottom:10px;">
           <tr>
             <td style="padding:0;">
               <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -164,6 +166,26 @@ export default function AdminDashboard({
                     <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Sample Agreement</div>
                     <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Review the sample agreement and understand the key terms and conditions before you proceed.</div>
                     <a href="${agreementUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">View Sample Agreement &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CARD 5: Property Photos & Videos -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;">
+          <tr>
+            <td style="padding:0;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="top" style="padding:20px 0 20px 20px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">05</div>
+                  </td>
+                  <td valign="top" style="padding:20px 20px 18px 12px;">
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Property Photos &amp; Video Tour</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Browse high-resolution interior photos, walkthrough videos, and room layouts.</div>
+                    <a href="${mediaFolderUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">View Photos &amp; Videos &rarr;</a>
                   </td>
                 </tr>
               </table>
@@ -1743,6 +1765,19 @@ export default function AdminDashboard({
                       />
                     </div>
 
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                        Photos &amp; Videos Folder URL (Drive / Cloud Link)
+                      </label>
+                      <input 
+                        type="url" 
+                        value={emailForm.mediaFolderUrl}
+                        onChange={(e) => setEmailForm({ ...emailForm, mediaFolderUrl: e.target.value })}
+                        placeholder="https://drive.google.com/drive/folders/your_property_media"
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
+                      />
+                    </div>
+
                     {/* Action Buttons */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '6px' }}>
                       <button 
@@ -1872,7 +1907,7 @@ export default function AdminDashboard({
                         </div>
 
                         {/* Card 04 */}
-                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                           <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
                             04
                           </div>
@@ -1880,6 +1915,18 @@ export default function AdminDashboard({
                             <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Sample Agreement</div>
                             <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Review the sample agreement and understand the key terms and conditions before you proceed.</div>
                             <a href={emailForm.agreementUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>View Sample Agreement &rarr;</a>
+                          </div>
+                        </div>
+
+                        {/* Card 05: Property Photos & Videos */}
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
+                            05
+                          </div>
+                          <div>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Property Photos &amp; Video Tour</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Browse high-resolution interior photos, walkthrough videos, and room layouts.</div>
+                            <a href={emailForm.mediaFolderUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>View Photos &amp; Videos &rarr;</a>
                           </div>
                         </div>
                       </div>
