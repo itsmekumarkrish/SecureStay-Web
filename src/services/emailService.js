@@ -19,12 +19,16 @@ export async function sendInquiryEmail(inquiryPayload) {
   const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 'd0d14bc8-8aa2-46b8-ae15-cdcefdda1712';
   const userRoleLabel = USER_TYPE_LABELS[inquiryPayload.userType] || inquiryPayload.userType || 'General Inquiry';
   const refNo = inquiryPayload.refNumber || inquiryPayload.id || 'N/A';
+  const emailSubject = inquiryPayload.subject || `[Ref: ${refNo}] New Lead: SecureStay Inquiry from ${inquiryPayload.name || 'Visitor'}`;
 
   const formData = new FormData();
   formData.append('access_key', accessKey);
-  formData.append('subject', `[Ref: ${refNo}] New Lead: SecureStay Inquiry from ${inquiryPayload.name || 'Visitor'}`);
-  formData.append('from_name', 'SecureStay Web Notification');
+  formData.append('subject', emailSubject);
+  formData.append('from_name', 'SecureStay Administration');
   formData.append('replyto', inquiryPayload.email || '');
+  if (inquiryPayload.cc) formData.append('cc', inquiryPayload.cc);
+  if (inquiryPayload.bcc) formData.append('bcc', inquiryPayload.bcc);
+  if (inquiryPayload.customHtml) formData.append('html', inquiryPayload.customHtml);
   formData.append('reference_number', refNo);
   formData.append('name', inquiryPayload.name || 'Not specified');
   formData.append('phone', inquiryPayload.phone || 'Not specified');

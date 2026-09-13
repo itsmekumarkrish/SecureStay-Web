@@ -36,6 +36,10 @@ export default function AdminDashboard({
   const [emailForm, setEmailForm] = useState({
     customerName: 'Bharath S.',
     customerEmail: 'bharath.s@securestay.in',
+    ccEmails: '',
+    bccEmails: '',
+    emailSubject: 'Welcome to Secure Stay — Your Complete Stay Information Package',
+    rmName: 'Rajesh Sharma',
     rmUrl: 'https://wa.me/919999999999',
     agreementUrl: 'https://www.securestay.in/docs/sample_agreement.pdf',
     mediaFolderUrl: 'https://drive.google.com/drive/folders/sample_property_photos'
@@ -44,16 +48,19 @@ export default function AdminDashboard({
   const [emailSendingStatus, setEmailSendingStatus] = useState('');
 
   const handleSelectLeadForEmail = (inq) => {
+    const leadName = inq.name || 'Valued Customer';
     setEmailForm({
       ...emailForm,
-      customerName: inq.name || 'Valued Customer',
-      customerEmail: inq.email || ''
+      customerName: leadName,
+      customerEmail: inq.email || '',
+      emailSubject: `Welcome to Secure Stay, ${leadName}! — Your Stay Information Package`
     });
     setActiveTab('email-dispatcher');
   };
 
   const getGeneratedEmailHtml = () => {
     const name = emailForm.customerName || 'Valued Customer';
+    const rmName = emailForm.rmName || 'Rajesh Sharma';
     const rmUrl = emailForm.rmUrl || 'https://wa.me/919999999999';
     const agreementUrl = emailForm.agreementUrl || 'https://www.securestay.in/docs/sample_agreement.pdf';
     const mediaFolderUrl = emailForm.mediaFolderUrl || 'https://drive.google.com/drive/folders/sample_property_photos';
@@ -143,9 +150,9 @@ export default function AdminDashboard({
                     <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">03</div>
                   </td>
                   <td valign="top" style="padding:20px 20px 18px 12px;">
-                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Dedicated Relationship Manager</div>
-                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Know who is supporting you throughout your journey and how to reach your <strong style="color:#C9A84C;">RM</strong> whenever you need assistance.</div>
-                    <a href="${rmUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">Contact Your Manager &rarr;</a>
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Dedicated Relationship Manager (${rmName})</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Know who is supporting you throughout your journey and how to reach your <strong style="color:#C9A84C;">RM (${rmName})</strong> whenever you need assistance.</div>
+                    <a href="${rmUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">Contact ${rmName} &rarr;</a>
                   </td>
                 </tr>
               </table>
@@ -282,8 +289,10 @@ export default function AdminDashboard({
 
   const handleOpenGmail = () => {
     const recipient = encodeURIComponent(emailForm.customerEmail || '');
-    const subject = encodeURIComponent(`Welcome to Secure Stay, ${emailForm.customerName || 'Valued Customer'}!`);
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}`;
+    const cc = encodeURIComponent(emailForm.ccEmails || '');
+    const bcc = encodeURIComponent(emailForm.bccEmails || '');
+    const subject = encodeURIComponent(emailForm.emailSubject || `Welcome to Secure Stay, ${emailForm.customerName || 'Valued Customer'}!`);
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&cc=${cc}&bcc=${bcc}&su=${subject}`;
     window.open(gmailUrl, '_blank');
   };
 
@@ -299,6 +308,10 @@ export default function AdminDashboard({
       await sendInquiryEmail({
         name: emailForm.customerName,
         email: emailForm.customerEmail,
+        cc: emailForm.ccEmails,
+        bcc: emailForm.bccEmails,
+        subject: emailForm.emailSubject,
+        rmName: emailForm.rmName,
         phone: 'N/A (Admin Email Dispatch)',
         message: `Welcome & Information Package sent via SecureStay Admin Dashboard.`,
         customHtml: htmlContent
@@ -1710,9 +1723,65 @@ export default function AdminDashboard({
                     </div>
                   </div>
 
-                  <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                        Email Subject Line *
+                      </label>
+                      <input 
+                        type="text" 
+                        value={emailForm.emailSubject}
+                        onChange={(e) => setEmailForm({ ...emailForm, emailSubject: e.target.value })}
+                        placeholder="e.g. Welcome to Secure Stay — Your Stay Information Package"
+                        required
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                        Customer Email Address (To) *
+                      </label>
+                      <input 
+                        type="email" 
+                        value={emailForm.customerEmail}
+                        onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
+                        placeholder="e.g. bharath.s@example.com"
+                        required
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
+                      />
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                          CC Emails (Comma-separated)
+                        </label>
+                        <input 
+                          type="text" 
+                          value={emailForm.ccEmails}
+                          onChange={(e) => setEmailForm({ ...emailForm, ccEmails: e.target.value })}
+                          placeholder="manager@securestay.in, sales@..."
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                          BCC Emails (Comma-separated)
+                        </label>
+                        <input 
+                          type="text" 
+                          value={emailForm.bccEmails}
+                          onChange={(e) => setEmailForm({ ...emailForm, bccEmails: e.target.value })}
+                          placeholder="audit@securestay.in"
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                         Customer Full Name *
                       </label>
                       <input 
@@ -1721,39 +1790,40 @@ export default function AdminDashboard({
                         onChange={(e) => setEmailForm({ ...emailForm, customerName: e.target.value })}
                         placeholder="e.g. Bharath S."
                         required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
-                        Customer Email Address *
-                      </label>
-                      <input 
-                        type="email" 
-                        value={emailForm.customerEmail}
-                        onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
-                        placeholder="e.g. bharath.s@example.com"
-                        required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
-                      />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                          Relationship Manager Name
+                        </label>
+                        <input 
+                          type="text" 
+                          value={emailForm.rmName}
+                          onChange={(e) => setEmailForm({ ...emailForm, rmName: e.target.value })}
+                          placeholder="e.g. Rajesh Sharma"
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.85rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                          RM Manager Contact Link
+                        </label>
+                        <input 
+                          type="url" 
+                          value={emailForm.rmUrl}
+                          onChange={(e) => setEmailForm({ ...emailForm, rmUrl: e.target.value })}
+                          placeholder="https://wa.me/919999999999"
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.85rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </div>
                     </div>
 
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
-                        Relationship Manager Contact Link
-                      </label>
-                      <input 
-                        type="url" 
-                        value={emailForm.rmUrl}
-                        onChange={(e) => setEmailForm({ ...emailForm, rmUrl: e.target.value })}
-                        placeholder="https://wa.me/919999999999"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                         Sample Agreement Document URL
                       </label>
                       <input 
@@ -1761,12 +1831,12 @@ export default function AdminDashboard({
                         value={emailForm.agreementUrl}
                         onChange={(e) => setEmailForm({ ...emailForm, agreementUrl: e.target.value })}
                         placeholder="https://www.securestay.in/docs/sample_agreement.pdf"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                         Photos &amp; Videos Folder URL (Drive / Cloud Link)
                       </label>
                       <input 
@@ -1774,7 +1844,7 @@ export default function AdminDashboard({
                         value={emailForm.mediaFolderUrl}
                         onChange={(e) => setEmailForm({ ...emailForm, mediaFolderUrl: e.target.value })}
                         placeholder="https://drive.google.com/drive/folders/your_property_media"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
@@ -1900,9 +1970,9 @@ export default function AdminDashboard({
                             03
                           </div>
                           <div>
-                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Dedicated Relationship Manager</div>
-                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Know who is supporting you throughout your journey and how to reach your <strong style={{ color: '#C9A84C' }}>RM</strong> whenever you need assistance.</div>
-                            <a href={emailForm.rmUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>Contact Your Manager &rarr;</a>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Dedicated Relationship Manager ({emailForm.rmName || 'Rajesh Sharma'})</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Know who is supporting you throughout your journey and how to reach your <strong style={{ color: '#C9A84C' }}>RM ({emailForm.rmName || 'Rajesh Sharma'})</strong> whenever you need assistance.</div>
+                            <a href={emailForm.rmUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>Contact {emailForm.rmName || 'Manager'} &rarr;</a>
                           </div>
                         </div>
 
