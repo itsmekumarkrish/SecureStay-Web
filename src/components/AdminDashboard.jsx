@@ -174,40 +174,61 @@ export default function AdminDashboard({
       </td>
     </tr>
 
-    <!-- FEATURE STRIP -->
+    <!-- 4. FEATURE STRIP -->
     <tr>
-      <td style="background-color:#F0EBE0;padding:18px 32px;">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td width="28%" valign="middle" style="padding:4px 6px;">
-              <table border="0" cellpadding="0" cellspacing="0"><tr>
-                <td valign="middle" style="padding-right:8px;">
-                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">🛡️</div>
-                </td>
-                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">SAFE &amp; SECURE<br/>PROPERTIES</td>
-              </tr></table>
-            </td>
-            <td width="28%" valign="middle" style="padding:4px 6px;">
-              <table border="0" cellpadding="0" cellspacing="0"><tr>
-                <td valign="middle" style="padding-right:8px;">
-                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">📄</div>
-                </td>
-                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">TRANSPARENT<br/>PROCESS</td>
-              </tr></table>
-            </td>
-            <td width="28%" valign="middle" style="padding:4px 6px;">
-              <table border="0" cellpadding="0" cellspacing="0"><tr>
-                <td valign="middle" style="padding-right:8px;">
-                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">🏠</div>
-                </td>
-                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">A BETTER LIVING<br/>EXPERIENCE</td>
-              </tr></table>
-            </td>
-            <td width="16%" valign="middle" align="right" style="padding:4px 0 4px 6px;">
-              <a href="${domainOrigin}/#services" target="_blank" style="background-color:#4E4929;color:#F5EDD8;font-size:10px;font-weight:700;text-decoration:none;padding:8px 14px;border-radius:18px;display:inline-block;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;white-space:nowrap;">Get Started</a>
-            </td>
-          </tr>
-        </table>
+      <td style="background-color:#F0EBE0;padding:20px 36px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+
+          <td width="25%" valign="middle" style="padding:4px 8px 4px 0;">
+            <table border="0" cellpadding="0" cellspacing="0"><tr>
+              <td valign="middle" style="padding-right:10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="40" height="40" style="width:40px;height:40px;min-width:40px;border:1.5px solid #4E4929;border-radius:50%;border-collapse:separate;border-spacing:0;background:transparent;">
+                  <tr><td align="center" valign="middle" width="40" height="40" style="width:40px;height:40px;text-align:center;vertical-align:middle;line-height:0;font-size:0;padding:0;">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4E4929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 auto;">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                    </svg>
+                  </td></tr>
+                </table>
+              </td>
+              <td valign="middle" style="color:#3A3620;font-size:9.5px;font-weight:700;line-height:1.35;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:0.4px;">SAFE &amp; SECURE<br/>PROPERTIES</td>
+            </tr></table>
+          </td>
+
+          <td width="25%" valign="middle" style="padding:4px 8px;">
+            <table border="0" cellpadding="0" cellspacing="0"><tr>
+              <td valign="middle" style="padding-right:10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="40" height="40" style="width:40px;height:40px;min-width:40px;border:1.5px solid #4E4929;border-radius:50%;border-collapse:separate;border-spacing:0;background:transparent;">
+                  <tr><td align="center" valign="middle" width="40" height="40" style="width:40px;height:40px;text-align:center;vertical-align:middle;line-height:0;font-size:0;padding:0;">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4E4929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 auto;">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3l1.7 1.7"/>
+                    </svg>
+                  </td></tr>
+                </table>
+              </td>
+              <td valign="middle" style="color:#3A3620;font-size:9.5px;font-weight:700;line-height:1.35;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:0.4px;">TRANSPARENT<br/>PROCESS</td>
+            </tr></table>
+          </td>
+
+          <td width="28%" valign="middle" style="padding:4px 8px;">
+            <table border="0" cellpadding="0" cellspacing="0"><tr>
+              <td valign="middle" style="padding-right:10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="40" height="40" style="width:40px;height:40px;min-width:40px;border:1.5px solid #4E4929;border-radius:50%;border-collapse:separate;border-spacing:0;background:transparent;">
+                  <tr><td align="center" valign="middle" width="40" height="40" style="width:40px;height:40px;text-align:center;vertical-align:middle;line-height:0;font-size:0;padding:0;">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4E4929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 auto;">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                  </td></tr>
+                </table>
+              </td>
+              <td valign="middle" style="color:#3A3620;font-size:9.5px;font-weight:700;line-height:1.35;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:0.4px;">A BETTER LIVING<br/>EXPERIENCE</td>
+            </tr></table>
+          </td>
+
+          <td width="22%" valign="middle" align="right" style="padding:4px 0 4px 8px;">
+            <a href="${domainOrigin}/#services" target="_blank" style="background-color:#4E4929;color:#F5EDD8;font-size:11.5px;font-weight:700;text-decoration:none;padding:10px 20px;border-radius:22px;display:inline-block;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;white-space:nowrap;letter-spacing:0.3px;">Get Started</a>
+          </td>
+
+        </tr></table>
       </td>
     </tr>
     <tr>
@@ -1864,21 +1885,33 @@ export default function AdminDashboard({
                       </div>
 
                       {/* Feature Strip */}
-                      <div style={{ backgroundColor: '#F0EBE0', padding: '14px 20px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>🛡️</div>
-                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>SAFE &amp; SECURE<br/>PROPERTIES</span>
+                      <div style={{ backgroundColor: '#F0EBE0', padding: '16px 24px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                              </svg>
+                            </div>
+                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>SAFE &amp; SECURE<br/>PROPERTIES</span>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>📄</div>
-                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>TRANSPARENT<br/>PROCESS</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3l1.7 1.7"/>
+                              </svg>
+                            </div>
+                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>TRANSPARENT<br/>PROCESS</span>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>🏠</div>
-                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>A BETTER LIVING<br/>EXPERIENCE</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                              </svg>
+                            </div>
+                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>A BETTER LIVING<br/>EXPERIENCE</span>
                           </div>
-                          <a href="/#services" target="_blank" rel="noreferrer" style={{ backgroundColor: '#4E4929', color: '#F5EDD8', fontSize: '9px', fontWeight: '700', padding: '6px 12px', borderRadius: '14px', textDecoration: 'none' }}>Get Started</a>
+                          <a href="/#services" target="_blank" rel="noreferrer" style={{ backgroundColor: '#4E4929', color: '#F5EDD8', fontSize: '11px', fontWeight: '700', padding: '9px 18px', borderRadius: '22px', textDecoration: 'none', whiteSpace: 'nowrap' }}>Get Started</a>
                         </div>
                       </div>
 
