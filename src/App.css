@@ -41,6 +41,14 @@ html {
   box-sizing: border-box;
 }
 
+/* Global button reset — eliminates all browser-default borders, outlines, backgrounds */
+button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--text-dark);
@@ -400,13 +408,11 @@ a {
   font-weight: 500;
   padding: 6px 18px 6px 12px;
   border-radius: 30px;
-  margin-top: 16px;
-  margin-bottom: clamp(16px, 2.5vh, 24px);
+  margin-top: 20px;
+  margin-bottom: clamp(28px, 4vh, 38px);
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(12, 35, 64, 0.04);
 }
-
-
 
 .tag-rating {
   background: rgba(245, 158, 11, 0.12);
@@ -426,9 +432,9 @@ a {
 
 .hero-text h1 {
   font-size: clamp(1.9rem, 2.2vw + 0.5rem, 2.7rem);
-  line-height: 1.18;
+  line-height: 1.36;
   color: #0c2340;
-  margin: 0 0 clamp(14px, 2.2vh, 20px) 0;
+  margin: 0 0 clamp(28px, 4vh, 38px) 0;
   max-width: min(96%, 920px);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -442,13 +448,11 @@ a {
   display: inline-block;
 }
 
-
-
 .hero-subtitle {
   font-size: clamp(0.92rem, 0.45vw + 0.55rem, 1.08rem);
-  line-height: 1.6;
+  line-height: 1.76;
   max-width: min(90%, 740px);
-  margin: 0 0 clamp(16px, 2.2vh, 24px) 0;
+  margin: 0 0 clamp(34px, 4.8vh, 46px) 0;
   color: var(--text-muted);
   text-align: left;
 }
@@ -464,8 +468,8 @@ a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 14px;
-  margin-bottom: clamp(32px, 5vh, 48px);
+  gap: 16px;
+  margin-bottom: clamp(52px, 7vh, 72px);
 }
 
 .hero-buttons .btn-primary {
@@ -2787,24 +2791,24 @@ input:focus, select:focus, textarea:focus {
   }
 
   .hero-subtitle {
-    font-size: 0.92rem;
-    line-height: 1.55;
-    margin-bottom: 24px;
-    padding: 0;
-    color: var(--text-muted);
-    text-align: left;
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 24px !important;
+    padding: 0 !important;
+    color: var(--text-muted) !important;
+    text-align: left !important;
   }
 
   /* Horizontal Side-by-Side Action Buttons on Mobile */
   .hero-buttons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px;
-    justify-content: flex-start;
-    margin-top: 8px;
-    margin-bottom: 24px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 10px !important;
+    justify-content: flex-start !important;
+    margin-top: 8px !important;
+    margin-bottom: 24px !important;
   }
 
   .hero-buttons .btn-primary,
@@ -3039,6 +3043,131 @@ input:focus, select:focus, textarea:focus {
     border-bottom: none;
     padding-bottom: 0;
   }
+
+/* Base Desktop Services Section Tab Styling */
+.services-tab-wrapper {
+  display: inline-flex;
+  align-items: center;
+  background-color: #E2E8F0;
+  padding: 6px;
+  border-radius: 40px;
+  border: 1px solid #CBD5E1;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(12, 35, 64, 0.04);
+  gap: 6px;
+  margin: 0 auto;
+}
+
+.services-tab-btn {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  padding: 12px 28px;
+  border-radius: 32px;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  white-space: nowrap;
+  background-color: transparent;
+  color: #475569;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.services-tab-btn:hover:not(.active) {
+  color: #0C2340;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.services-tab-btn.active {
+  background-color: #0C2340 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.25) !important;
+}
+
+.services-tab-btn:focus,
+.services-tab-btn:active {
+  outline: none !important;
+  border: none !important;
+}
+
+.services-tab-btn *,
+.services-tab-btn span,
+.services-tab-btn svg {
+  outline: none !important;
+  border: none !important;
+}
+
+@media (max-width: 768px) {
+  /* Responsive Services Section Styling */
+  .services-section-container {
+    padding: 40px 0 !important;
+  }
+  
+  .services-tab-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    background-color: #E2E8F0 !important;
+    padding: 4px !important;
+    border-radius: 32px !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06) !important;
+  }
+
+  .services-tab-btn {
+    padding: 10px 8px !important;
+    border-radius: 26px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    gap: 5px !important;
+    flex: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  .services-tab-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .services-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .service-card-item {
+    padding: 22px 18px !important;
+  }
+
+  .services-comparison-box {
+    padding: 28px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .services-comparison-box h3 {
+    font-size: 22px !important;
+  }
+
+  .services-comparison-box p {
+    font-size: 13px !important;
+  }
+
+  .services-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+}
 
   .service-icon-wrapper {
     width: 30px;

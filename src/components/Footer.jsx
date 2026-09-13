@@ -42,7 +42,7 @@ export default function Footer({ setLegalModal, onNavigate }) {
             <h4 className="footer-heading">Quick Links</h4>
             <ul className="footer-links">
               <li><button type="button" onClick={() => handleNavClick('home', 'about')} className="footer-btn-link">About SecureStay</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Our Services</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Our Services</button></li>
               <li><button type="button" onClick={() => handleNavClick('catalog')} className="footer-btn-link">All Properties</button></li>
               <li><button type="button" onClick={() => handleNavClick('home', 'contact-form')} className="footer-btn-link">List Your Property</button></li>
             </ul>
@@ -75,11 +75,11 @@ export default function Footer({ setLegalModal, onNavigate }) {
           <div className="footer-col">
             <h4 className="footer-heading">Our Services</h4>
             <ul className="footer-links">
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Guaranteed Rent Payouts</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Tenant KYC Verification</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Property Inspections & Repairs</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Legal Rental Agreements</button></li>
-              <li><button type="button" onClick={() => handleNavClick('home', 'services')} className="footer-btn-link">Zero Brokerage Stays</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Guaranteed Rent Payouts</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Tenant KYC Verification</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Property Inspections & Repairs</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Legal Rental Agreements</button></li>
+              <li><button type="button" onClick={() => handleNavClick('services')} className="footer-btn-link">Zero Brokerage Stays</button></li>
             </ul>
           </div>
         </div>

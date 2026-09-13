@@ -107,6 +107,9 @@ export default function App() {
       if (path === '/catalog' || hash === '#catalog') {
         return 'catalog';
       }
+      if (path === '/services' || hash === '#services') {
+        return 'services';
+      }
     }
     return 'home';
   });
@@ -127,6 +130,24 @@ export default function App() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Automatic smooth scrolling to hash sections (e.g., #services, #contact-form)
+  useEffect(() => {
+    const scrollToHash = () => {
+      if (typeof window !== 'undefined' && window.location.hash) {
+        const targetId = window.location.hash.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        }
+      }
+    };
+    scrollToHash();
+    window.addEventListener('hashchange', scrollToHash);
+    return () => window.removeEventListener('hashchange', scrollToHash);
+  }, [currentView]);
 
   // Deleted property IDs stored in localStorage
   const [deletedIds, setDeletedIds] = useState(() => {
@@ -492,8 +513,10 @@ export default function App() {
       window.location.hash = 'propertyadmin';
     } else if (viewName === 'catalog') {
       window.location.hash = 'catalog';
+    } else if (viewName === 'services') {
+      window.location.hash = 'services';
     } else {
-      if (window.location.hash === '#propertyadmin' || window.location.hash === '#admin' || window.location.hash === '#catalog') {
+      if (window.location.hash === '#propertyadmin' || window.location.hash === '#admin' || window.location.hash === '#catalog' || window.location.hash === '#services') {
         window.history.replaceState(null, '', window.location.pathname);
       }
     }
@@ -508,6 +531,8 @@ export default function App() {
         setCurrentView('admin');
       } else if (hash === '#catalog' || path === '/catalog') {
         setCurrentView('catalog');
+      } else if (hash === '#services' || path === '/services') {
+        setCurrentView('services');
       }
     };
 
@@ -568,7 +593,34 @@ export default function App() {
         />
       )}
 
-      {/* 3. Main Landing Homepage View */}
+      {/* 3. Dedicated Standalone Services Page View */}
+      {currentView === 'services' && (
+        <>
+          <Header 
+            mobileMenuOpen={mobileMenuOpen} 
+            setMobileMenuOpen={setMobileMenuOpen} 
+            onNavigate={(view) => navigateToView(view)}
+          />
+          <div style={{ paddingTop: '80px' }}>
+            <ServicesSection />
+          </div>
+          <ContactSection 
+            formData={formData} 
+            setFormData={setFormData} 
+            formSubmitted={formSubmitted} 
+            setFormSubmitted={setFormSubmitted}
+            handleSubmit={handleSubmitContactForm} 
+            lastRefNumber={lastRefNumber}
+          />
+          <Footer 
+            setLegalModal={setLegalModal} 
+            onNavigate={(view) => navigateToView(view)}
+          />
+          <LiveChat />
+        </>
+      )}
+
+      {/* 4. Main Landing Homepage View */}
       {currentView === 'home' && (
         <>
           <Header 
@@ -578,7 +630,6 @@ export default function App() {
           />
           <Hero />
           <FeaturesSection />
-          <ServicesSection />
           <PropertiesSection 
             properties={propertiesList} 
             handleInquire={handleInquire}

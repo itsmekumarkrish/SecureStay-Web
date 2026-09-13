@@ -5,7 +5,7 @@ export default function FeaturesSection() {
   return (
     <section id="about" className="section bg-light">
       <div className="container">
-        <div className="section-title text-center">
+        <div className="section-title text-center" style={{ maxWidth: '840px' }}>
           <h2>Why Choose SecureStay?</h2>
           <p>We provide a seamless and transparent experience for both homeowners and tenants.</p>
         </div>

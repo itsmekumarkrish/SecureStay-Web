@@ -50,6 +50,13 @@ export default function Header({
           <button 
             type="button" 
             className="nav-link-btn"
+            onClick={() => handleNavClick('services')}
+          >
+            Services
+          </button>
+          <button 
+            type="button" 
+            className="nav-link-btn"
             onClick={() => handleNavClick('catalog')}
           >
             Properties
@@ -80,6 +87,13 @@ export default function Header({
             onClick={() => handleNavClick('home', 'about')}
           >
             About Us
+          </button>
+          <button 
+            type="button" 
+            className="nav-mobile-btn"
+            onClick={() => handleNavClick('services')}
+          >
+            Services &amp; Benefits
           </button>
           <button 
             type="button" 
