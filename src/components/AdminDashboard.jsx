@@ -854,8 +854,8 @@ export default function AdminDashboard({
           >
             <Mail size={16} className="flex-shrink-0" />
             <span className="tab-btn-title">
-              <span className="desktop-tab-label">Email Dispatcher ✉️</span>
-              <span className="mobile-tab-label">Email ✉️</span>
+              <span className="desktop-tab-label">Email Dispatcher</span>
+              <span className="mobile-tab-label">Email</span>
             </span>
           </button>
         </div>
@@ -1603,136 +1603,154 @@ export default function AdminDashboard({
 
         {/* EMAIL DISPATCHER TAB PANEL */}
         {activeTab === 'email-dispatcher' && (
-          <div className="catalog-content-block p-4" style={{ background: '#071626', border: '1px solid rgba(197, 155, 39, 0.25)', borderRadius: '12px' }}>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="admin-card-section" style={{ background: '#FFFFFF', borderRadius: '14px', border: '1px solid #E2E8F0', padding: '24px' }}>
+            <div className="admin-section-header" style={{ marginBottom: '20px' }}>
+              <h3 style={{ color: '#0C2340', fontSize: '1.25rem', fontWeight: '700', margin: '0 0 4px 0' }}>
+                Email Dispatcher &amp; Customer Template Studio
+              </h3>
+              <p style={{ color: '#64748B', fontSize: '0.875rem', margin: 0 }}>
+                Generate, live-preview, and send personalized 4-card HTML welcome email packages to prospective leads.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
               
               {/* Left Column: Form Configuration */}
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                <div className="saas-form-card" style={{ background: '#0C2340', border: '1px solid rgba(197, 155, 39, 0.3)', padding: '16px' }}>
-                  <div className="saas-card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '16px' }}>
-                    <div className="saas-card-number" style={{ background: '#C59B27', color: '#0C2340', fontWeight: '800' }}>✉️</div>
+              <div style={{ flex: '1 1 360px', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: '#0C2340', border: '1px solid rgba(197, 155, 39, 0.4)', borderRadius: '12px', overflow: 'hidden', padding: '20px', boxShadow: '0 8px 20px rgba(12, 35, 64, 0.12)' }}>
+                  
+                  {/* Header */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '14px', marginBottom: '18px' }}>
+                    <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#C59B27', color: '#0C2340', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', flexShrink: 0 }}>
+                      <Mail size={20} />
+                    </div>
                     <div>
-                      <h4 style={{ color: '#FFFFFF', margin: 0, fontSize: '1.1rem', fontWeight: '700' }}>Email Dispatcher Config</h4>
-                      <p style={{ color: '#D5CAAF', margin: 0, fontSize: '0.8rem' }}>Customize recipient details for live 4-card HTML template dispatch.</p>
+                      <h4 style={{ color: '#FFFFFF', margin: 0, fontSize: '1.05rem', fontWeight: '700' }}>Email Configuration</h4>
+                      <p style={{ color: '#DDD8CE', margin: '2px 0 0 0', fontSize: '0.78rem' }}>Customize recipient details &amp; action links</p>
                     </div>
                   </div>
 
-                  <form onSubmit={handleSendEmailNow} className="flex flex-col gap-4">
+                  <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     <div>
-                      <label className="text-xs font-semibold text-gray-300 block mb-1">Customer Full Name *</label>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                        Customer Full Name *
+                      </label>
                       <input 
                         type="text" 
-                        className="saas-form-input" 
                         value={emailForm.customerName}
                         onChange={(e) => setEmailForm({ ...emailForm, customerName: e.target.value })}
                         placeholder="e.g. Bharath S."
                         required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-gray-300 block mb-1">Customer Email Address *</label>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                        Customer Email Address *
+                      </label>
                       <input 
                         type="email" 
-                        className="saas-form-input" 
                         value={emailForm.customerEmail}
                         onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
                         placeholder="e.g. bharath.s@example.com"
                         required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-gray-300 block mb-1">Relationship Manager Contact Link</label>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                        Relationship Manager Contact Link
+                      </label>
                       <input 
                         type="url" 
-                        className="saas-form-input" 
                         value={emailForm.rmUrl}
                         onChange={(e) => setEmailForm({ ...emailForm, rmUrl: e.target.value })}
                         placeholder="https://wa.me/919999999999"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-gray-300 block mb-1">Sample Agreement Document URL</label>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '6px' }}>
+                        Sample Agreement Document URL
+                      </label>
                       <input 
                         type="url" 
-                        className="saas-form-input" 
                         value={emailForm.agreementUrl}
                         onChange={(e) => setEmailForm({ ...emailForm, agreementUrl: e.target.value })}
                         placeholder="https://www.securestay.in/docs/sample_agreement.pdf"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
                       />
                     </div>
 
-                    {/* Quick Actions Grid */}
-                    <div className="flex flex-col gap-2 mt-2">
+                    {/* Action Buttons */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '6px' }}>
                       <button 
                         type="submit" 
-                        className="btn-saas-primary w-full flex-align justify-center gap-2"
                         disabled={emailSendingStatus === 'sending'}
-                        style={{ background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', padding: '12px', borderRadius: '8px', cursor: 'pointer' }}
+                        style={{ width: '100%', padding: '12px 16px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
                       >
                         <Send size={16} /> 
                         {emailSendingStatus === 'sending' ? 'Sending HTML Email...' : 'Send HTML Email Now'}
                       </button>
 
-                      <div className="grid grid-cols-2 gap-2">
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                         <button 
                           type="button" 
                           onClick={handleCopyHtmlEmail}
-                          className="btn-saas-secondary flex-align justify-center gap-2 text-xs"
-                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', cursor: 'pointer' }}
+                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                         >
-                          {emailCopied ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
-                          {emailCopied ? 'HTML Copied!' : 'Copy HTML Code'}
+                          {emailCopied ? <Check size={14} style={{ color: '#4ADE80' }} /> : <Copy size={14} />}
+                          {emailCopied ? 'HTML Copied!' : 'Copy HTML'}
                         </button>
 
                         <button 
                           type="button" 
                           onClick={handleOpenGmail}
-                          className="btn-saas-secondary flex-align justify-center gap-2 text-xs"
-                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', cursor: 'pointer' }}
+                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                         >
                           <ExternalLink size={14} /> Open in Gmail
                         </button>
                       </div>
 
                       {emailSendingStatus === 'success' && (
-                        <div className="p-3 bg-emerald-900/40 border border-emerald-500/50 rounded text-emerald-300 text-xs text-center flex-align justify-center gap-2 mt-1">
+                        <div style={{ padding: '10px 14px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '8px', color: '#34D399', fontSize: '0.8rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                           <CheckCircle size={14} /> Email sent successfully to {emailForm.customerEmail}!
                         </div>
                       )}
                       {emailSendingStatus === 'error' && (
-                        <div className="p-3 bg-red-900/40 border border-red-500/50 rounded text-red-300 text-xs text-center flex-align justify-center gap-2 mt-1">
-                          Failed to send email. Please copy HTML code or check Web3Forms API key.
+                        <div style={{ padding: '10px 14px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '8px', color: '#F87171', fontSize: '0.8rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                          Failed to send email. Copy HTML code or check API connection.
                         </div>
                       )}
                     </div>
                   </form>
                 </div>
 
-                {/* Lead Pick Banner */}
-                <div className="p-3 rounded-lg border border-gold-500/20 bg-gold-500/5 text-xs text-gray-300 flex-align gap-3">
-                  <Sparkles size={20} className="text-gold-400 flex-shrink-0" />
-                  <span>Tip: You can select any customer directly from the <strong>Customer Inquiries</strong> tab to auto-fill their name and email here!</span>
+                {/* Lead Pick Tip */}
+                <div style={{ padding: '12px 16px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', fontSize: '0.8rem', color: '#475569', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Sparkles size={18} style={{ color: '#C59B27', flexShrink: 0 }} />
+                  <span>Tip: Select any lead in <strong>Customer Inquiries</strong> to auto-fill recipient details here.</span>
                 </div>
               </div>
 
-              {/* Right Column: Interactive Real-Time Email Preview */}
-              <div className="lg:col-span-7">
-                <div className="saas-form-card" style={{ background: '#4E4929', color: '#F5EDD8', overflow: 'hidden', borderRadius: '10px' }}>
-                  <div className="saas-card-header" style={{ background: '#3D3820', borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px' }}>
-                    <span className="text-xs uppercase tracking-wider text-amber-300 font-bold flex-align gap-2">
-                      <Eye size={14} /> Live Email Preview (Dear {emailForm.customerName || 'Customer'})
+              {/* Right Column: Live Email Preview */}
+              <div style={{ flex: '1 1 450px', minWidth: '320px' }}>
+                <div style={{ background: '#4E4929', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}>
+                  
+                  <div style={{ background: '#3D3820', padding: '12px 18px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#F0E8D4', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Eye size={15} style={{ color: '#C9A84C' }} /> Real-Time Email Live Preview
+                    </span>
+                    <span style={{ color: '#C9A84C', fontSize: '0.75rem', fontWeight: '600', background: 'rgba(201, 168, 76, 0.15)', padding: '2px 8px', borderRadius: '10px' }}>
+                      Dear {emailForm.customerName || 'Customer'}
                     </span>
                   </div>
 
-                  <div className="p-4" style={{ backgroundColor: '#DDD8CE', borderRadius: '0 0 10px 10px' }}>
-                    <div style={{ maxWidth: '640px', margin: '0 auto', background: '#FFFFFF', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}>
+                  <div style={{ backgroundColor: '#DDD8CE', padding: '20px 14px' }}>
+                    <div style={{ maxWidth: '620px', margin: '0 auto', background: '#FFFFFF', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }}>
                       
                       {/* Header Banner */}
                       <div style={{ lineHeight: 0 }}>
