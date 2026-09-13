@@ -3045,6 +3045,11 @@ input:focus, select:focus, textarea:focus {
   }
 
 /* Base Desktop Services Section Tab Styling */
+.services-section-container {
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
 .services-tab-wrapper {
   display: inline-flex;
   align-items: center;
@@ -3055,6 +3060,8 @@ input:focus, select:focus, textarea:focus {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(12, 35, 64, 0.04);
   gap: 6px;
   margin: 0 auto;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .services-tab-btn {
@@ -3079,6 +3086,7 @@ input:focus, select:focus, textarea:focus {
   color: #475569;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 .services-tab-btn:hover:not(.active) {
@@ -3108,7 +3116,8 @@ input:focus, select:focus, textarea:focus {
 @media (max-width: 768px) {
   /* Responsive Services Section Styling */
   .services-section-container {
-    padding: 40px 0 !important;
+    padding: 32px 0 !important;
+    overflow-x: hidden !important;
   }
   
   .services-tab-wrapper {
@@ -3119,22 +3128,35 @@ input:focus, select:focus, textarea:focus {
     padding: 4px !important;
     border-radius: 32px !important;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.06) !important;
+    box-sizing: border-box !important;
+    gap: 4px !important;
   }
 
   .services-tab-btn {
-    padding: 10px 8px !important;
+    padding: 10px 4px !important;
     border-radius: 26px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 700 !important;
-    gap: 5px !important;
-    flex: 1 !important;
+    gap: 4px !important;
+    flex: 1 1 50% !important;
+    min-width: 0 !important;
     text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .services-tab-btn span {
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+    display: inline-block !important;
+    letter-spacing: -0.25px !important;
   }
 
   .services-tab-btn svg {
-    width: 15px !important;
-    height: 15px !important;
+    width: 14px !important;
+    height: 14px !important;
     flex-shrink: 0 !important;
   }
 

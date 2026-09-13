@@ -139,76 +139,22 @@ export default function ServicesSection() {
         </div>
 
         {/* Tab Selector */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', width: '100%' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            backgroundColor: '#DDE4EE',
-            padding: '5px',
-            borderRadius: '50px',
-            gap: '4px',
-            border: '1px solid #C5D1E0',
-            boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.07), 0 2px 8px rgba(12,35,64,0.05)',
-          }}>
-            {/* Tab 1 */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '36px', width: '100%', boxSizing: 'border-box' }}>
+          <div className="services-tab-wrapper">
             <button
               type="button"
               onClick={() => setActiveTab('tenants')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '11px 24px',
-                borderRadius: '44px',
-                border: 'none',
-                outline: 'none',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                fontSize: '14px',
-                fontWeight: '700',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.25s ease',
-                backgroundColor: activeTab === 'tenants' ? '#0C2340' : 'transparent',
-                color: activeTab === 'tenants' ? '#FFFFFF' : '#4B5975',
-                boxShadow: activeTab === 'tenants' ? '0 4px 14px rgba(12,35,64,0.28)' : 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                appearance: 'none',
-              }}
+              className={`services-tab-btn ${activeTab === 'tenants' ? 'active' : ''}`}
             >
-              <Home size={16} style={{ flexShrink: 0, display: 'block' }} />
+              <Home size={16} style={{ flexShrink: 0 }} />
               <span>For Tenants &amp; Professionals</span>
             </button>
-
-            {/* Tab 2 */}
             <button
               type="button"
               onClick={() => setActiveTab('owners')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '11px 24px',
-                borderRadius: '44px',
-                border: 'none',
-                outline: 'none',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                fontSize: '14px',
-                fontWeight: '700',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.25s ease',
-                backgroundColor: activeTab === 'owners' ? '#0C2340' : 'transparent',
-                color: activeTab === 'owners' ? '#FFFFFF' : '#4B5975',
-                boxShadow: activeTab === 'owners' ? '0 4px 14px rgba(12,35,64,0.28)' : 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                appearance: 'none',
-              }}
+              className={`services-tab-btn ${activeTab === 'owners' ? 'active' : ''}`}
             >
-              <Building2 size={16} style={{ flexShrink: 0, display: 'block' }} />
+              <Building2 size={16} style={{ flexShrink: 0 }} />
               <span>For Property Owners &amp; NRIs</span>
             </button>
           </div>
