@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
   Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
-  Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound, List, LayoutGrid
+  Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound, List, LayoutGrid,
+  Copy, Mail, ExternalLink, Check
 } from 'lucide-react';
+import { sendInquiryEmail } from '../services/emailService';
 
 export default function AdminDashboard({ 
   properties = [], 
@@ -27,8 +29,208 @@ export default function AdminDashboard({
     setLoginError('');
   };
 
-  const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries'
+  const [activeTab, setActiveTab] = useState('add-property'); // 'add-property' | 'properties-list' | 'inquiries' | 'email-dispatcher'
   const [successMessage, setSuccessMessage] = useState('');
+
+  // Email Dispatcher State
+  const [emailForm, setEmailForm] = useState({
+    customerName: 'Bharath S.',
+    customerEmail: 'bharath.s@securestay.in',
+    rmUrl: 'https://wa.me/919999999999',
+    agreementUrl: 'https://www.securestay.in/docs/sample_agreement.pdf'
+  });
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [emailSendingStatus, setEmailSendingStatus] = useState('');
+
+  const handleSelectLeadForEmail = (inq) => {
+    setEmailForm({
+      ...emailForm,
+      customerName: inq.name || 'Valued Customer',
+      customerEmail: inq.email || ''
+    });
+    setActiveTab('email-dispatcher');
+  };
+
+  const getGeneratedEmailHtml = () => {
+    const name = emailForm.customerName || 'Valued Customer';
+    const rmUrl = emailForm.rmUrl || 'https://wa.me/919999999999';
+    const agreementUrl = emailForm.agreementUrl || 'https://www.securestay.in/docs/sample_agreement.pdf';
+    const domainOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://www.securestay.in';
+
+    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Stay - Welcome</title>
+</head>
+<body style="margin:0;padding:0;background-color:#DDD8CE;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#DDD8CE;">
+<tr><td align="center" style="padding:28px 16px;">
+  <table border="0" cellpadding="0" cellspacing="0" width="700" style="max-width:700px;width:100%;">
+    <tr>
+      <td style="padding:0;line-height:0;border-radius:8px 8px 0 0;overflow:hidden;">
+        <img src="${domainOrigin}/assets/header_banner.png" alt="Secure Stay Private Limited" width="700" style="width:100%;max-width:700px;display:block;border-radius:8px 8px 0 0;" />
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#4E4929;padding:36px 42px 28px 42px;">
+        <h1 style="color:#F5EDD8;font-size:34px;font-weight:800;margin:0 0 18px 0;font-family:Georgia,serif;letter-spacing:-0.5px;">Dear ${name}!</h1>
+        <p style="color:#D5CAAF;font-size:13.5px;line-height:1.7;margin:0 0 13px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">At Secure Stay, we believe finding and managing your stay should be simple, transparent, and hassle free. We're here to make every step of your journey smoother — from exploring your property to completing the agreement and getting settled in comfortably.</p>
+        <p style="color:#D5CAAF;font-size:13.5px;line-height:1.7;margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">We've put together everything you need below, so you can explore the details at your convenience.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#4E4929;padding:0 42px 36px 42px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+          <tr>
+            <td style="border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;">
+              <div style="color:#C9BD9C;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;margin-bottom:4px;">EXPLORE SECURE STAY</div>
+              <div style="color:#F0E8D4;font-size:20px;font-weight:700;font-family:Georgia,serif;">Your Secure Stay Journey</div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CARD 1 -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;margin-bottom:10px;">
+          <tr>
+            <td style="padding:0;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="top" style="padding:20px 0 20px 20px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">01</div>
+                  </td>
+                  <td valign="top" style="padding:20px 20px 18px 12px;">
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Why Secure Stay</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Learn why tenants and property owners choose Secure Stay for complete transparency, zero brokerage, and dedicated support.</div>
+                    <a href="${domainOrigin}/#about" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">Why Secure Stay &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CARD 2 -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;margin-bottom:10px;">
+          <tr>
+            <td style="padding:0;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="top" style="padding:20px 0 20px 20px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">02</div>
+                  </td>
+                  <td valign="top" style="padding:20px 20px 18px 12px;">
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Our Services &amp; Benefits</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Explore our services, tenant benefits, support, and the advantages of choosing a professionally managed stay.</div>
+                    <a href="${domainOrigin}/#services" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">Explore Services &amp; Benefits &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CARD 3 -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;margin-bottom:10px;">
+          <tr>
+            <td style="padding:0;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="top" style="padding:20px 0 20px 20px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">03</div>
+                  </td>
+                  <td valign="top" style="padding:20px 20px 18px 12px;">
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Dedicated Relationship Manager</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Know who is supporting you throughout your journey and how to reach your <strong style="color:#C9A84C;">RM</strong> whenever you need assistance.</div>
+                    <a href="${rmUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">Contact Your Manager &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CARD 4 -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#3D3820;border-radius:10px;">
+          <tr>
+            <td style="padding:0;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td width="64" valign="top" style="padding:20px 0 20px 20px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background-color:#C9A84C;text-align:center;line-height:40px;color:#2C2810;font-size:15px;font-weight:800;font-family:Georgia,serif;">04</div>
+                  </td>
+                  <td valign="top" style="padding:20px 20px 18px 12px;">
+                    <div style="color:#F0E8D4;font-size:13px;font-weight:700;margin-bottom:5px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Sample Agreement</div>
+                    <div style="color:#A89E82;font-size:11px;line-height:1.55;margin-bottom:12px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Review the sample agreement and understand the key terms and conditions before you proceed.</div>
+                    <a href="${agreementUrl}" target="_blank" style="display:inline-block;background-color:#C9A84C;color:#2C2810;font-size:10.5px;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-decoration:none;padding:6px 14px;border-radius:20px;">View Sample Agreement &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#2E2A13;padding:16px 32px;border-radius:0 0 8px 8px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td style="color:#F0E8D4;font-size:11px;font-weight:600;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Discover Our Latest Updates</td>
+            <td align="right" style="color:#A89E82;font-size:10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+              <a href="${domainOrigin}" target="_blank" style="color:#A89E82;text-decoration:none;margin-right:12px;">www.securestay.in</a>
+              <a href="mailto:info@securestay.in" style="color:#A89E82;text-decoration:none;">info@securestay.in</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+</table>
+</body>
+</html>`;
+  };
+
+  const handleCopyHtmlEmail = () => {
+    const htmlContent = getGeneratedEmailHtml();
+    navigator.clipboard.writeText(htmlContent);
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2500);
+  };
+
+  const handleOpenGmail = () => {
+    const recipient = encodeURIComponent(emailForm.customerEmail || '');
+    const subject = encodeURIComponent(`Welcome to Secure Stay, ${emailForm.customerName || 'Valued Customer'}!`);
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}`;
+    window.open(gmailUrl, '_blank');
+  };
+
+  const handleSendEmailNow = async (e) => {
+    e.preventDefault();
+    if (!emailForm.customerEmail) {
+      alert('Please enter a recipient customer email address.');
+      return;
+    }
+    setEmailSendingStatus('sending');
+    try {
+      const htmlContent = getGeneratedEmailHtml();
+      await sendInquiryEmail({
+        name: emailForm.customerName,
+        email: emailForm.customerEmail,
+        phone: 'N/A (Admin Email Dispatch)',
+        message: `Welcome & Information Package sent via SecureStay Admin Dashboard.`,
+        customHtml: htmlContent
+      });
+      setEmailSendingStatus('success');
+      setTimeout(() => setEmailSendingStatus(''), 4000);
+    } catch (err) {
+      console.error('Failed to send email:', err);
+      setEmailSendingStatus('error');
+      setTimeout(() => setEmailSendingStatus(''), 4000);
+    }
+  };
 
   // Table Search, Status Filters, and View Mode
   const [tableSearch, setTableSearch] = useState('');
@@ -643,6 +845,17 @@ export default function AdminDashboard({
             <span className="tab-btn-title">
               <span className="desktop-tab-label">Customer Inquiries <span className="tab-count-badge">({inquiries.length})</span></span>
               <span className="mobile-tab-label">Inquiries ({inquiries.length})</span>
+            </span>
+          </button>
+          <button 
+            type="button" 
+            className={`admin-tab-btn ${activeTab === 'email-dispatcher' ? 'active' : ''}`}
+            onClick={() => setActiveTab('email-dispatcher')}
+          >
+            <Mail size={16} className="flex-shrink-0" />
+            <span className="tab-btn-title">
+              <span className="desktop-tab-label">Email Dispatcher ✉️</span>
+              <span className="mobile-tab-label">Email ✉️</span>
             </span>
           </button>
         </div>
@@ -1356,6 +1569,15 @@ export default function AdminDashboard({
                               <Send size={12} /> WhatsApp
                             </a>
                           )}
+                          <button
+                            type="button"
+                            className="btn-whatsapp-sm"
+                            style={{ background: 'rgba(197, 155, 39, 0.15)', color: '#C59B27', border: '1px solid rgba(197, 155, 39, 0.3)' }}
+                            onClick={() => handleSelectLeadForEmail(inq)}
+                            title="Configure & Send HTML Email Template"
+                          >
+                            <Mail size={12} /> Send Email
+                          </button>
                           <button 
                             type="button" 
                             className="btn-icon-danger"
@@ -1376,6 +1598,231 @@ export default function AdminDashboard({
                 <p>No customer lead inquiries match the selected filter.</p>
               </div>
             )}
+          </div>
+        )}
+
+        {/* EMAIL DISPATCHER TAB PANEL */}
+        {activeTab === 'email-dispatcher' && (
+          <div className="catalog-content-block p-4" style={{ background: '#071626', border: '1px solid rgba(197, 155, 39, 0.25)', borderRadius: '12px' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              
+              {/* Left Column: Form Configuration */}
+              <div className="lg:col-span-5 flex flex-col gap-4">
+                <div className="saas-form-card" style={{ background: '#0C2340', border: '1px solid rgba(197, 155, 39, 0.3)', padding: '16px' }}>
+                  <div className="saas-card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '16px' }}>
+                    <div className="saas-card-number" style={{ background: '#C59B27', color: '#0C2340', fontWeight: '800' }}>✉️</div>
+                    <div>
+                      <h4 style={{ color: '#FFFFFF', margin: 0, fontSize: '1.1rem', fontWeight: '700' }}>Email Dispatcher Config</h4>
+                      <p style={{ color: '#D5CAAF', margin: 0, fontSize: '0.8rem' }}>Customize recipient details for live 4-card HTML template dispatch.</p>
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleSendEmailNow} className="flex flex-col gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-gray-300 block mb-1">Customer Full Name *</label>
+                      <input 
+                        type="text" 
+                        className="saas-form-input" 
+                        value={emailForm.customerName}
+                        onChange={(e) => setEmailForm({ ...emailForm, customerName: e.target.value })}
+                        placeholder="e.g. Bharath S."
+                        required
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-gray-300 block mb-1">Customer Email Address *</label>
+                      <input 
+                        type="email" 
+                        className="saas-form-input" 
+                        value={emailForm.customerEmail}
+                        onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
+                        placeholder="e.g. bharath.s@example.com"
+                        required
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-gray-300 block mb-1">Relationship Manager Contact Link</label>
+                      <input 
+                        type="url" 
+                        className="saas-form-input" 
+                        value={emailForm.rmUrl}
+                        onChange={(e) => setEmailForm({ ...emailForm, rmUrl: e.target.value })}
+                        placeholder="https://wa.me/919999999999"
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-gray-300 block mb-1">Sample Agreement Document URL</label>
+                      <input 
+                        type="url" 
+                        className="saas-form-input" 
+                        value={emailForm.agreementUrl}
+                        onChange={(e) => setEmailForm({ ...emailForm, agreementUrl: e.target.value })}
+                        placeholder="https://www.securestay.in/docs/sample_agreement.pdf"
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '10px 12px' }}
+                      />
+                    </div>
+
+                    {/* Quick Actions Grid */}
+                    <div className="flex flex-col gap-2 mt-2">
+                      <button 
+                        type="submit" 
+                        className="btn-saas-primary w-full flex-align justify-center gap-2"
+                        disabled={emailSendingStatus === 'sending'}
+                        style={{ background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', padding: '12px', borderRadius: '8px', cursor: 'pointer' }}
+                      >
+                        <Send size={16} /> 
+                        {emailSendingStatus === 'sending' ? 'Sending HTML Email...' : 'Send HTML Email Now'}
+                      </button>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <button 
+                          type="button" 
+                          onClick={handleCopyHtmlEmail}
+                          className="btn-saas-secondary flex-align justify-center gap-2 text-xs"
+                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', cursor: 'pointer' }}
+                        >
+                          {emailCopied ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
+                          {emailCopied ? 'HTML Copied!' : 'Copy HTML Code'}
+                        </button>
+
+                        <button 
+                          type="button" 
+                          onClick={handleOpenGmail}
+                          className="btn-saas-secondary flex-align justify-center gap-2 text-xs"
+                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', cursor: 'pointer' }}
+                        >
+                          <ExternalLink size={14} /> Open in Gmail
+                        </button>
+                      </div>
+
+                      {emailSendingStatus === 'success' && (
+                        <div className="p-3 bg-emerald-900/40 border border-emerald-500/50 rounded text-emerald-300 text-xs text-center flex-align justify-center gap-2 mt-1">
+                          <CheckCircle size={14} /> Email sent successfully to {emailForm.customerEmail}!
+                        </div>
+                      )}
+                      {emailSendingStatus === 'error' && (
+                        <div className="p-3 bg-red-900/40 border border-red-500/50 rounded text-red-300 text-xs text-center flex-align justify-center gap-2 mt-1">
+                          Failed to send email. Please copy HTML code or check Web3Forms API key.
+                        </div>
+                      )}
+                    </div>
+                  </form>
+                </div>
+
+                {/* Lead Pick Banner */}
+                <div className="p-3 rounded-lg border border-gold-500/20 bg-gold-500/5 text-xs text-gray-300 flex-align gap-3">
+                  <Sparkles size={20} className="text-gold-400 flex-shrink-0" />
+                  <span>Tip: You can select any customer directly from the <strong>Customer Inquiries</strong> tab to auto-fill their name and email here!</span>
+                </div>
+              </div>
+
+              {/* Right Column: Interactive Real-Time Email Preview */}
+              <div className="lg:col-span-7">
+                <div className="saas-form-card" style={{ background: '#4E4929', color: '#F5EDD8', overflow: 'hidden', borderRadius: '10px' }}>
+                  <div className="saas-card-header" style={{ background: '#3D3820', borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px' }}>
+                    <span className="text-xs uppercase tracking-wider text-amber-300 font-bold flex-align gap-2">
+                      <Eye size={14} /> Live Email Preview (Dear {emailForm.customerName || 'Customer'})
+                    </span>
+                  </div>
+
+                  <div className="p-4" style={{ backgroundColor: '#DDD8CE', borderRadius: '0 0 10px 10px' }}>
+                    <div style={{ maxWidth: '640px', margin: '0 auto', background: '#FFFFFF', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}>
+                      
+                      {/* Header Banner */}
+                      <div style={{ lineHeight: 0 }}>
+                        <img src="/assets/header_banner.png" alt="Secure Stay Banner" style={{ width: '100%', display: 'block' }} />
+                      </div>
+
+                      {/* Greeting */}
+                      <div style={{ backgroundColor: '#4E4929', padding: '24px 28px 18px 28px' }}>
+                        <h2 style={{ color: '#F5EDD8', fontSize: '24px', fontWeight: '800', margin: '0 0 12px 0', fontFamily: 'Georgia, serif' }}>
+                          Dear {emailForm.customerName || 'Bharath'}!
+                        </h2>
+                        <p style={{ color: '#D5CAAF', fontSize: '12.5px', lineHeight: '1.6', margin: '0 0 10px 0', fontFamily: 'Arial, sans-serif' }}>
+                          At Secure Stay, we believe finding and managing your stay should be simple, transparent, and hassle free. We're here to make every step of your journey smoother — from exploring your property to completing the agreement and getting settled in comfortably.
+                        </p>
+                        <p style={{ color: '#D5CAAF', fontSize: '12.5px', lineHeight: '1.6', margin: 0, fontFamily: 'Arial, sans-serif' }}>
+                          We've put together everything you need below, so you can explore the details at your convenience.
+                        </p>
+                      </div>
+
+                      {/* 4 Cards Section */}
+                      <div style={{ backgroundColor: '#4E4929', padding: '0 28px 24px 28px' }}>
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: '14px', marginBottom: '14px' }}>
+                          <div style={{ color: '#C9BD9C', fontSize: '9px', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px' }}>EXPLORE SECURE STAY</div>
+                          <div style={{ color: '#F0E8D4', fontSize: '16px', fontWeight: '700', fontFamily: 'Georgia, serif' }}>Your Secure Stay Journey</div>
+                        </div>
+
+                        {/* Card 01 */}
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
+                            01
+                          </div>
+                          <div>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Why Secure Stay</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Learn why tenants and property owners choose Secure Stay for complete transparency, zero brokerage, and dedicated support.</div>
+                            <a href="/#about" target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>Why Secure Stay &rarr;</a>
+                          </div>
+                        </div>
+
+                        {/* Card 02 */}
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
+                            02
+                          </div>
+                          <div>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Our Services &amp; Benefits</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Explore our services, tenant benefits, support, and the advantages of choosing a professionally managed stay.</div>
+                            <a href="/#services" target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>Explore Services &amp; Benefits &rarr;</a>
+                          </div>
+                        </div>
+
+                        {/* Card 03 */}
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', marginBottom: '10px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
+                            03
+                          </div>
+                          <div>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Dedicated Relationship Manager</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Know who is supporting you throughout your journey and how to reach your <strong style={{ color: '#C9A84C' }}>RM</strong> whenever you need assistance.</div>
+                            <a href={emailForm.rmUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>Contact Your Manager &rarr;</a>
+                          </div>
+                        </div>
+
+                        {/* Card 04 */}
+                        <div style={{ backgroundColor: '#3D3820', borderRadius: '8px', padding: '12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2C2810', fontSize: '13px', fontWeight: '800', fontFamily: 'Georgia, serif', flexShrink: 0 }}>
+                            04
+                          </div>
+                          <div>
+                            <div style={{ color: '#F0E8D4', fontSize: '12.5px', fontWeight: '700', marginBottom: '3px' }}>Sample Agreement</div>
+                            <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Review the sample agreement and understand the key terms and conditions before you proceed.</div>
+                            <a href={emailForm.agreementUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>View Sample Agreement &rarr;</a>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Footer */}
+                      <div style={{ backgroundColor: '#2E2A13', padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '9.5px', color: '#A89E82' }}>
+                        <span style={{ color: '#F0E8D4', fontWeight: '600' }}>Discover Our Latest Updates</span>
+                        <div>
+                          <span style={{ marginRight: '10px' }}>www.securestay.in</span>
+                          <span>info@securestay.in</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         )}
       </div>
