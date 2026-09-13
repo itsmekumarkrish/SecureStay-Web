@@ -1807,7 +1807,7 @@ export default function AdminDashboard({
                     </span>
                   </div>
 
-                  <div style={{ backgroundColor: '#DDD8CE', padding: '20px 14px', maxHeight: '720px', overflowY: 'auto' }}>
+                  <div style={{ backgroundColor: '#DDD8CE', padding: '20px 14px' }}>
                     <div style={{ maxWidth: '620px', margin: '0 auto', background: '#FFFFFF', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }}>
                       
                       {/* Header Banner */}
@@ -1885,34 +1885,57 @@ export default function AdminDashboard({
                       </div>
 
                       {/* Feature Strip */}
-                      <div style={{ backgroundColor: '#F0EBE0', padding: '16px 24px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
-                              </svg>
-                            </div>
-                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>SAFE &amp; SECURE<br/>PROPERTIES</span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3l1.7 1.7"/>
-                              </svg>
-                            </div>
-                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>TRANSPARENT<br/>PROCESS</span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '34px', height: '34px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-                              </svg>
-                            </div>
-                            <span style={{ color: '#3A3620', fontSize: '9px', fontWeight: '700', lineHeight: '1.3', letterSpacing: '0.3px' }}>A BETTER LIVING<br/>EXPERIENCE</span>
-                          </div>
-                          <a href="/#services" target="_blank" rel="noreferrer" style={{ backgroundColor: '#4E4929', color: '#F5EDD8', fontSize: '11px', fontWeight: '700', padding: '9px 18px', borderRadius: '22px', textDecoration: 'none', whiteSpace: 'nowrap' }}>Get Started</a>
-                        </div>
+                      <div style={{ backgroundColor: '#F0EBE0', padding: '14px 16px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                        <table border="0" cellPadding="0" cellSpacing="0" style={{ width: '100%', borderCollapse: 'collapse' }}>
+                          <tbody>
+                            <tr>
+                              <td style={{ width: '25%', verticalAlign: 'middle', padding: '2px 4px 2px 0' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                                    </svg>
+                                  </div>
+                                  <span style={{ color: '#3A3620', fontSize: '8px', fontWeight: '700', lineHeight: '1.25', letterSpacing: '0.2px' }}>
+                                    SAFE &amp; SECURE<br/>PROPERTIES
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td style={{ width: '25%', verticalAlign: 'middle', padding: '2px 4px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3l1.7 1.7"/>
+                                    </svg>
+                                  </div>
+                                  <span style={{ color: '#3A3620', fontSize: '8px', fontWeight: '700', lineHeight: '1.25', letterSpacing: '0.2px' }}>
+                                    TRANSPARENT<br/>PROCESS
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td style={{ width: '27%', verticalAlign: 'middle', padding: '2px 4px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1.5px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E4929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                                    </svg>
+                                  </div>
+                                  <span style={{ color: '#3A3620', fontSize: '8px', fontWeight: '700', lineHeight: '1.25', letterSpacing: '0.2px' }}>
+                                    A BETTER LIVING<br/>EXPERIENCE
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td style={{ width: '23%', verticalAlign: 'middle', textAlign: 'right', padding: '2px 0 2px 4px' }}>
+                                <a href="/#services" target="_blank" rel="noreferrer" style={{ backgroundColor: '#4E4929', color: '#F5EDD8', fontSize: '9.5px', fontWeight: '700', padding: '7px 14px', borderRadius: '20px', textDecoration: 'none', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                  Get Started
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
 
                       {/* Footer */}
