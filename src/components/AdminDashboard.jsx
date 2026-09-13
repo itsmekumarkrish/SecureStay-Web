@@ -173,6 +173,43 @@ export default function AdminDashboard({
 
       </td>
     </tr>
+
+    <!-- FEATURE STRIP -->
+    <tr>
+      <td style="background-color:#F0EBE0;padding:18px 32px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td width="28%" valign="middle" style="padding:4px 6px;">
+              <table border="0" cellpadding="0" cellspacing="0"><tr>
+                <td valign="middle" style="padding-right:8px;">
+                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">🛡️</div>
+                </td>
+                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">SAFE &amp; SECURE<br/>PROPERTIES</td>
+              </tr></table>
+            </td>
+            <td width="28%" valign="middle" style="padding:4px 6px;">
+              <table border="0" cellpadding="0" cellspacing="0"><tr>
+                <td valign="middle" style="padding-right:8px;">
+                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">📄</div>
+                </td>
+                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">TRANSPARENT<br/>PROCESS</td>
+              </tr></table>
+            </td>
+            <td width="28%" valign="middle" style="padding:4px 6px;">
+              <table border="0" cellpadding="0" cellspacing="0"><tr>
+                <td valign="middle" style="padding-right:8px;">
+                  <div style="width:32px;height:32px;border:1.5px solid #4E4929;border-radius:50%;text-align:center;line-height:32px;color:#4E4929;font-size:13px;">🏠</div>
+                </td>
+                <td valign="middle" style="color:#3A3620;font-size:9px;font-weight:700;line-height:1.3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">A BETTER LIVING<br/>EXPERIENCE</td>
+              </tr></table>
+            </td>
+            <td width="16%" valign="middle" align="right" style="padding:4px 0 4px 6px;">
+              <a href="${domainOrigin}/#services" target="_blank" style="background-color:#4E4929;color:#F5EDD8;font-size:10px;font-weight:700;text-decoration:none;padding:8px 14px;border-radius:18px;display:inline-block;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;white-space:nowrap;">Get Started</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
     <tr>
       <td style="background-color:#2E2A13;padding:16px 32px;border-radius:0 0 8px 8px;">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -1749,7 +1786,7 @@ export default function AdminDashboard({
                     </span>
                   </div>
 
-                  <div style={{ backgroundColor: '#DDD8CE', padding: '20px 14px' }}>
+                  <div style={{ backgroundColor: '#DDD8CE', padding: '20px 14px', maxHeight: '720px', overflowY: 'auto' }}>
                     <div style={{ maxWidth: '620px', margin: '0 auto', background: '#FFFFFF', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 6px 20px rgba(0,0,0,0.15)' }}>
                       
                       {/* Header Banner */}
@@ -1823,6 +1860,25 @@ export default function AdminDashboard({
                             <div style={{ color: '#A89E82', fontSize: '10.5px', lineHeight: '1.5', marginBottom: '8px' }}>Review the sample agreement and understand the key terms and conditions before you proceed.</div>
                             <a href={emailForm.agreementUrl || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-block', backgroundColor: '#C9A84C', color: '#2C2810', fontSize: '9.5px', fontWeight: '700', padding: '4px 10px', borderRadius: '14px', textDecoration: 'none' }}>View Sample Agreement &rarr;</a>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* Feature Strip */}
+                      <div style={{ backgroundColor: '#F0EBE0', padding: '14px 20px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>🛡️</div>
+                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>SAFE &amp; SECURE<br/>PROPERTIES</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>📄</div>
+                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>TRANSPARENT<br/>PROCESS</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div style={{ width: '26px', height: '26px', borderRadius: '50%', border: '1px solid #4E4929', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px' }}>🏠</div>
+                            <span style={{ color: '#3A3620', fontSize: '8.5px', fontWeight: '700', lineHeight: '1.2' }}>A BETTER LIVING<br/>EXPERIENCE</span>
+                          </div>
+                          <a href="/#services" target="_blank" rel="noreferrer" style={{ backgroundColor: '#4E4929', color: '#F5EDD8', fontSize: '9px', fontWeight: '700', padding: '6px 12px', borderRadius: '14px', textDecoration: 'none' }}>Get Started</a>
                         </div>
                       </div>
 
