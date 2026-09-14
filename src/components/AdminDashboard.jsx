@@ -1780,7 +1780,7 @@ export default function AdminDashboard({
                     </button>
                   </div>
 
-                  <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <form onSubmit={(e) => { e.preventDefault(); handleGenerateReviewDraft(); }} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                         <label style={{ fontSize: '0.8rem', fontWeight: '700', color: '#F1B04C' }}>
@@ -2034,36 +2034,32 @@ export default function AdminDashboard({
                       />
                     </div>
 
-                    {/* Action Buttons */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '6px' }}>
+                    {/* Primary Action Button */}
+                    <div style={{ marginTop: '6px' }}>
                       <button 
                         type="submit" 
-                        disabled={emailSendingStatus === 'sending'}
-                        style={{ width: '100%', padding: '12px 16px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
+                        title="Generate local review file email_preview_review.html and prepare Gmail API draft for bharath.s@securestay.in"
+                        style={{ 
+                          width: '100%', 
+                          padding: '13px 18px', 
+                          background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', 
+                          color: '#0C2340', 
+                          fontWeight: '800', 
+                          fontSize: '0.94rem', 
+                          borderRadius: '8px', 
+                          border: 'none', 
+                          cursor: 'pointer', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justify: 'center', 
+                          gap: '8px', 
+                          boxShadow: '0 4px 14px rgba(197, 155, 39, 0.35)',
+                          transition: 'all 0.2s ease'
+                        }}
                       >
-                        <Send size={16} /> 
-                        {emailSendingStatus === 'sending' ? 'Sending HTML Email...' : 'Send HTML Email Now'}
+                        🔍 Review Layout &amp; Create Gmail Draft
                       </button>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                        <button 
-                          type="button" 
-                          onClick={handleCopyHtmlEmail}
-                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-                        >
-                          {emailCopied ? <Check size={14} style={{ color: '#4ADE80' }} /> : <Copy size={14} />}
-                          {emailCopied ? 'HTML Copied!' : 'Copy HTML'}
-                        </button>
-
-                        <button 
-                          type="button" 
-                          onClick={handleGenerateReviewDraft}
-                          title="Generate local review file email_preview_review.html and prepare Gmail API draft for bharath.s@securestay.in"
-                          style={{ padding: '10px', background: 'rgba(197, 155, 39, 0.18)', color: '#F1B04C', border: '1px solid #C59B27', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-                        >
-                          <Mail size={14} /> Review &amp; Create Gmail Draft
-                        </button>
-                      </div>
+                    </div>
 
                       {emailSendingStatus === 'success' && (
                         <div style={{ padding: '10px 14px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '8px', color: '#34D399', fontSize: '0.8rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
