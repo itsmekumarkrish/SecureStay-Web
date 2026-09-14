@@ -321,9 +321,32 @@ export default function AdminDashboard({
       console.warn('Clipboard write error:', err);
     }
 
-    // 3. Open Mandatory Pre-Send Review Modal
-    setReviewModalNotice("Final layout generated. Viewing 'email_preview_review.html' in a new tab to verify before draft injection.");
-    setShowReviewModal(true);
+  const handleConfirmInjectDraft = async () => {
+    setDraftInjectStatus('injecting');
+    try {
+      const htmlContent = getGeneratedEmailHtml();
+      await sendInquiryEmail({
+        name: emailForm.customerName,
+        email: emailForm.customerEmail,
+        cc: emailForm.ccEmails,
+        bcc: emailForm.bccEmails,
+        subject: emailForm.emailSubject,
+        rmName: emailForm.rmName,
+        phone: 'N/A (Admin Email Dispatch)',
+        message: `Welcome & Information Package sent via SecureStay Admin Dashboard.`,
+        customHtml: htmlContent
+      });
+
+      setDraftInjectStatus('success');
+      setTimeout(() => {
+        setDraftInjectStatus('');
+        setShowReviewModal(false);
+      }, 2500);
+    } catch (err) {
+      console.error('Failed to dispatch draft:', err);
+      setDraftInjectStatus('error');
+      setTimeout(() => setDraftInjectStatus(''), 3000);
+    }
   };
 
   const handleSendEmailNow = async (e) => {
@@ -2685,33 +2708,82 @@ export default function AdminDashboard({
               </div>
             </div>
 
-            {/* Action Controls */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {/* Action Controls: 2 Primary Options (Edit vs Okay Send) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              
+              {/* Optional New Tab Fullscreen Visual Review Link */}
               <button 
                 type="button" 
                 onClick={handlePreviewInNewTab}
-                style={{ width: '100%', padding: '12px 18px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
+                style={{ width: '100%', padding: '10px 14px', background: 'rgba(197, 155, 39, 0.12)', color: '#F1B04C', border: '1px solid rgba(197, 155, 39, 0.4)', borderRadius: '8px', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
-                👁️ Preview 'email_preview_review.html' in New Tab
+                👁️ Open Full HTML Layout Preview in New Tab
               </button>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                <button 
-                  type="button" 
-                  onClick={handleCopyHtmlEmail}
-                  style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-                >
-                  {emailCopied ? <Check size={14} style={{ color: '#4ADE80' }} /> : <Copy size={14} />}
-                  {emailCopied ? 'HTML Copied!' : 'Copy Base64 / HTML'}
-                </button>
+              {/* Live Status Notices */}
+              {draftInjectStatus === 'success' && (
+                <div style={{ padding: '12px 16px', background: 'rgba(16, 185, 129, 0.18)', border: '1px solid #10B981', borderRadius: '8px', color: '#34D399', fontSize: '0.85rem', textAlign: 'center', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <CheckCircle size={18} /> Layout Approved! Dispatch Sent to {emailForm.customerEmail || 'bharath.s@securestay.in'}
+                </div>
+              )}
 
+              {draftInjectStatus === 'injecting' && (
+                <div style={{ padding: '12px 16px', background: 'rgba(197, 155, 39, 0.18)', border: '1px solid #C59B27', borderRadius: '8px', color: '#F1B04C', fontSize: '0.85rem', textAlign: 'center', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <Clock size={18} className="animate-spin" /> Dispatching HTML Email Package...
+                </div>
+              )}
+
+              {/* The 2 Requested Option Buttons */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                
+                {/* OPTION 1: Edit */}
                 <button 
                   type="button" 
                   onClick={() => setShowReviewModal(false)}
-                  style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#DDD8CE', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer' }}
+                  style={{ 
+                    padding: '13px 18px', 
+                    background: 'rgba(255,255,255,0.08)', 
+                    color: '#FFFFFF', 
+                    border: '1px solid rgba(255,255,255,0.25)', 
+                    borderRadius: '8px', 
+                    fontSize: '0.92rem', 
+                    fontWeight: '700', 
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justify: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s ease'
+                  }}
                 >
-                  Close &amp; Proceed to Inject
+                  ✏️ Edit
                 </button>
+
+                {/* OPTION 2: Okay Send */}
+                <button 
+                  type="button" 
+                  onClick={handleConfirmInjectDraft}
+                  disabled={draftInjectStatus === 'injecting'}
+                  style={{ 
+                    padding: '13px 18px', 
+                    background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', 
+                    color: '#0C2340', 
+                    fontWeight: '800', 
+                    fontSize: '0.95rem', 
+                    borderRadius: '8px', 
+                    border: 'none', 
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justify: 'center',
+                    gap: '6px',
+                    boxShadow: '0 4px 14px rgba(197, 155, 39, 0.4)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  🚀 Okay Send
+                </button>
+
               </div>
             </div>
 
