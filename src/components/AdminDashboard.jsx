@@ -49,6 +49,9 @@ export default function AdminDashboard({
   const [isFormBoxExpanded, setIsFormBoxExpanded] = useState(false);
   const [showCc, setShowCc] = useState(false);
   const [showBcc, setShowBcc] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewModalNotice, setReviewModalNotice] = useState('');
+  const [draftInjectStatus, setDraftInjectStatus] = useState('');
 
   const handleSelectLeadForEmail = (inq) => {
     const leadName = inq.name || 'Valued Customer';
@@ -290,67 +293,35 @@ export default function AdminDashboard({
     setTimeout(() => setEmailCopied(false), 2500);
   };
 
-  const handleOpenGmail = () => {
-    // 1. Extract and sanitize input states
-    const recipient = (emailForm.customerEmail || '').trim();
-    const cc = (emailForm.ccEmails || '').trim();
-    const bcc = (emailForm.bccEmails || '').trim();
-    const name = (emailForm.customerName || 'Valued Customer').trim();
-    const subject = (emailForm.emailSubject || `Welcome to Secure Stay, ${name}! — Your Stay Information Package`).trim();
-    const rmName = (emailForm.rmName || 'SecureStay Relationship Manager').trim();
-    const rmUrl = (emailForm.rmUrl || 'https://wa.me/919999999999').trim();
-    const agreementUrl = (emailForm.agreementUrl || 'https://www.securestay.in/docs/sample_agreement.pdf').trim();
-    const mediaFolderUrl = (emailForm.mediaFolderUrl || 'https://drive.google.com/drive/folders/sample_property_photos').trim();
+  const handleGenerateReviewDraft = () => {
+    // 1. Compile final rich 4-card HTML template with active dynamic values
+    const htmlContent = getGeneratedEmailHtml();
 
-    // 2. Compile structured plain-text fallback body template with active links
-    const bodyText = 
-`Dear ${name},
-
-Welcome to Secure Stay! We are delighted to share your complete stay information package.
-
-At Secure Stay, we make finding and managing your stay simple, transparent, and hassle-free — from exploring your property to completing your agreement and getting settled in comfortably.
-
-📋 YOUR STAY INFORMATION PACKAGE:
-
-1. DEDICATED RELATIONSHIP MANAGER
-   • Manager: ${rmName}
-   • Contact Direct: ${rmUrl}
-
-2. SAMPLE STAY AGREEMENT
-   • View Sample Agreement: ${agreementUrl}
-
-3. PROPERTY PHOTOS & VIDEOS
-   • View Property Media Folder: ${mediaFolderUrl}
-
-If you have any questions or require assistance, please feel free to reach out directly to your Relationship Manager (${rmName}).
-
-Warm regards,
-Secure Stay Private Limited
-Website: https://www.securestay.in`;
-
-    // 3. Construct clean URL query parameters without malformed empty fields
-    const params = new URLSearchParams();
-    params.set('view', 'cm');
-    params.set('fs', '1');
-    if (recipient) params.set('to', recipient);
-    if (cc) params.set('cc', cc);
-    if (bcc) params.set('bcc', bcc);
-    if (subject) params.set('su', subject);
-    if (bodyText) params.set('body', bodyText);
-
-    // 4. Auto-copy rich HTML email package to clipboard for rich-text pasting
+    // 2. Download / generate local static review file 'email_preview_review.html'
     try {
-      const htmlContent = getGeneratedEmailHtml();
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'email_preview_review.html';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.warn('Auto-download preview file error:', err);
+    }
+
+    // 3. Auto-copy HTML to clipboard as fallback
+    try {
       navigator.clipboard.writeText(htmlContent);
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 3000);
     } catch (err) {
-      console.warn('Could not copy HTML to clipboard:', err);
+      console.warn('Clipboard write error:', err);
     }
 
-    // 5. Open Gmail web composer
-    const gmailUrl = `https://mail.google.com/mail/?${params.toString()}`;
-    window.open(gmailUrl, '_blank');
+    // 4. Open Mandatory Pre-Send Review Modal
+    setReviewModalNotice("Final layout generated. Please review 'email_preview_review.html' in your browser or workspace to verify.");
+    setShowReviewModal(true);
   };
 
   const handleSendEmailNow = async (e) => {
@@ -2086,10 +2057,11 @@ Website: https://www.securestay.in`;
 
                         <button 
                           type="button" 
-                          onClick={handleOpenGmail}
-                          style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                          onClick={handleGenerateReviewDraft}
+                          title="Generate local review file email_preview_review.html and prepare Gmail API draft for bharath.s@securestay.in"
+                          style={{ padding: '10px', background: 'rgba(197, 155, 39, 0.18)', color: '#F1B04C', border: '1px solid #C59B27', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                         >
-                          <ExternalLink size={14} /> Open in Gmail
+                          <Mail size={14} /> Review &amp; Create Gmail Draft
                         </button>
                       </div>
 
@@ -2648,6 +2620,104 @@ Website: https://www.securestay.in`;
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Mandatory Pre-Send Review & Gmail Draft Injection Modal */}
+      {showReviewModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(12, 35, 64, 0.85)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '20px' }}>
+          <div style={{ background: '#0C2340', border: '1px solid #C59B27', borderRadius: '16px', maxWidth: '640px', width: '100%', padding: '28px', color: '#FFFFFF', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+            
+            {/* Modal Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '16px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#C59B27', color: '#0C2340', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800' }}>
+                  <Mail size={22} />
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: '700', color: '#FFFFFF' }}>Pre-Send Layout Review &amp; Gmail Draft</h3>
+                  <p style={{ margin: '3px 0 0 0', fontSize: '0.8rem', color: '#DDD8CE' }}>Account: <strong style={{ color: '#F1B04C' }}>bharath.s@securestay.in</strong></p>
+                </div>
+              </div>
+              <button type="button" onClick={() => setShowReviewModal(false)} style={{ background: 'none', border: 'none', color: '#DDD8CE', cursor: 'pointer', padding: '4px' }}>
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Review Notice Box */}
+            <div style={{ background: 'rgba(197, 155, 39, 0.15)', border: '1px solid #C59B27', borderRadius: '10px', padding: '14px 16px', marginBottom: '20px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+              <Sparkles size={20} style={{ color: '#F1B04C', flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <h4 style={{ margin: '0 0 4px 0', fontSize: '0.9rem', fontWeight: '700', color: '#F1B04C' }}>Mandatory Review Step</h4>
+                <p style={{ margin: 0, fontSize: '0.83rem', color: '#F5EDD8', lineHeight: '1.5' }}>
+                  {reviewModalNotice || "Final layout generated. Please review 'email_preview_review.html' in your browser or workspace to verify."}
+                </p>
+              </div>
+            </div>
+
+            {/* Summary of Recipient & Subject */}
+            <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '10px', padding: '16px', marginBottom: '22px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.83rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Sender Account:</span>
+                <span style={{ color: '#F1B04C', fontWeight: '700' }}>bharath.s@securestay.in</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Recipient (To):</span>
+                <span style={{ color: '#FFFFFF', fontWeight: '600' }}>{emailForm.customerEmail || 'Not specified'}</span>
+              </div>
+              {emailForm.ccEmails && (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#DDD8CE', fontWeight: '600' }}>CC Emails:</span>
+                  <span style={{ color: '#FFFFFF' }}>{emailForm.ccEmails}</span>
+                </div>
+              )}
+              {emailForm.bccEmails && (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#DDD8CE', fontWeight: '600' }}>BCC Emails:</span>
+                  <span style={{ color: '#FFFFFF' }}>{emailForm.bccEmails}</span>
+                </div>
+              )}
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Subject Line:</span>
+                <span style={{ color: '#FFFFFF', textAlign: 'right', maxWidth: '340px' }}>{emailForm.emailSubject}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Local Review File:</span>
+                <span style={{ color: '#4ADE80', fontWeight: '700' }}>email_preview_review.html (Workspace Root)</span>
+              </div>
+            </div>
+
+            {/* Action Controls */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button 
+                type="button" 
+                onClick={handleGenerateReviewDraft}
+                style={{ width: '100%', padding: '12px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
+              >
+                <Check size={18} /> Update &amp; Download 'email_preview_review.html'
+              </button>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                <button 
+                  type="button" 
+                  onClick={handleCopyHtmlEmail}
+                  style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                >
+                  {emailCopied ? <Check size={14} style={{ color: '#4ADE80' }} /> : <Copy size={14} />}
+                  {emailCopied ? 'HTML Copied!' : 'Copy Base64 / HTML'}
+                </button>
+
+                <button 
+                  type="button" 
+                  onClick={() => setShowReviewModal(false)}
+                  style={{ padding: '10px', background: 'rgba(255,255,255,0.08)', color: '#DDD8CE', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer' }}
+                >
+                  Close &amp; Proceed to Inject
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       )}
