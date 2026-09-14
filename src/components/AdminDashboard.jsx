@@ -47,6 +47,8 @@ export default function AdminDashboard({
   const [emailCopied, setEmailCopied] = useState(false);
   const [emailSendingStatus, setEmailSendingStatus] = useState('');
   const [isFormBoxExpanded, setIsFormBoxExpanded] = useState(false);
+  const [showCc, setShowCc] = useState(false);
+  const [showBcc, setShowBcc] = useState(false);
 
   const handleSelectLeadForEmail = (inq) => {
     const leadName = inq.name || 'Valued Customer';
@@ -1756,7 +1758,7 @@ export default function AdminDashboard({
                   <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                        <label style={{ fontSize: '0.8rem', fontWeight: '700', color: '#C59B27' }}>
+                        <label style={{ fontSize: '0.8rem', fontWeight: '700', color: '#F1B04C' }}>
                           Email Subject Line *
                         </label>
                         <span style={{ fontSize: '0.7rem', color: '#DDD8CE', opacity: 0.85 }}>Auto-resizable / Multiline</span>
@@ -1786,73 +1788,143 @@ export default function AdminDashboard({
                     </div>
 
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#F1B04C', marginBottom: '4px' }}>
                         Customer Email Address (To) *
                       </label>
-                      <input 
-                        type="email" 
-                        value={emailForm.customerEmail}
-                        onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
-                        placeholder="e.g. bharath.s@example.com"
-                        required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
-                      />
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
-                          CC Emails (Comma-separated)
-                        </label>
-                        <textarea 
-                          rows={2}
-                          value={emailForm.ccEmails}
-                          onChange={(e) => setEmailForm({ ...emailForm, ccEmails: e.target.value })}
-                          placeholder="manager@securestay.in, sales@..."
-                          style={{ 
-                            width: '100%', 
-                            background: 'rgba(255,255,255,0.08)', 
-                            color: '#FFFFFF', 
-                            border: '1px solid rgba(255,255,255,0.2)', 
-                            borderRadius: '8px', 
-                            padding: '8px 10px', 
-                            fontSize: '0.82rem', 
-                            outline: 'none', 
-                            boxSizing: 'border-box',
-                            resize: 'vertical',
-                            fontFamily: 'inherit',
-                            lineHeight: '1.4',
-                            minHeight: '42px'
-                          }}
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <input 
+                          type="email" 
+                          value={emailForm.customerEmail}
+                          onChange={(e) => setEmailForm({ ...emailForm, customerEmail: e.target.value })}
+                          placeholder="e.g. bharath.s@example.com"
+                          required
+                          style={{ flex: 1, background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
                         />
+                        <button 
+                          type="button" 
+                          onClick={() => setShowCc(!showCc)}
+                          style={{
+                            flexShrink: 0,
+                            whiteSpace: 'nowrap',
+                            padding: '8px 13px',
+                            borderRadius: '8px',
+                            border: '1px solid #F1B04C',
+                            background: showCc ? '#F1B04C' : 'rgba(241, 176, 76, 0.12)',
+                            color: showCc ? '#0C2340' : '#F1B04C',
+                            fontWeight: '700',
+                            fontSize: '0.78rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            boxShadow: showCc ? '0 2px 8px rgba(241, 176, 76, 0.3)' : 'none'
+                          }}
+                        >
+                          {showCc ? '✓ CC' : '+ CC'}
+                        </button>
+                        <button 
+                          type="button" 
+                          onClick={() => setShowBcc(!showBcc)}
+                          style={{
+                            flexShrink: 0,
+                            whiteSpace: 'nowrap',
+                            padding: '8px 13px',
+                            borderRadius: '8px',
+                            border: '1px solid #F1B04C',
+                            background: showBcc ? '#F1B04C' : 'rgba(241, 176, 76, 0.12)',
+                            color: showBcc ? '#0C2340' : '#F1B04C',
+                            fontWeight: '700',
+                            fontSize: '0.78rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            boxShadow: showBcc ? '0 2px 8px rgba(241, 176, 76, 0.3)' : 'none'
+                          }}
+                        >
+                          {showBcc ? '✓ BCC' : '+ BCC'}
+                        </button>
                       </div>
 
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
-                          BCC Emails (Comma-separated)
-                        </label>
-                        <textarea 
-                          rows={2}
-                          value={emailForm.bccEmails}
-                          onChange={(e) => setEmailForm({ ...emailForm, bccEmails: e.target.value })}
-                          placeholder="audit@securestay.in, records@..."
-                          style={{ 
-                            width: '100%', 
-                            background: 'rgba(255,255,255,0.08)', 
-                            color: '#FFFFFF', 
-                            border: '1px solid rgba(255,255,255,0.2)', 
-                            borderRadius: '8px', 
-                            padding: '8px 10px', 
-                            fontSize: '0.82rem', 
-                            outline: 'none', 
-                            boxSizing: 'border-box',
-                            resize: 'vertical',
-                            fontFamily: 'inherit',
-                            lineHeight: '1.4',
-                            minHeight: '42px'
-                          }}
-                        />
-                      </div>
+                      {/* Full-width CC Input Row */}
+                      {showCc && (
+                        <div style={{ marginTop: '10px', animation: 'fadeIn 0.2s ease' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                            <label style={{ fontSize: '0.78rem', fontWeight: '700', color: '#F1B04C' }}>
+                              CC Emails (Comma-separated)
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => setShowCc(false)}
+                              style={{ background: 'none', border: 'none', color: '#DDD8CE', fontSize: '0.7rem', cursor: 'pointer', opacity: 0.7 }}
+                            >
+                              Remove CC
+                            </button>
+                          </div>
+                          <textarea 
+                            rows={2}
+                            value={emailForm.ccEmails}
+                            onChange={(e) => setEmailForm({ ...emailForm, ccEmails: e.target.value })}
+                            placeholder="manager@securestay.in, sales@securestay.in"
+                            style={{ 
+                              width: '100%', 
+                              background: 'rgba(255,255,255,0.08)', 
+                              color: '#FFFFFF', 
+                              border: '1px solid rgba(255,255,255,0.2)', 
+                              borderRadius: '8px', 
+                              padding: '8px 10px', 
+                              fontSize: '0.82rem', 
+                              outline: 'none', 
+                              boxSizing: 'border-box',
+                              resize: 'vertical',
+                              fontFamily: 'inherit',
+                              lineHeight: '1.4',
+                              minHeight: '42px'
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      {/* Full-width BCC Input Row */}
+                      {showBcc && (
+                        <div style={{ marginTop: '10px', animation: 'fadeIn 0.2s ease' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                            <label style={{ fontSize: '0.78rem', fontWeight: '700', color: '#F1B04C' }}>
+                              BCC Emails (Comma-separated)
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => setShowBcc(false)}
+                              style={{ background: 'none', border: 'none', color: '#DDD8CE', fontSize: '0.7rem', cursor: 'pointer', opacity: 0.7 }}
+                            >
+                              Remove BCC
+                            </button>
+                          </div>
+                          <textarea 
+                            rows={2}
+                            value={emailForm.bccEmails}
+                            onChange={(e) => setEmailForm({ ...emailForm, bccEmails: e.target.value })}
+                            placeholder="audit@securestay.in, records@securestay.in"
+                            style={{ 
+                              width: '100%', 
+                              background: 'rgba(255,255,255,0.08)', 
+                              color: '#FFFFFF', 
+                              border: '1px solid rgba(255,255,255,0.2)', 
+                              borderRadius: '8px', 
+                              padding: '8px 10px', 
+                              fontSize: '0.82rem', 
+                              outline: 'none', 
+                              boxSizing: 'border-box',
+                              resize: 'vertical',
+                              fontFamily: 'inherit',
+                              lineHeight: '1.4',
+                              minHeight: '42px'
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
 
                     <div>
