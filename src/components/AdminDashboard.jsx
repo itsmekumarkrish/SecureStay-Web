@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
   Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
@@ -64,7 +64,7 @@ export default function AdminDashboard({
     setActiveTab('email-dispatcher');
   };
 
-  const getGeneratedEmailHtml = () => {
+  const getGeneratedEmailHtml = (isPreviewMode = false) => {
     const name = emailForm.customerName || 'Valued Customer';
     const rmName = emailForm.rmName || 'Rajesh Sharma';
     const rmUrl = emailForm.rmUrl || 'https://wa.me/919999999999';
@@ -80,6 +80,26 @@ export default function AdminDashboard({
   <title>Secure Stay - Welcome</title>
 </head>
 <body style="margin:0;padding:0;background-color:#DDD8CE;">
+${isPreviewMode ? `
+<div id="preview-action-bar" style="position:-webkit-sticky;position:sticky;top:0;left:0;right:0;width:100%;background-color:#0C2340;border-bottom:2px solid #C59B27;padding:12px 24px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:15px;box-shadow:0 4px 20px rgba(0,0,0,0.5);z-index:999999;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <div style="display:flex;align-items:center;gap:12px;color:#FFFFFF;">
+    <span style="background:rgba(197,155,39,0.25);color:#F1B04C;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid rgba(197,155,39,0.5);letter-spacing:0.5px;">
+      👁️ PREVIEW MODE
+    </span>
+    <span style="font-size:13px;color:#DDD8CE;font-weight:500;">
+      Review email layout before dispatching
+    </span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button onclick="if(window.opener &amp;&amp; !window.opener.closed){ window.opener.focus(); } window.close();" style="background-color:#334155;color:#FFFFFF;border:1px solid #475569;padding:9px 18px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s ease;">
+      ✏️ Edit
+    </button>
+    <button onclick="if(window.opener &amp;&amp; !window.opener.closed){ window.opener.postMessage('CONFIRM_SEND_EMAIL','*'); window.close(); } else { try{ localStorage.setItem('securestay_action','CONFIRM_SEND_'+Date.now()); }catch(e){} alert('🚀 Draft confirmed! Closing preview tab...'); window.close(); }" style="background-color:#C59B27;color:#0C2340;border:none;padding:9px 22px;border-radius:6px;font-weight:800;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(197,155,39,0.4);">
+      🚀 Okay Send
+    </button>
+  </div>
+</div>
+` : ''}`
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#DDD8CE;">
 <tr><td align="center" style="padding:28px 16px;">
   <table border="0" cellpadding="0" cellspacing="0" width="700" style="max-width:700px;width:100%;">
@@ -287,14 +307,14 @@ export default function AdminDashboard({
   };
 
   const handleCopyHtmlEmail = () => {
-    const htmlContent = getGeneratedEmailHtml();
+    const htmlContent = getGeneratedEmailHtml(false);
     navigator.clipboard.writeText(htmlContent);
     setEmailCopied(true);
     setTimeout(() => setEmailCopied(false), 2500);
   };
 
   const handlePreviewInNewTab = () => {
-    const htmlContent = getGeneratedEmailHtml();
+    const htmlContent = getGeneratedEmailHtml(true);
     try {
       const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
       const previewUrl = URL.createObjectURL(blob);
@@ -313,14 +333,37 @@ export default function AdminDashboard({
 
     // 2. Auto-copy HTML to clipboard as fallback
     try {
-      const htmlContent = getGeneratedEmailHtml();
+      const htmlContent = getGeneratedEmailHtml(false);
       navigator.clipboard.writeText(htmlContent);
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 3000);
+    } catch (err) {
+      console.warn('Auto copy failed:', err);
+    }
+
     // 3. Open Mandatory Pre-Send Review Modal
     setReviewModalNotice("Final layout generated. Viewing 'email_preview_review.html' in a new tab to verify before draft injection.");
     setShowReviewModal(true);
   };
+
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data === 'CONFIRM_SEND_EMAIL') {
+        handleConfirmInjectDraft();
+      }
+    };
+    const handleStorage = (event) => {
+      if (event.key === 'securestay_action' && event.newValue && event.newValue.startsWith('CONFIRM_SEND_')) {
+        handleConfirmInjectDraft();
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, [emailForm]);
 
   const handleConfirmInjectDraft = async () => {
     setDraftInjectStatus('injecting');
