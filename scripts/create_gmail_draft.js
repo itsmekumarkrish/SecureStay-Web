@@ -6,11 +6,15 @@
  * into a valid MIME format and injects it directly into the Gmail drafts folder of bharath.s@securestay.in.
  */
 
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import { fileURLToPath } from 'url';
 
-async function createGmailDraft(options = {}) {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export async function createGmailDraft(options = {}) {
   const accountEmail = 'bharath.s@securestay.in';
   const reviewFilePath = path.join(__dirname, '../email_preview_review.html');
   
@@ -119,8 +123,4 @@ async function createGmailDraft(options = {}) {
   });
 }
 
-if (require.main === module) {
-  createGmailDraft().catch(err => console.error(err));
-}
-
-module.exports = { createGmailDraft };
+createGmailDraft().catch(err => console.error(err));
