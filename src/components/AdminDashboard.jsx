@@ -293,25 +293,27 @@ export default function AdminDashboard({
     setTimeout(() => setEmailCopied(false), 2500);
   };
 
-  const handleGenerateReviewDraft = () => {
-    // 1. Compile final rich 4-card HTML template with active dynamic values
+  const handlePreviewInNewTab = () => {
     const htmlContent = getGeneratedEmailHtml();
-
-    // 2. Download / generate local static review file 'email_preview_review.html'
     try {
       const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'email_preview_review.html';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const previewUrl = URL.createObjectURL(blob);
+      const win = window.open(previewUrl, '_blank');
+      if (!win) {
+        window.open('/email_preview_review.html', '_blank');
+      }
     } catch (err) {
-      console.warn('Auto-download preview file error:', err);
+      window.open('/email_preview_review.html', '_blank');
     }
+  };
 
-    // 3. Auto-copy HTML to clipboard as fallback
+  const handleGenerateReviewDraft = () => {
+    // 1. Compile final rich HTML template & open in a new tab
+    handlePreviewInNewTab();
+
+    // 2. Auto-copy HTML to clipboard as fallback
     try {
+      const htmlContent = getGeneratedEmailHtml();
       navigator.clipboard.writeText(htmlContent);
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 3000);
@@ -319,8 +321,8 @@ export default function AdminDashboard({
       console.warn('Clipboard write error:', err);
     }
 
-    // 4. Open Mandatory Pre-Send Review Modal
-    setReviewModalNotice("Final layout generated. Please review 'email_preview_review.html' in your browser or workspace to verify.");
+    // 3. Open Mandatory Pre-Send Review Modal
+    setReviewModalNotice("Final layout generated. Viewing 'email_preview_review.html' in a new tab to verify before draft injection.");
     setShowReviewModal(true);
   };
 
@@ -2071,7 +2073,6 @@ export default function AdminDashboard({
                           Failed to send email. Copy HTML code or check API connection.
                         </div>
                       )}
-                    </div>
                   </form>
                 </div>
 
@@ -2688,10 +2689,10 @@ export default function AdminDashboard({
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button 
                 type="button" 
-                onClick={handleGenerateReviewDraft}
-                style={{ width: '100%', padding: '12px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
+                onClick={handlePreviewInNewTab}
+                style={{ width: '100%', padding: '12px 18px', background: 'linear-gradient(135deg, #C59B27 0%, #E5B83B 100%)', color: '#0C2340', fontWeight: '800', fontSize: '0.92rem', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(197, 155, 39, 0.3)' }}
               >
-                <Check size={18} /> Update &amp; Download 'email_preview_review.html'
+                👁️ Preview 'email_preview_review.html' in New Tab
               </button>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
