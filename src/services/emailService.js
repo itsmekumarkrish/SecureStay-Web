@@ -28,15 +28,22 @@ export async function sendInquiryEmail(inquiryPayload) {
   formData.append('replyto', inquiryPayload.email || '');
   if (inquiryPayload.cc) formData.append('cc', inquiryPayload.cc);
   if (inquiryPayload.bcc) formData.append('bcc', inquiryPayload.bcc);
-  if (inquiryPayload.customHtml) formData.append('html', inquiryPayload.customHtml);
-  formData.append('reference_number', refNo);
-  formData.append('name', inquiryPayload.name || 'Not specified');
-  formData.append('phone', inquiryPayload.phone || 'Not specified');
-  formData.append('email', inquiryPayload.email || 'Not specified');
-  formData.append('user_type', userRoleLabel);
-  formData.append('location', inquiryPayload.location || 'Not specified');
-  formData.append('message', inquiryPayload.message || 'No message provided');
-  formData.append('submission_date', inquiryPayload.date || new Date().toLocaleString('en-IN'));
+  if (inquiryPayload.customHtml) {
+    // Pure Rich HTML Delivery Mode for Web3Forms API
+    formData.append('message', inquiryPayload.customHtml);
+    formData.append('html', inquiryPayload.customHtml);
+    formData.append('parse_mode', 'html');
+  } else {
+    // Standard Plain-Text Inquiry Form Mode
+    formData.append('reference_number', refNo);
+    formData.append('name', inquiryPayload.name || 'Not specified');
+    formData.append('phone', inquiryPayload.phone || 'Not specified');
+    formData.append('email', inquiryPayload.email || 'Not specified');
+    formData.append('user_type', userRoleLabel);
+    formData.append('location', inquiryPayload.location || 'Not specified');
+    formData.append('message', inquiryPayload.message || 'No message provided');
+    formData.append('submission_date', inquiryPayload.date || new Date().toLocaleString('en-IN'));
+  }
 
   try {
     const response = await fetch('https://api.web3forms.com/submit', {
