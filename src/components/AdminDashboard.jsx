@@ -291,11 +291,65 @@ export default function AdminDashboard({
   };
 
   const handleOpenGmail = () => {
-    const recipient = encodeURIComponent(emailForm.customerEmail || '');
-    const cc = encodeURIComponent(emailForm.ccEmails || '');
-    const bcc = encodeURIComponent(emailForm.bccEmails || '');
-    const subject = encodeURIComponent(emailForm.emailSubject || `Welcome to Secure Stay, ${emailForm.customerName || 'Valued Customer'}!`);
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&cc=${cc}&bcc=${bcc}&su=${subject}`;
+    // 1. Extract and sanitize input states
+    const recipient = (emailForm.customerEmail || '').trim();
+    const cc = (emailForm.ccEmails || '').trim();
+    const bcc = (emailForm.bccEmails || '').trim();
+    const name = (emailForm.customerName || 'Valued Customer').trim();
+    const subject = (emailForm.emailSubject || `Welcome to Secure Stay, ${name}! — Your Stay Information Package`).trim();
+    const rmName = (emailForm.rmName || 'SecureStay Relationship Manager').trim();
+    const rmUrl = (emailForm.rmUrl || 'https://wa.me/919999999999').trim();
+    const agreementUrl = (emailForm.agreementUrl || 'https://www.securestay.in/docs/sample_agreement.pdf').trim();
+    const mediaFolderUrl = (emailForm.mediaFolderUrl || 'https://drive.google.com/drive/folders/sample_property_photos').trim();
+
+    // 2. Compile structured plain-text fallback body template with active links
+    const bodyText = 
+`Dear ${name},
+
+Welcome to Secure Stay! We are delighted to share your complete stay information package.
+
+At Secure Stay, we make finding and managing your stay simple, transparent, and hassle-free — from exploring your property to completing your agreement and getting settled in comfortably.
+
+📋 YOUR STAY INFORMATION PACKAGE:
+
+1. DEDICATED RELATIONSHIP MANAGER
+   • Manager: ${rmName}
+   • Contact Direct: ${rmUrl}
+
+2. SAMPLE STAY AGREEMENT
+   • View Sample Agreement: ${agreementUrl}
+
+3. PROPERTY PHOTOS & VIDEOS
+   • View Property Media Folder: ${mediaFolderUrl}
+
+If you have any questions or require assistance, please feel free to reach out directly to your Relationship Manager (${rmName}).
+
+Warm regards,
+Secure Stay Private Limited
+Website: https://www.securestay.in`;
+
+    // 3. Construct clean URL query parameters without malformed empty fields
+    const params = new URLSearchParams();
+    params.set('view', 'cm');
+    params.set('fs', '1');
+    if (recipient) params.set('to', recipient);
+    if (cc) params.set('cc', cc);
+    if (bcc) params.set('bcc', bcc);
+    if (subject) params.set('su', subject);
+    if (bodyText) params.set('body', bodyText);
+
+    // 4. Auto-copy rich HTML email package to clipboard for rich-text pasting
+    try {
+      const htmlContent = getGeneratedEmailHtml();
+      navigator.clipboard.writeText(htmlContent);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 3000);
+    } catch (err) {
+      console.warn('Could not copy HTML to clipboard:', err);
+    }
+
+    // 5. Open Gmail web composer
+    const gmailUrl = `https://mail.google.com/mail/?${params.toString()}`;
     window.open(gmailUrl, '_blank');
   };
 
