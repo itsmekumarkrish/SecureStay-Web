@@ -3,7 +3,7 @@ import {
   ArrowLeft, ShieldCheck, Lock, Plus, Trash2, CheckCircle, Image as ImageIcon, 
   Building2, MessageSquare, LogOut, Upload, Pencil, X, Search, Phone, Send, MapPin, 
   Users, Clock, CheckSquare, Eye, EyeOff, User, Sparkles, KeyRound, List, LayoutGrid,
-  Copy, Mail, ExternalLink, Check
+  Copy, Mail, ExternalLink, Check, Maximize2, Minimize2
 } from 'lucide-react';
 import { sendInquiryEmail } from '../services/emailService';
 
@@ -46,6 +46,7 @@ export default function AdminDashboard({
   });
   const [emailCopied, setEmailCopied] = useState(false);
   const [emailSendingStatus, setEmailSendingStatus] = useState('');
+  const [isFormBoxExpanded, setIsFormBoxExpanded] = useState(false);
 
   const handleSelectLeadForEmail = (inq) => {
     const leadName = inq.name || 'Valued Customer';
@@ -1709,32 +1710,76 @@ export default function AdminDashboard({
             <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
               
               {/* Left Column: Form Configuration */}
-              <div style={{ flex: '1 1 360px', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ flex: isFormBoxExpanded ? '1 1 540px' : '1 1 380px', maxWidth: isFormBoxExpanded ? '720px' : '520px', transition: 'all 0.3s ease', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ background: '#0C2340', border: '1px solid rgba(197, 155, 39, 0.4)', borderRadius: '12px', overflow: 'hidden', padding: '20px', boxShadow: '0 8px 20px rgba(12, 35, 64, 0.12)' }}>
                   
-                  {/* Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '14px', marginBottom: '18px' }}>
-                    <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#C59B27', color: '#0C2340', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', flexShrink: 0 }}>
-                      <Mail size={20} />
+                  {/* Header with Box Size Increaser Toggle */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.12)', paddingBottom: '14px', marginBottom: '18px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#C59B27', color: '#0C2340', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', flexShrink: 0 }}>
+                        <Mail size={20} />
+                      </div>
+                      <div>
+                        <h4 style={{ color: '#FFFFFF', margin: 0, fontSize: '1.05rem', fontWeight: '700' }}>Email Configuration</h4>
+                        <p style={{ color: '#DDD8CE', margin: '2px 0 0 0', fontSize: '0.78rem' }}>Customize recipient details &amp; action links</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 style={{ color: '#FFFFFF', margin: 0, fontSize: '1.05rem', fontWeight: '700' }}>Email Configuration</h4>
-                      <p style={{ color: '#DDD8CE', margin: '2px 0 0 0', fontSize: '0.78rem' }}>Customize recipient details &amp; action links</p>
-                    </div>
+
+                    {/* Box Size Increaser Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={() => setIsFormBoxExpanded(!isFormBoxExpanded)}
+                      title={isFormBoxExpanded ? "Contract Form Box Width" : "Increase Form Box Size / Width"}
+                      style={{
+                        background: isFormBoxExpanded ? '#C59B27' : 'rgba(255,255,255,0.12)',
+                        color: isFormBoxExpanded ? '#0C2340' : '#DDD8CE',
+                        border: '1px solid rgba(197, 155, 39, 0.5)',
+                        borderRadius: '6px',
+                        padding: '6px 10px',
+                        fontSize: '0.75rem',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        transition: 'all 0.2s ease',
+                        boxShadow: isFormBoxExpanded ? '0 2px 8px rgba(197, 155, 39, 0.3)' : 'none'
+                      }}
+                    >
+                      {isFormBoxExpanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+                      {isFormBoxExpanded ? 'Standard Box' : 'Expand Box Size'}
+                    </button>
                   </div>
 
                   <form onSubmit={handleSendEmailNow} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
-                        Email Subject Line *
-                      </label>
-                      <input 
-                        type="text" 
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                        <label style={{ fontSize: '0.8rem', fontWeight: '700', color: '#C59B27' }}>
+                          Email Subject Line *
+                        </label>
+                        <span style={{ fontSize: '0.7rem', color: '#DDD8CE', opacity: 0.85 }}>Auto-resizable / Multiline</span>
+                      </div>
+                      <textarea 
                         value={emailForm.emailSubject}
                         onChange={(e) => setEmailForm({ ...emailForm, emailSubject: e.target.value })}
                         placeholder="e.g. Welcome to Secure Stay — Your Stay Information Package"
                         required
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
+                        rows={2}
+                        style={{ 
+                          width: '100%', 
+                          background: 'rgba(255,255,255,0.08)', 
+                          color: '#FFFFFF', 
+                          border: '1px solid rgba(255,255,255,0.2)', 
+                          borderRadius: '8px', 
+                          padding: '9px 12px', 
+                          fontSize: '0.88rem', 
+                          outline: 'none', 
+                          boxSizing: 'border-box',
+                          resize: 'vertical',
+                          fontFamily: 'inherit',
+                          lineHeight: '1.45',
+                          minHeight: '46px'
+                        }}
                       />
                     </div>
 
@@ -1757,12 +1802,26 @@ export default function AdminDashboard({
                         <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                           CC Emails (Comma-separated)
                         </label>
-                        <input 
-                          type="text" 
+                        <textarea 
+                          rows={2}
                           value={emailForm.ccEmails}
                           onChange={(e) => setEmailForm({ ...emailForm, ccEmails: e.target.value })}
                           placeholder="manager@securestay.in, sales@..."
-                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                          style={{ 
+                            width: '100%', 
+                            background: 'rgba(255,255,255,0.08)', 
+                            color: '#FFFFFF', 
+                            border: '1px solid rgba(255,255,255,0.2)', 
+                            borderRadius: '8px', 
+                            padding: '8px 10px', 
+                            fontSize: '0.82rem', 
+                            outline: 'none', 
+                            boxSizing: 'border-box',
+                            resize: 'vertical',
+                            fontFamily: 'inherit',
+                            lineHeight: '1.4',
+                            minHeight: '42px'
+                          }}
                         />
                       </div>
 
@@ -1770,12 +1829,26 @@ export default function AdminDashboard({
                         <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                           BCC Emails (Comma-separated)
                         </label>
-                        <input 
-                          type="text" 
+                        <textarea 
+                          rows={2}
                           value={emailForm.bccEmails}
                           onChange={(e) => setEmailForm({ ...emailForm, bccEmails: e.target.value })}
-                          placeholder="audit@securestay.in"
-                          style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                          placeholder="audit@securestay.in, records@..."
+                          style={{ 
+                            width: '100%', 
+                            background: 'rgba(255,255,255,0.08)', 
+                            color: '#FFFFFF', 
+                            border: '1px solid rgba(255,255,255,0.2)', 
+                            borderRadius: '8px', 
+                            padding: '8px 10px', 
+                            fontSize: '0.82rem', 
+                            outline: 'none', 
+                            boxSizing: 'border-box',
+                            resize: 'vertical',
+                            fontFamily: 'inherit',
+                            lineHeight: '1.4',
+                            minHeight: '42px'
+                          }}
                         />
                       </div>
                     </div>
@@ -1839,12 +1912,26 @@ export default function AdminDashboard({
                       <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#C59B27', marginBottom: '4px' }}>
                         Photos &amp; Videos Folder URL (Drive / Cloud Link)
                       </label>
-                      <input 
-                        type="url" 
+                      <textarea 
+                        rows={2}
                         value={emailForm.mediaFolderUrl}
                         onChange={(e) => setEmailForm({ ...emailForm, mediaFolderUrl: e.target.value })}
                         placeholder="https://drive.google.com/drive/folders/your_property_media"
-                        style={{ width: '100%', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '9px 12px', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' }}
+                        style={{ 
+                          width: '100%', 
+                          background: 'rgba(255,255,255,0.08)', 
+                          color: '#FFFFFF', 
+                          border: '1px solid rgba(255,255,255,0.2)', 
+                          borderRadius: '8px', 
+                          padding: '8px 10px', 
+                          fontSize: '0.85rem', 
+                          outline: 'none', 
+                          boxSizing: 'border-box',
+                          resize: 'vertical',
+                          fontFamily: 'inherit',
+                          lineHeight: '1.4',
+                          minHeight: '42px'
+                        }}
                       />
                     </div>
 
