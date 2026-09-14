@@ -317,9 +317,10 @@ export default function AdminDashboard({
       navigator.clipboard.writeText(htmlContent);
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 3000);
-    } catch (err) {
-      console.warn('Clipboard write error:', err);
-    }
+    // 3. Open Mandatory Pre-Send Review Modal
+    setReviewModalNotice("Final layout generated. Viewing 'email_preview_review.html' in a new tab to verify before draft injection.");
+    setShowReviewModal(true);
+  };
 
   const handleConfirmInjectDraft = async () => {
     setDraftInjectStatus('injecting');
