@@ -1731,23 +1731,25 @@ export default function AdminDashboard({
                       onClick={() => setIsFormBoxExpanded(!isFormBoxExpanded)}
                       title={isFormBoxExpanded ? "Contract Form Box Width" : "Increase Form Box Size / Width"}
                       style={{
-                        background: isFormBoxExpanded ? '#C59B27' : 'rgba(255,255,255,0.12)',
-                        color: isFormBoxExpanded ? '#0C2340' : '#DDD8CE',
-                        border: '1px solid rgba(197, 155, 39, 0.5)',
-                        borderRadius: '6px',
-                        padding: '6px 10px',
-                        fontSize: '0.75rem',
+                        flexShrink: 0,
+                        whiteSpace: 'nowrap',
+                        background: isFormBoxExpanded ? '#C59B27' : 'rgba(197, 155, 39, 0.15)',
+                        color: isFormBoxExpanded ? '#0C2340' : '#FFD700',
+                        border: '1px solid #C59B27',
+                        borderRadius: '20px',
+                        padding: '6px 14px',
+                        fontSize: '0.78rem',
                         fontWeight: '700',
                         cursor: 'pointer',
-                        display: 'flex',
+                        display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
                         transition: 'all 0.2s ease',
-                        boxShadow: isFormBoxExpanded ? '0 2px 8px rgba(197, 155, 39, 0.3)' : 'none'
+                        boxShadow: isFormBoxExpanded ? '0 2px 10px rgba(197, 155, 39, 0.4)' : '0 2px 6px rgba(0,0,0,0.2)'
                       }}
                     >
                       {isFormBoxExpanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-                      {isFormBoxExpanded ? 'Standard Box' : 'Expand Box Size'}
+                      <span>{isFormBoxExpanded ? 'Standard Box' : 'Expand Box'}</span>
                     </button>
                   </div>
 
