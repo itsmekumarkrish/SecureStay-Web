@@ -393,6 +393,27 @@ ${isPreviewMode ? `
     }
   };
 
+  const handleOpenGmailCompose = () => {
+    try {
+      const htmlContent = getGeneratedEmailHtml(false);
+      navigator.clipboard.writeText(htmlContent);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 3000);
+    } catch (e) {}
+
+    const recipient = encodeURIComponent(emailForm.customerEmail || '');
+    const subject = encodeURIComponent(emailForm.emailSubject || '');
+    const cc = encodeURIComponent(emailForm.ccEmails || '');
+    const bcc = encodeURIComponent(emailForm.bccEmails || '');
+    const body = encodeURIComponent(`Dear ${emailForm.customerName || 'Valued Customer'},\n\nPlease find your complete Secure Stay information package attached.\n\n(Rich HTML package copied to your clipboard — paste in email body if supported)\n\nBest regards,\nSecure Stay Private Limited\nhello@securestay.in`);
+
+    let gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
+    if (emailForm.ccEmails) gmailUrl += `&cc=${cc}`;
+    if (emailForm.bccEmails) gmailUrl += `&bcc=${bcc}`;
+
+    window.open(gmailUrl, '_blank');
+  };
+
   const handleSendEmailNow = async (e) => {
     e.preventDefault();
     if (!emailForm.customerEmail) {
@@ -2762,6 +2783,15 @@ ${isPreviewMode ? `
                 style={{ width: '100%', padding: '10px 14px', background: 'rgba(197, 155, 39, 0.12)', color: '#F1B04C', border: '1px solid rgba(197, 155, 39, 0.4)', borderRadius: '8px', fontSize: '0.82rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
                 👁️ Open Full HTML Layout Preview in New Tab
+              </button>
+
+              {/* Direct Gmail Web Compose Option */}
+              <button 
+                type="button" 
+                onClick={handleOpenGmailCompose}
+                style={{ width: '100%', padding: '11px 14px', background: 'rgba(234, 67, 53, 0.15)', color: '#FF6B6B', border: '1px solid rgba(234, 67, 53, 0.4)', borderRadius: '8px', fontSize: '0.85rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                ✉️ Compose Directly in Gmail App / Web (Auto-copies HTML)
               </button>
 
               {/* Live Status Notices */}
