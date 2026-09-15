@@ -9,7 +9,7 @@ const USER_TYPE_LABELS = {
   other: 'Other Inquiry'
 };
 
-export const TARGET_COMPANY_EMAIL = 'bharath.s@securestay.in';
+export const TARGET_COMPANY_EMAIL = 'hello@securestay.in';
 
 /**
  * Sends inquiry details to company email via Web3Forms API

@@ -35,7 +35,7 @@ export default function AdminDashboard({
   // Email Dispatcher State
   const [emailForm, setEmailForm] = useState({
     customerName: 'Bharath S.',
-    customerEmail: 'bharath.s@securestay.in',
+    customerEmail: 'hello@securestay.in',
     ccEmails: '',
     bccEmails: '',
     emailSubject: 'Welcome to Secure Stay — Your Complete Stay Information Package',
@@ -2107,7 +2107,7 @@ ${isPreviewMode ? `
                     <div style={{ marginTop: '6px' }}>
                       <button 
                         type="submit" 
-                        title="Generate local review file email_preview_review.html and prepare Gmail API draft for bharath.s@securestay.in"
+                        title="Generate local review file email_preview_review.html and prepare Gmail API draft for hello@securestay.in"
                         style={{ 
                           width: '100%', 
                           padding: '13px 18px', 
@@ -2701,7 +2701,7 @@ ${isPreviewMode ? `
                 </div>
                 <div>
                   <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: '700', color: '#FFFFFF' }}>Pre-Send Layout Review &amp; Gmail Draft</h3>
-                  <p style={{ margin: '3px 0 0 0', fontSize: '0.8rem', color: '#DDD8CE' }}>Account: <strong style={{ color: '#F1B04C' }}>bharath.s@securestay.in</strong></p>
+                  <p style={{ margin: '3px 0 0 0', fontSize: '0.8rem', color: '#DDD8CE' }}>Account: <strong style={{ color: '#F1B04C' }}>hello@securestay.in</strong></p>
                 </div>
               </div>
               <button type="button" onClick={() => setShowReviewModal(false)} style={{ background: 'none', border: 'none', color: '#DDD8CE', cursor: 'pointer', padding: '4px' }}>
@@ -2724,7 +2724,7 @@ ${isPreviewMode ? `
             <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '10px', padding: '16px', marginBottom: '22px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.83rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Sender Account:</span>
-                <span style={{ color: '#F1B04C', fontWeight: '700' }}>bharath.s@securestay.in</span>
+                <span style={{ color: '#F1B04C', fontWeight: '700' }}>hello@securestay.in</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#DDD8CE', fontWeight: '600' }}>Recipient (To):</span>
@@ -2767,7 +2767,7 @@ ${isPreviewMode ? `
               {/* Live Status Notices */}
               {draftInjectStatus === 'success' && (
                 <div style={{ padding: '12px 16px', background: 'rgba(16, 185, 129, 0.18)', border: '1px solid #10B981', borderRadius: '8px', color: '#34D399', fontSize: '0.85rem', textAlign: 'center', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                  <CheckCircle size={18} /> Layout Approved! Dispatch Sent to {emailForm.customerEmail || 'bharath.s@securestay.in'}
+                  <CheckCircle size={18} /> Layout Approved! Dispatch Sent to {emailForm.customerEmail || 'hello@securestay.in'}
                 </div>
               )}
 
