@@ -99,7 +99,7 @@ ${isPreviewMode ? `
     </button>
   </div>
 </div>
-` : ''}`
+` : ''}
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#DDD8CE;">
 <tr><td align="center" style="padding:28px 16px;">
   <table border="0" cellpadding="0" cellspacing="0" width="700" style="max-width:700px;width:100%;">
